@@ -47,7 +47,7 @@ struct GeneralSettingsBrowseSection: View {
                     }
                     .help(browseIconsViewOptionHelp(useSecondMenuBar: true))
                 }
-                .frame(width: 260)
+                .fixedSize(horizontal: true, vertical: false)
             }
 
             if licenseService.isPro, menuBarManager.settings.useSecondMenuBar {
@@ -71,64 +71,62 @@ struct GeneralSettingsBrowseSection: View {
         }
     }
 
+    @ViewBuilder
     private var proSecondMenuBarRows: some View {
-        Group {
-            CompactDivider()
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(spacing: 5) {
-                    Text("Rows shown in Second Menu Bar")
-                        .foregroundStyle(.white.opacity(0.94))
+        CompactDivider()
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 5) {
+                Text("Rows shown in Second Menu Bar")
+                    .foregroundStyle(.white.opacity(0.94))
 
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(SaneTypography.label)
-                        .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
-                        .help(secondMenuBarRowsSummary)
-                }
+                Image(systemName: "questionmark.circle.fill")
+                    .font(SaneTypography.label)
+                    .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
+                    .help(secondMenuBarRowsSummary)
+            }
 
-                LazyVGrid(
-                    columns: [GridItem(.adaptive(minimum: 112), spacing: 6, alignment: .leading)],
-                    alignment: .leading,
-                    spacing: 6
-                ) {
-                    ForEach(GeneralSettingsSecondMenuBarPreset.allCases) { preset in
-                        segmentedChoiceButton(preset.title, isSelected: secondMenuBarPreset.wrappedValue == preset) {
-                            secondMenuBarPreset.wrappedValue = preset
-                        }
-                        .help(secondMenuBarPresetHelp(preset))
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: 112), spacing: 6, alignment: .leading)],
+                alignment: .leading,
+                spacing: 6
+            ) {
+                ForEach(GeneralSettingsSecondMenuBarPreset.allCases) { preset in
+                    segmentedChoiceButton(preset.title, isSelected: secondMenuBarPreset.wrappedValue == preset) {
+                        secondMenuBarPreset.wrappedValue = preset
                     }
+                    .help(secondMenuBarPresetHelp(preset))
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
 
-            if secondMenuBarPreset.wrappedValue == .power {
-                powerRows
-            }
+        if secondMenuBarPreset.wrappedValue == .power {
+            powerRows
         }
     }
 
+    @ViewBuilder
     private var powerRows: some View {
-        Group {
-            CompactDivider()
-            CompactRow("Custom rows") {
-                Button(showBrowseRowCustomization ? "Hide" : "Show") {
-                    withAnimation(.easeInOut(duration: 0.18)) {
-                        showBrowseRowCustomization.toggle()
-                    }
+        CompactDivider()
+        CompactRow("Custom rows") {
+            Button(showBrowseRowCustomization ? "Hide" : "Show") {
+                withAnimation(.easeInOut(duration: 0.18)) {
+                    showBrowseRowCustomization.toggle()
                 }
-                .buttonStyle(ChromeActionButtonStyle())
-                .help("Show or hide row-level options.")
             }
+            .buttonStyle(ChromeActionButtonStyle())
+            .help("Show or hide row-level options.")
+        }
 
-            if showBrowseRowCustomization {
-                CompactDivider()
-                CompactToggle(label: "Show Visible row", isOn: $menuBarManager.settings.secondMenuBarShowVisible)
-                    .help("Show the Visible destination row in the Second Menu Bar.")
+        if showBrowseRowCustomization {
+            CompactDivider()
+            CompactToggle(label: "Show Visible row", isOn: $menuBarManager.settings.secondMenuBarShowVisible)
+                .help("Show the Visible destination row in the Second Menu Bar.")
 
-                CompactDivider()
-                CompactToggle(label: "Show Always Hidden row", isOn: $menuBarManager.settings.secondMenuBarShowAlwaysHidden)
-                    .help("Show the Always Hidden destination row in the Second Menu Bar.")
-            }
+            CompactDivider()
+            CompactToggle(label: "Show Always Hidden row", isOn: $menuBarManager.settings.secondMenuBarShowAlwaysHidden)
+                .help("Show the Always Hidden destination row in the Second Menu Bar.")
         }
     }
 
@@ -137,6 +135,7 @@ struct GeneralSettingsBrowseSection: View {
             HStack {
                 HStack(spacing: 5) {
                     Text("Left-click SaneBar icon")
+                        .font(SaneTypography.label)
                     Image(systemName: "questionmark.circle.fill")
                         .font(SaneTypography.label)
                         .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
@@ -144,7 +143,7 @@ struct GeneralSettingsBrowseSection: View {
                 }
                 Spacer()
             }
-            .foregroundStyle(.white.opacity(0.94))
+            .foregroundStyle(SaneTypography.text)
 
             HStack(spacing: 6) {
                 ForEach(GeneralSettingsBrowseLeftClickMode.allCases) { mode in
