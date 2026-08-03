@@ -112,8 +112,8 @@ struct GeneralSettingsHidingSection: View {
                 if let hideAllOtherStatusMessage {
                     CompactDivider()
                     Text(hideAllOtherStatusMessage)
-                        .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.9))
+                        .font(SaneTypography.body)
+                        .foregroundStyle(SaneTypography.text)
                         .multilineTextAlignment(.leading)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
@@ -126,106 +126,81 @@ struct GeneralSettingsHidingSection: View {
     }
 
     private var hideNewUnlistedToggleRow: some View {
-        Button {
-            hideAllOtherMenuBarItemsBinding.wrappedValue.toggle()
-        } label: {
-            HStack {
-                Text("Hide new/unlisted items by default")
-                    .foregroundStyle(.white)
-                Spacer()
-                Capsule()
-                    .fill(menuBarManager.settings.hideAllOtherMenuBarItems ? Color.accentColor : Color.white.opacity(0.22))
-                    .overlay(alignment: menuBarManager.settings.hideAllOtherMenuBarItems ? .trailing : .leading) {
-                        Circle()
-                            .fill(.white)
-                            .frame(width: 18, height: 18)
-                            .padding(3)
-                    }
-                    .frame(width: 44, height: 24)
-            }
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Hide new/unlisted items by default")
-        .accessibilityValue(menuBarManager.settings.hideAllOtherMenuBarItems ? "On" : "Off")
-        .accessibilityIdentifier("sanebar-hide-new-unlisted-toggle")
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+        CompactToggle(label: "Hide new/unlisted items by default", isOn: hideAllOtherMenuBarItemsBinding)
+            .accessibilityIdentifier("sanebar-hide-new-unlisted-toggle")
     }
 
+    @ViewBuilder
     private var autoRehideRows: some View {
-        Group {
-            if licenseService.isPro {
-                CompactDivider()
-                CompactRow("Wait before hiding") {
-                    HStack {
-                        Text(rehideDelayLabel)
-                            .frame(width: 95, alignment: .trailing)
-                        Stepper("", value: $menuBarManager.settings.rehideDelay, in: 1 ... 60, step: 1)
-                            .labelsHidden()
-                    }
+        if licenseService.isPro {
+            CompactDivider()
+            CompactRow("Wait before hiding") {
+                HStack {
+                    Text(rehideDelayLabel)
+                        .frame(width: 95, alignment: .trailing)
+                    Stepper("", value: $menuBarManager.settings.rehideDelay, in: 1 ... 60, step: 1)
+                        .labelsHidden()
                 }
-                CompactDivider()
-                CompactRow("Wait after Browse Icons") {
-                    HStack {
-                        Text(findIconDelayLabel)
-                            .frame(width: 95, alignment: .trailing)
-                        Stepper("", value: $menuBarManager.settings.findIconRehideDelay, in: 5 ... 60, step: 5)
-                            .labelsHidden()
-                    }
-                }
-                CompactDivider()
-                CompactToggle(label: "Hide when app changes", isOn: $menuBarManager.settings.rehideOnAppChange)
-            } else {
-                CompactDivider()
-                proGatedRow(feature: .autoRehideCustomization, label: "Customize auto-hide timing")
             }
+            CompactDivider()
+            CompactRow("Wait after Browse Icons") {
+                HStack {
+                    Text(findIconDelayLabel)
+                        .frame(width: 95, alignment: .trailing)
+                    Stepper("", value: $menuBarManager.settings.findIconRehideDelay, in: 5 ... 60, step: 5)
+                        .labelsHidden()
+                }
+            }
+            CompactDivider()
+            CompactToggle(label: "Hide when app changes", isOn: $menuBarManager.settings.rehideOnAppChange)
+        } else {
+            CompactDivider()
+            proGatedRow(feature: .autoRehideCustomization, label: "Customize auto-hide timing")
         }
     }
 
     /// One shared dwell for both hover and scroll reveal — keeps the UI uncluttered
     /// while still letting users tune how long they must linger before icons reveal.
+    @ViewBuilder
     private var revealDelayRow: some View {
-        Group {
-            CompactDivider()
-            CompactRow("Reveal delay") {
-                HStack {
-                    Slider(value: $menuBarManager.settings.hoverDelay, in: 0.05 ... 2.0, step: 0.05)
-                        .frame(width: 80)
-                    Text(delayLabel(menuBarManager.settings.hoverDelay))
-                        .frame(width: 55, alignment: .trailing)
-                }
+        CompactDivider()
+        CompactRow("Reveal delay") {
+            HStack {
+                Slider(value: $menuBarManager.settings.hoverDelay, in: 0.05 ... 2.0, step: 0.05)
+                    .frame(width: 80)
+                Text(delayLabel(menuBarManager.settings.hoverDelay))
+                    .frame(width: 55, alignment: .trailing)
             }
         }
     }
 
+    @ViewBuilder
     private var scrollGestureRows: some View {
-        Group {
-            CompactDivider()
-            if licenseService.isPro {
-                CompactRow("Gesture behavior") {
-                    HStack(spacing: 6) {
-                        ForEach(SaneBarSettings.GestureMode.allCases, id: \.self) { mode in
-                            ChromeSegmentedChoiceButton(
-                                title: mode.rawValue,
-                                isSelected: menuBarManager.settings.gestureMode == mode
-                            ) {
-                                menuBarManager.settings.gestureMode = mode
-                            }
-                            .help(gestureModeHelp(mode))
+        CompactDivider()
+        if licenseService.isPro {
+            CompactRow("Gesture behavior") {
+                HStack(spacing: 6) {
+                    ForEach(SaneBarSettings.GestureMode.allCases, id: \.self) { mode in
+                        ChromeSegmentedChoiceButton(
+                            title: mode.rawValue,
+                            isSelected: menuBarManager.settings.gestureMode == mode
+                        ) {
+                            menuBarManager.settings.gestureMode = mode
                         }
+                        .help(gestureModeHelp(mode))
                     }
-                    .frame(width: 220)
                 }
-                Text(gestureModeSummary)
-                    .font(.system(size: 13))
-                    .foregroundStyle(.white.opacity(0.92))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 4)
-            } else {
-                proGatedRow(feature: .gestureCustomization, label: "Customize gesture behavior")
+                .frame(width: 220)
             }
+            Text(gestureModeSummary)
+                .font(SaneTypography.body)
+                .foregroundStyle(SaneTypography.text)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 4)
+        } else {
+            proGatedRow(feature: .gestureCustomization, label: "Customize gesture behavior")
         }
     }
 
