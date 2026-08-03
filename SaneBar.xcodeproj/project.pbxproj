@@ -2049,7 +2049,7 @@
 			repositoryURL = "https://github.com/sane-apps/SaneUI.git";
 			requirement = {
 				kind = revision;
-				revision = a42777c01440220e18b332cc86052ca52358bba4;
+				revision = 0bc8d4daaa2438648bc4f07289712137f7c4548a;
 			};
 		};
 		D2D0D47940BF0BB98E9639FA /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {

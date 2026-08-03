@@ -135,20 +135,28 @@ struct GeneralSettingsHidingSection: View {
         if licenseService.isPro {
             CompactDivider()
             CompactRow("Wait before hiding") {
-                HStack {
+                HStack(spacing: 8) {
                     Text(rehideDelayLabel)
-                        .frame(width: 95, alignment: .trailing)
+                        .font(SaneTypography.label)
+                        .foregroundStyle(SaneTypography.text)
+                        .lineLimit(1)
+                        .fixedSize(horizontal: true, vertical: false)
                     Stepper("", value: $menuBarManager.settings.rehideDelay, in: 1 ... 60, step: 1)
                         .labelsHidden()
+                        .controlSize(.regular)
                 }
             }
             CompactDivider()
             CompactRow("Wait after Browse Icons") {
-                HStack {
+                HStack(spacing: 8) {
                     Text(findIconDelayLabel)
-                        .frame(width: 95, alignment: .trailing)
+                        .font(SaneTypography.label)
+                        .foregroundStyle(SaneTypography.text)
+                        .lineLimit(1)
+                        .fixedSize(horizontal: true, vertical: false)
                     Stepper("", value: $menuBarManager.settings.findIconRehideDelay, in: 5 ... 60, step: 5)
                         .labelsHidden()
+                        .controlSize(.regular)
                 }
             }
             CompactDivider()
@@ -165,11 +173,15 @@ struct GeneralSettingsHidingSection: View {
     private var revealDelayRow: some View {
         CompactDivider()
         CompactRow("Reveal delay") {
-            HStack {
+            HStack(spacing: 8) {
                 Slider(value: $menuBarManager.settings.hoverDelay, in: 0.05 ... 2.0, step: 0.05)
-                    .frame(width: 80)
+                    .frame(width: 100)
+                    .controlSize(.regular)
                 Text(delayLabel(menuBarManager.settings.hoverDelay))
-                    .frame(width: 55, alignment: .trailing)
+                    .font(SaneTypography.label)
+                    .foregroundStyle(SaneTypography.text)
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
             }
         }
     }
@@ -190,7 +202,7 @@ struct GeneralSettingsHidingSection: View {
                         .help(gestureModeHelp(mode))
                     }
                 }
-                .frame(width: 220)
+                .fixedSize(horizontal: true, vertical: false)
             }
             Text(gestureModeSummary)
                 .font(SaneTypography.body)
