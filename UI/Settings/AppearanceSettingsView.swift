@@ -287,7 +287,7 @@ struct AppearanceSettingsView: View {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundStyle(.orange)
                                 Text("Log out to verify changes.")
-                                    .font(.system(size: 13))
+                                    .font(SaneTypography.body)
                                     .foregroundStyle(.white.opacity(0.92))
                                 Spacer()
                             }
@@ -420,7 +420,7 @@ struct AppearanceSettingsView: View {
             Spacer()
 
             Image(systemName: "chevron.up.chevron.down")
-                .font(.system(size: 10, weight: .semibold))
+                .font(SaneTypography.label)
                 .foregroundStyle(Color.white.opacity(0.9))
         }
         .padding(.horizontal, 10)

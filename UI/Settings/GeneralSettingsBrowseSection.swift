@@ -56,7 +56,7 @@ struct GeneralSettingsBrowseSection: View {
                 CompactDivider()
                 CompactRow("Rows shown in Second Menu Bar") {
                     Text("Hidden + Visible")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(SaneTypography.label)
                         .foregroundStyle(.white.opacity(0.94))
                 }
                 CompactDivider()
@@ -80,7 +80,7 @@ struct GeneralSettingsBrowseSection: View {
                         .foregroundStyle(.white.opacity(0.94))
 
                     Image(systemName: "questionmark.circle.fill")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(SaneTypography.label)
                         .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
                         .help(secondMenuBarRowsSummary)
                 }
@@ -138,7 +138,7 @@ struct GeneralSettingsBrowseSection: View {
                 HStack(spacing: 5) {
                     Text("Left-click SaneBar icon")
                     Image(systemName: "questionmark.circle.fill")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(SaneTypography.label)
                         .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
                         .help("Right-click the SaneBar icon to open the app menu.")
                 }

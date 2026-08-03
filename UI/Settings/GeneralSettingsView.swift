@@ -181,12 +181,11 @@ struct GeneralSettingsView: View {
                                 CompactRow(profile.name) {
                                     HStack {
                                         Text(profile.modifiedAt.formatted(date: .abbreviated, time: .shortened))
-                                            .font(.system(size: 13))
+                                            .font(SaneTypography.body)
                                             .foregroundStyle(.white.opacity(0.92))
 
                                         Button("Load") { loadProfile(profile) }
                                             .buttonStyle(ChromeActionButtonStyle())
-                                            .controlSize(.small)
 
                                         Button {
                                             deleteProfile(profile)
@@ -209,7 +208,6 @@ struct GeneralSettingsView: View {
                                 showingSaveProfileAlert = true
                             }
                             .buttonStyle(ChromeActionButtonStyle())
-                            .controlSize(.small)
                             .help("Save your current settings, layout, and custom icon as a named profile")
                         }
                     } else {
@@ -240,7 +238,6 @@ struct GeneralSettingsView: View {
                             }
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .controlSize(.small)
                         .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs SaneBar's visible, hidden, and always-hidden groups if needed.")
                     }
                 }
@@ -275,13 +272,11 @@ struct GeneralSettingsView: View {
                                 exportSettings()
                             }
                             .buttonStyle(ChromeActionButtonStyle())
-                            .controlSize(.small)
 
                             Button("Import Settings...") {
                                 importSettings()
                             }
                             .buttonStyle(ChromeActionButtonStyle())
-                            .controlSize(.small)
                         }
 
                         CompactDivider()
@@ -296,7 +291,6 @@ struct GeneralSettingsView: View {
                                 }
                             }
                             .buttonStyle(ChromeActionButtonStyle())
-                            .controlSize(.small)
                         }
                     } else {
                         proGatedRow(feature: .exportImport, label: "Export, import, and migrate settings")
@@ -310,7 +304,6 @@ struct GeneralSettingsView: View {
                             showingResetAlert = true
                         }
                         .buttonStyle(ChromeActionButtonStyle(destructive: true))
-                        .controlSize(.small)
                         .help("Reset all settings to factory defaults")
                     }
                 }
@@ -388,7 +381,6 @@ struct GeneralSettingsView: View {
                     triggerManualUpdateCheck()
                 }
                 .buttonStyle(ChromeActionButtonStyle())
-                .controlSize(.small)
                 .disabled(isCheckingForUpdates)
                 .help("Check for updates right now")
             }

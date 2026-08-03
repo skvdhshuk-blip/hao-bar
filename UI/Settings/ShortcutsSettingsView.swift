@@ -134,7 +134,7 @@ struct ShortcutsSettingsView: View {
                                 CompactRow(item.title) {
                                     HStack {
                                         Text(item.command)
-                                            .font(.system(size: 13, design: .monospaced))
+                                            .font(SaneTypography.body)
                                             .textSelection(.enabled)
                                             .lineLimit(1)
                                             .truncationMode(.tail)
@@ -147,10 +147,10 @@ struct ShortcutsSettingsView: View {
                                         } label: {
                                             Label {
                                                 Text(copiedAutomationCommandID == item.id ? "Copied" : "Copy")
-                                                    .font(.system(size: 11, weight: .semibold))
+                                                    .font(SaneTypography.label)
                                             } icon: {
                                                 Image(systemName: copiedAutomationCommandID == item.id ? "checkmark" : "doc.on.doc")
-                                                    .font(.system(size: 10, weight: .semibold))
+                                                    .font(SaneTypography.label)
                                             }
                                         }
                                         .buttonStyle(
@@ -239,7 +239,7 @@ struct ShortcutsSettingsView: View {
             CompactRow(command.title) {
                 HStack(spacing: 8) {
                     Text(command.command)
-                        .font(.system(size: 13, design: .monospaced))
+                        .font(SaneTypography.body)
                         .lineLimit(1)
                         .truncationMode(.tail)
                     ChromeBadge(title: "Pro", systemImage: "lock.fill")

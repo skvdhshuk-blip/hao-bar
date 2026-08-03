@@ -136,7 +136,6 @@ struct HealthSettingsView: View {
                                 openMenuBarSettings()
                             }
                             .buttonStyle(ChromeActionButtonStyle(prominent: true))
-                            .controlSize(.small)
                             .saneHelp("Opens macOS System Settings so you can manage which icons are allowed in the menu bar.")
                             .accessibilityLabel("Open macOS Menu Bar settings")
                             Spacer()
@@ -161,7 +160,6 @@ struct HealthSettingsView: View {
                                     openAccessibilitySettings()
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
-                                .controlSize(.small)
                                 .saneHelp("Opens Accessibility settings so you can grant SaneBar permission.")
                                 .accessibilityLabel("Open Accessibility settings")
                             }
@@ -178,7 +176,6 @@ struct HealthSettingsView: View {
                                     runRepair(reason: "health-geometry-fix", message: "Layout check ran.")
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
-                                .controlSize(.small)
                                 .disabled(repairInProgress)
                                 .saneHelp("Runs a layout repair check now.")
                                 .accessibilityLabel("Fix menu bar geometry")
@@ -196,7 +193,6 @@ struct HealthSettingsView: View {
                                     runRepair(reason: "health-items-fix", message: "Repair check ran.")
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
-                                .controlSize(.small)
                                 .disabled(repairInProgress)
                                 .saneHelp("Repairs detached or missing SaneBar item groups.")
                                 .accessibilityLabel("Fix SaneBar items")
@@ -210,14 +206,12 @@ struct HealthSettingsView: View {
                                 setLayoutMode(.stability)
                             }
                             .buttonStyle(ChromeActionButtonStyle(prominent: menuBarManager.settings.layoutMode == .stability))
-                            .controlSize(.small)
                             .saneHelp("Hands-off: SaneBar only fixes its icon layout at startup or when you click Fix.")
 
                             Button("Live") {
                                 setLayoutMode(.live)
                             }
                             .buttonStyle(ChromeActionButtonStyle(prominent: menuBarManager.settings.layoutMode == .live))
-                            .controlSize(.small)
                             .saneHelp("SaneBar also re-checks the layout after sleep/wake, display changes, and session changes.")
                         }
                     }
@@ -229,7 +223,7 @@ struct HealthSettingsView: View {
                 CompactSection("Layout Rescue", icon: "lifepreserver", iconColor: .orange) {
                     CompactRow("Restore Point") {
                         Text(restorePointLabel)
-                            .font(.system(size: 13))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
                             .saneHelp("The saved known-good layout SaneBar can return to if icons drift after restart, wake, or display changes.")
                     }
@@ -239,7 +233,6 @@ struct HealthSettingsView: View {
                             createRestorePoint()
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .controlSize(.small)
                         .saneHelp("Saves the current SaneBar icon, divider, spacer, display-backup, and always-hidden divider positions as the restore point.")
                     }
                     CompactDivider()
@@ -248,7 +241,6 @@ struct HealthSettingsView: View {
                             restoreLayout()
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .controlSize(.small)
                         .disabled(!canRestoreLayout)
                         .saneHelp(canRestoreLayout
                             ? "Restores the saved layout point, recreates SaneBar's menu bar items, then runs the same repair path as Arrange Now."
@@ -257,7 +249,7 @@ struct HealthSettingsView: View {
                     if !layoutRescueMessage.isEmpty {
                         CompactDivider()
                         Text(layoutRescueMessage)
-                            .font(.system(size: 13))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 12)
@@ -268,25 +260,25 @@ struct HealthSettingsView: View {
                 CompactSection("Menu Bar Items", icon: "rectangle.grid.1x2", iconColor: .cyan) {
                     CompactRow("Detected") {
                         Text("\(totalCount)")
-                            .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white)
                     }
                     CompactDivider()
                     CompactRow("Visible / Hidden") {
                         Text("\(visibleCount) / \(hiddenCount)")
-                            .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white)
                     }
                     CompactDivider()
                     CompactRow("Always Hidden") {
                         Text("\(alwaysHiddenCount)")
-                            .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white)
                     }
                     CompactDivider()
                     CompactRow("Last Scan") {
                         Text(lastScanDate?.formatted(date: .omitted, time: .shortened) ?? "Not run")
-                            .font(.system(size: 13))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
                     }
                 }
@@ -303,14 +295,13 @@ struct HealthSettingsView: View {
                             runRepair(reason: "health", message: "Repair check ran.")
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .controlSize(.small)
                         .disabled(repairInProgress)
                         .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs SaneBar's visible, hidden, and always-hidden groups if needed.")
                     }
                     CompactDivider()
                     CompactRow("Last Repair") {
                         Text(lastRepairLabel)
-                            .font(.system(size: 13))
+                            .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
                     }
                     CompactDivider()
@@ -319,7 +310,6 @@ struct HealthSettingsView: View {
                             openAccessibilitySettings()
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .controlSize(.small)
                         .saneHelp("Opens macOS System Settings directly to Privacy & Security > Accessibility so you can grant or repair SaneBar's permission.")
                     }
                 }
@@ -330,7 +320,6 @@ struct HealthSettingsView: View {
                             copyDiagnostics()
                         }
                         .buttonStyle(ChromeActionButtonStyle(prominent: copiedDiagnostics))
-                        .controlSize(.small)
                         .saneHelp("Copies a support report with current permissions, layout state, item counts, and recent diagnostics to the clipboard.")
                     }
                 }

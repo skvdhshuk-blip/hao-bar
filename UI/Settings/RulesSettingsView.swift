@@ -56,7 +56,7 @@ struct RulesSettingsView: View {
                         if menuBarManager.settings.showOnLowBattery {
                             HStack(spacing: 8) {
                                 Text("Threshold:")
-                                    .font(.system(size: 13))
+                                    .font(SaneTypography.body)
                                     .foregroundStyle(.white.opacity(0.92))
                                 Slider(
                                     value: Binding(
@@ -67,7 +67,7 @@ struct RulesSettingsView: View {
                                     step: 5
                                 )
                                 Text("\(menuBarManager.settings.batteryThreshold)%")
-                                    .font(.system(size: 13, design: .monospaced))
+                                    .font(SaneTypography.body)
                                     .frame(width: 36, alignment: .trailing)
                             }
                             .padding(.leading, 4)
@@ -94,7 +94,7 @@ struct RulesSettingsView: View {
                         if menuBarManager.settings.showOnAppLaunch {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("If these apps open:")
-                                    .font(.system(size: 13))
+                                    .font(SaneTypography.body)
                                     .foregroundStyle(.white.opacity(0.92))
                                     .padding(.leading, 4)
 
@@ -135,7 +135,7 @@ struct RulesSettingsView: View {
                                                 toggleScheduleDay(option.day)
                                             }
                                             .buttonStyle(.plain)
-                                            .font(.system(size: 11, weight: .semibold))
+                                            .font(SaneTypography.label)
                                             .foregroundStyle(isSelected ? .white : .white.opacity(0.92))
                                             .padding(.horizontal, 8)
                                             .padding(.vertical, 4)
@@ -206,7 +206,6 @@ struct RulesSettingsView: View {
                                         }
                                     }
                                     .buttonStyle(ChromeActionButtonStyle())
-                                    .controlSize(.small)
                                 }
 
                                 ForEach(menuBarManager.settings.triggerNetworks, id: \.self) { network in
@@ -262,7 +261,6 @@ struct RulesSettingsView: View {
                                         }
                                     }
                                     .buttonStyle(ChromeActionButtonStyle())
-                                    .controlSize(.small)
                                 }
 
                                 if !menuBarManager.settings.triggerFocusModes.contains("(Focus Off)") {
@@ -275,7 +273,6 @@ struct RulesSettingsView: View {
                                         }
                                     }
                                     .buttonStyle(ChromeActionButtonStyle())
-                                    .controlSize(.small)
                                 }
 
                                 ForEach(menuBarManager.settings.triggerFocusModes, id: \.self) { mode in
@@ -299,7 +296,7 @@ struct RulesSettingsView: View {
 
                                 if menuBarManager.settings.triggerFocusModes.isEmpty {
                                     Text("No Focus Modes configured. Enable a Focus Mode in System Settings to add it here.")
-                                        .font(.system(size: 13))
+                                        .font(SaneTypography.body)
                                         .foregroundStyle(.white.opacity(0.92))
                                 }
 
@@ -408,7 +405,6 @@ struct RulesSettingsView: View {
                         }
                     }
                     .buttonStyle(ChromeActionButtonStyle())
-                    .controlSize(.small)
                 }
             }
         }
@@ -480,7 +476,6 @@ private struct ScriptTriggerSettingsView: View {
                         menuBarManager.settings.scriptTriggerPath = url.path
                     }
                 }
-                .controlSize(.small)
             }
 
             // Interval stepper
@@ -498,18 +493,17 @@ private struct ScriptTriggerSettingsView: View {
                 Button("Run Now") {
                     runTestScript()
                 }
-                .controlSize(.small)
                 .disabled(scriptPathStatus != .ready)
 
                 if let testResult {
                     Text(testResult)
-                        .font(.system(size: 13))
+                        .font(SaneTypography.body)
                         .foregroundStyle(testResult.hasPrefix("Exit 0") ? .green : .orange)
                 }
             }
 
             Text("Exit code 0 = show hidden icons, non-zero = hide.")
-                .font(.system(size: 13))
+                .font(SaneTypography.body)
                 .foregroundStyle(.white.opacity(0.92))
         }
         .padding(.vertical, 8)

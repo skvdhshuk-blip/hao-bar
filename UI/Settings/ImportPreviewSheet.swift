@@ -24,7 +24,7 @@ struct ImportPreviewSheet: View {
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(.white)
                 Text("\(plan.sourceKind.rawValue): \(plan.fileName)")
-                    .font(.system(size: 13))
+                    .font(SaneTypography.body)
                     .foregroundStyle(.white.opacity(0.94))
                     .lineLimit(2)
             }
@@ -72,13 +72,13 @@ struct ImportPreviewSheet: View {
 
             if plan.hideAllOtherItems {
                 Text("This import will keep the shown items visible and hide newly detected menu bar items by default.")
-                    .font(.system(size: 13))
+                    .font(SaneTypography.body)
                     .foregroundStyle(.white.opacity(0.94))
                     .fixedSize(horizontal: false, vertical: true)
             }
             if enablesScriptTrigger {
                 Text("This import enables script-based control. Only import files you trust.")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(SaneTypography.body)
                     .foregroundStyle(.white)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -108,6 +108,6 @@ struct ImportPreviewSheet: View {
                 .foregroundStyle(.white)
                 .fontWeight(.semibold)
         }
-        .font(.system(size: 13))
+        .font(SaneTypography.body)
     }
 }

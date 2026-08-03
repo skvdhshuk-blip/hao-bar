@@ -126,7 +126,7 @@ private struct FirstRunHealthWizardView: View {
             if !rescueMessage.isEmpty {
                 CompactDivider()
                 Text(rescueMessage)
-                    .font(.system(size: 13))
+                    .font(SaneTypography.body)
                     .foregroundStyle(.white.opacity(0.94))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 12)
