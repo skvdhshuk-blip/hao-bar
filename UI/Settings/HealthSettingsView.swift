@@ -359,6 +359,8 @@ struct HealthSettingsView: View {
     private func createRestorePoint() {
         if menuBarManager.profileWorkflow.createLayoutRescueRestorePoint(reason: "health") {
             layoutRescueMessage = "Restore point saved."
+        } else {
+            layoutRescueMessage = MenuBarProfileWorkflow.layoutRescueRestorePointSaveFailureMessage(from: runtimeSnapshot)
         }
     }
 

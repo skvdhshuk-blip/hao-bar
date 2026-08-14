@@ -3,6 +3,9 @@ name: Sunset auto-close new issues
 # SaneBar is sunset (macOS 27 "Golden Gate" breaks menu bar managers) and is now free +
 # MIT, community-maintained. New ISSUES are auto-closed with a friendly note. Pull
 # requests are NOT touched; this triggers on `issues` only, never on `pull_request`.
+# SANEAPPS_GITHUB_HOSTED_EXCEPTION: SaneBar is retired and no longer accepts issue
+# triage; this secret-free workflow gives new reporters the maintained sunset notice
+# while leaving community pull requests open for human review.
 
 on:
   issues:

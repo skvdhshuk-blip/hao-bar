@@ -568,6 +568,25 @@ struct MenuBarManagerRecoveryPolicyTests {
         #expect(!MenuBarProfileWorkflow.canCreateLayoutRescueRestorePoint(from: detached))
     }
 
+    @Test("Layout rescue save explains when menu bar anchors are not trustworthy")
+    func layoutRescueRestorePointSaveFailureMessageExplainsUnhealthySnapshot() {
+        let unhealthy = MenuBarRuntimeSnapshot(
+            identityPrecision: .exact,
+            geometryConfidence: .missing,
+            structuralState: .ready,
+            separatorAnchorSource: .missing,
+            mainAnchorSource: .live,
+            startupItemsValid: true,
+            separatorX: nil,
+            mainX: 620
+        )
+
+        let message = MenuBarProfileWorkflow.layoutRescueRestorePointSaveFailureMessage(from: unhealthy)
+
+        #expect(message.contains("cannot save this layout yet"))
+        #expect(message.contains("Run Arrange Now"))
+    }
+
     @Test("Bad data hard-resets only on startup/display-topology; wake/Space/manual preserve the explicit divider (FM-2 #136/#168)")
     func statusItemRecoveryResetDecisionMatrix() {
         // Structurally-invalid items always reset. For soft bad data (.missingCoordinates/.invalidGeometry) a destructive reset (which reanchors toward Control Center) is forced ONLY for genuine startup / display-topology; wake / Space / manual recovery preserve the explicit persisted divider (#136/#168), repairing non-destructively.
