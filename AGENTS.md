@@ -14,7 +14,8 @@ This repository is public. Keep agent instructions public-safe and do not commit
 
 - Prefer the project wrappers in `Scripts/SaneMaster.rb` for build, test, launch, and QA workflows.
 - Releases are signed and published by the repo owner. Pull requests must never touch `docs/appcast.xml`, `docs/_redirects`, or release artifacts.
-- Before claiming a change works, build and test it, and runtime-verify any customer-facing surface you touched.
+- Before claiming a change works, build it, and runtime-verify any customer-facing surface you touched.
+- Visual-only SaneBar fixes skip comprehensive testing. Proof is a screenshot of the changed UI, not the full verify suite, move-matrix smoke, or runtime soak. SaneBar is sunset.
 - Settings and right-click menu items must be ordered from the customer's most likely/common need to the least likely/most advanced need.
 - Settings text, helper text, highlights, badges, status messages, and subsection text must stay bright white, high contrast, and at least `13pt`.
 - Settings sections should use plain language, balanced spacing, and visual symmetry.

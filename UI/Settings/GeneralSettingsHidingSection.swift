@@ -111,12 +111,7 @@ struct GeneralSettingsHidingSection: View {
                     .help("Keep only the explicitly visible items shown; move other detected menu bar items to Hidden.")
                 if let hideAllOtherStatusMessage {
                     CompactDivider()
-                    Text(hideAllOtherStatusMessage)
-                        .font(SaneTypography.body)
-                        .foregroundStyle(SaneTypography.text)
-                        .multilineTextAlignment(.leading)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
+                    SaneInlineHelp(hideAllOtherStatusMessage)
                         .accessibilityIdentifier("sanebar-hide-new-unlisted-status")
                 }
             } else {
@@ -204,13 +199,7 @@ struct GeneralSettingsHidingSection: View {
                 }
                 .fixedSize(horizontal: true, vertical: false)
             }
-            Text(gestureModeSummary)
-                .font(SaneTypography.body)
-                .foregroundStyle(SaneTypography.text)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 4)
+            SaneInlineHelp(gestureModeSummary)
         } else {
             proGatedRow(feature: .gestureCustomization, label: "Customize gesture behavior")
         }

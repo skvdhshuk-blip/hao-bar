@@ -44,8 +44,7 @@ struct RulesSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        SaneSettingsPage {
                 // Triggers (Automation) — Pro
                 CompactSection("Automatic Triggers") {
                     if licenseService.isPro {
@@ -54,23 +53,22 @@ struct RulesSettingsView: View {
                             .help("Reveal battery and power icons when battery is low")
 
                         if menuBarManager.settings.showOnLowBattery {
-                            HStack(spacing: 8) {
-                                Text("Threshold:")
-                                    .font(SaneTypography.body)
-                                    .foregroundStyle(.white.opacity(0.92))
-                                Slider(
-                                    value: Binding(
-                                        get: { Double(menuBarManager.settings.batteryThreshold) },
-                                        set: { menuBarManager.settings.batteryThreshold = Int($0) }
-                                    ),
-                                    in: 5 ... 50,
-                                    step: 5
-                                )
-                                Text("\(menuBarManager.settings.batteryThreshold)%")
-                                    .font(SaneTypography.body)
-                                    .frame(width: 36, alignment: .trailing)
+                            CompactRow("Threshold") {
+                                HStack(spacing: 8) {
+                                    Slider(
+                                        value: Binding(
+                                            get: { Double(menuBarManager.settings.batteryThreshold) },
+                                            set: { menuBarManager.settings.batteryThreshold = Int($0) }
+                                        ),
+                                        in: 5 ... 50,
+                                        step: 5
+                                    )
+                                    .frame(width: 100)
+                                    Text("\(menuBarManager.settings.batteryThreshold)%")
+                                        .font(SaneTypography.body)
+                                        .frame(width: 36, alignment: .trailing)
+                                }
                             }
-                            .padding(.leading, 4)
 
                             triggerActionControls(
                                 action: $menuBarManager.settings.batteryTriggerAction,
@@ -92,19 +90,11 @@ struct RulesSettingsView: View {
                             .help("Reveal icons when certain apps are launched")
 
                         if menuBarManager.settings.showOnAppLaunch {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("If these apps open:")
-                                    .font(SaneTypography.body)
-                                    .foregroundStyle(.white.opacity(0.92))
-                                    .padding(.leading, 4)
-
-                                AppPickerView(
-                                    selectedBundleIDs: $menuBarManager.settings.triggerApps,
-                                    title: "Select Apps"
-                                )
-                                .padding(.horizontal, 4)
-                            }
-                            .padding(.vertical, 8)
+                            CompactDivider()
+                            AppPickerView(
+                                selectedBundleIDs: $menuBarManager.settings.triggerApps,
+                                title: "Select Apps"
+                            )
 
                             triggerActionControls(
                                 action: $menuBarManager.settings.appLaunchTriggerAction,
@@ -126,57 +116,43 @@ struct RulesSettingsView: View {
                             .help("Reveal icons when local time enters selected day/time window")
 
                         if menuBarManager.settings.showOnSchedule {
-                            VStack(alignment: .leading, spacing: 10) {
-                                CompactRow("Days") {
-                                    HStack(spacing: 6) {
-                                        ForEach(scheduleWeekdayOptions, id: \.day) { option in
-                                            let isSelected = menuBarManager.settings.scheduleWeekdays.contains(option.day)
-                                            Button(option.label) {
-                                                toggleScheduleDay(option.day)
-                                            }
-                                            .buttonStyle(.plain)
-                                            .font(SaneTypography.label)
-                                            .foregroundStyle(isSelected ? .white : .white.opacity(0.92))
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 4)
-                                            .background(
-                                                Capsule()
-                                                    .fill(isSelected ? Color.saneAccent : Color.primary.opacity(0.12))
-                                            )
+                            CompactRow("Days") {
+                                HStack(spacing: 6) {
+                                    ForEach(scheduleWeekdayOptions, id: \.day) { option in
+                                        ChromeSegmentedChoiceButton(
+                                            title: option.label,
+                                            isSelected: menuBarManager.settings.scheduleWeekdays.contains(option.day)
+                                        ) {
+                                            toggleScheduleDay(option.day)
                                         }
                                     }
                                 }
-
-                                CompactRow("From") {
-                                    HStack(spacing: 8) {
-                                        Text(scheduleStartLabel)
-                                            .frame(width: 52, alignment: .trailing)
-                                        Stepper("", value: $menuBarManager.settings.scheduleStartHour, in: 0 ... 23, step: 1)
-                                            .labelsHidden()
-                                    }
-                                }
-
-                                CompactRow("To") {
-                                    HStack(spacing: 8) {
-                                        Text(scheduleEndLabel)
-                                            .frame(width: 52, alignment: .trailing)
-                                        Stepper("", value: $menuBarManager.settings.scheduleEndHour, in: 0 ... 23, step: 1)
-                                            .labelsHidden()
-                                    }
-                                }
-
-                                Text("Set the same start/end time for all-day schedule.")
-                                    .font(.system(size: 12))
-                                    .foregroundStyle(.white.opacity(0.9))
-                                    .padding(.leading, 4)
-
-                                triggerActionControls(
-                                    action: $menuBarManager.settings.scheduleTriggerAction,
-                                    profileId: $menuBarManager.settings.scheduleTriggerProfileId
-                                )
+                                .fixedSize(horizontal: true, vertical: false)
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
+
+                            CompactRow("From") {
+                                HStack(spacing: 8) {
+                                    Text(scheduleStartLabel)
+                                        .frame(width: 52, alignment: .trailing)
+                                    Stepper("", value: $menuBarManager.settings.scheduleStartHour, in: 0 ... 23, step: 1)
+                                        .labelsHidden()
+                                }
+                            }
+
+                            CompactRow("To") {
+                                HStack(spacing: 8) {
+                                    Text(scheduleEndLabel)
+                                        .frame(width: 52, alignment: .trailing)
+                                    Stepper("", value: $menuBarManager.settings.scheduleEndHour, in: 0 ... 23, step: 1)
+                                        .labelsHidden()
+                                }
+                            }
+                            SaneInlineHelp("Set the same start/end time for all-day schedule.")
+
+                            triggerActionControls(
+                                action: $menuBarManager.settings.scheduleTriggerAction,
+                                profileId: $menuBarManager.settings.scheduleTriggerProfileId
+                            )
                         }
                     } else {
                         proTriggerRow(
@@ -193,45 +169,35 @@ struct RulesSettingsView: View {
                             .help("Reveal icons when connecting to specific Wi-Fi networks")
 
                         if menuBarManager.settings.showOnNetworkChange {
-                            VStack(alignment: .leading, spacing: 8) {
-                                if let ssid = menuBarManager.networkTriggerService.currentSSID {
-                                    Button {
+                            if let ssid = menuBarManager.networkTriggerService.currentSSID {
+                                CompactRow("Current network") {
+                                    Button("Add \(ssid)") {
                                         if !menuBarManager.settings.triggerNetworks.contains(ssid) {
                                             menuBarManager.settings.triggerNetworks.append(ssid)
-                                        }
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "wifi")
-                                            Text("Add current: \(ssid)")
                                         }
                                     }
                                     .buttonStyle(ChromeActionButtonStyle())
                                 }
-
-                                ForEach(menuBarManager.settings.triggerNetworks, id: \.self) { network in
-                                    HStack {
-                                        Text(network)
-                                        Spacer()
-                                        Button {
-                                            menuBarManager.settings.triggerNetworks.removeAll { $0 == network }
-                                        } label: {
-                                            Image(systemName: "xmark")
-                                                .foregroundStyle(.white.opacity(0.9))
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                    .padding(8)
-                                    .background(Color.primary.opacity(0.1))
-                                    .cornerRadius(6)
-                                }
-
-                                triggerActionControls(
-                                    action: $menuBarManager.settings.networkTriggerAction,
-                                    profileId: $menuBarManager.settings.networkTriggerProfileId
-                                )
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
+
+                            ForEach(menuBarManager.settings.triggerNetworks, id: \.self) { network in
+                                CompactDivider()
+                                CompactRow(network) {
+                                    Button {
+                                        menuBarManager.settings.triggerNetworks.removeAll { $0 == network }
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(.white.opacity(0.9))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help("Remove this network")
+                                }
+                            }
+
+                            triggerActionControls(
+                                action: $menuBarManager.settings.networkTriggerAction,
+                                profileId: $menuBarManager.settings.networkTriggerProfileId
+                            )
                         }
                     } else {
                         proTriggerRow(
@@ -248,65 +214,48 @@ struct RulesSettingsView: View {
                             .help("Reveal icons when entering or exiting specific Focus Modes")
 
                         if menuBarManager.settings.showOnFocusModeChange {
-                            VStack(alignment: .leading, spacing: 8) {
-                                if let currentMode = menuBarManager.focusModeService.currentFocusMode {
-                                    Button {
+                            if let currentMode = menuBarManager.focusModeService.currentFocusMode {
+                                CompactRow("Current Focus") {
+                                    Button("Add \(currentMode)") {
                                         if !menuBarManager.settings.triggerFocusModes.contains(currentMode) {
                                             menuBarManager.settings.triggerFocusModes.append(currentMode)
                                         }
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "moon.fill")
-                                            Text("Add current: \(currentMode)")
-                                        }
                                     }
                                     .buttonStyle(ChromeActionButtonStyle())
                                 }
-
-                                if !menuBarManager.settings.triggerFocusModes.contains("(Focus Off)") {
-                                    Button {
-                                        menuBarManager.settings.triggerFocusModes.append("(Focus Off)")
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "moon")
-                                            Text("Add: (Focus Off)")
-                                        }
-                                    }
-                                    .buttonStyle(ChromeActionButtonStyle())
-                                }
-
-                                ForEach(menuBarManager.settings.triggerFocusModes, id: \.self) { mode in
-                                    HStack {
-                                        Image(systemName: mode == "(Focus Off)" ? "moon" : "moon.fill")
-                                            .foregroundStyle(.white.opacity(0.9))
-                                        Text(mode)
-                                        Spacer()
-                                        Button {
-                                            menuBarManager.settings.triggerFocusModes.removeAll { $0 == mode }
-                                        } label: {
-                                            Image(systemName: "xmark")
-                                                .foregroundStyle(.white.opacity(0.9))
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                    .padding(8)
-                                    .background(Color.primary.opacity(0.1))
-                                    .cornerRadius(6)
-                                }
-
-                                if menuBarManager.settings.triggerFocusModes.isEmpty {
-                                    Text("No Focus Modes configured. Enable a Focus Mode in System Settings to add it here.")
-                                        .font(SaneTypography.body)
-                                        .foregroundStyle(.white.opacity(0.92))
-                                }
-
-                                triggerActionControls(
-                                    action: $menuBarManager.settings.focusTriggerAction,
-                                    profileId: $menuBarManager.settings.focusTriggerProfileId
-                                )
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
+
+                            if !menuBarManager.settings.triggerFocusModes.contains("(Focus Off)") {
+                                CompactRow("When Focus is off") {
+                                    Button("Add") {
+                                        menuBarManager.settings.triggerFocusModes.append("(Focus Off)")
+                                    }
+                                    .buttonStyle(ChromeActionButtonStyle())
+                                }
+                            }
+
+                            ForEach(menuBarManager.settings.triggerFocusModes, id: \.self) { mode in
+                                CompactDivider()
+                                CompactRow(mode) {
+                                    Button {
+                                        menuBarManager.settings.triggerFocusModes.removeAll { $0 == mode }
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(.white.opacity(0.9))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help("Remove this Focus Mode")
+                                }
+                            }
+
+                            if menuBarManager.settings.triggerFocusModes.isEmpty {
+                                SaneInlineHelp("No Focus Modes configured. Enable a Focus Mode in System Settings to add it here.")
+                            }
+
+                            triggerActionControls(
+                                action: $menuBarManager.settings.focusTriggerAction,
+                                profileId: $menuBarManager.settings.focusTriggerProfileId
+                            )
                         }
                     } else {
                         proTriggerRow(
@@ -332,8 +281,6 @@ struct RulesSettingsView: View {
                         )
                     }
                 }
-            }
-            .padding(20)
         }
         .sheet(item: $proUpsellFeature) { feature in
             ProUpsellView(feature: feature)
@@ -357,14 +304,14 @@ struct RulesSettingsView: View {
     }
 
     private func proTriggerRow(label: String, help: String) -> some View {
-        Button {
-            proUpsellFeature = .advancedTriggers
-        } label: {
-            CompactRow(label) {
+        CompactRow(label) {
+            Button {
+                proUpsellFeature = .advancedTriggers
+            } label: {
                 ChromeBadge(title: "Pro", systemImage: "lock.fill")
             }
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
         .help(help)
     }
 
@@ -387,7 +334,7 @@ struct RulesSettingsView: View {
                         }
                     }
                 }
-                .frame(width: 220)
+                .fixedSize(horizontal: true, vertical: false)
             }
 
             if action.wrappedValue == .applyProfile {
@@ -408,7 +355,6 @@ struct RulesSettingsView: View {
                 }
             }
         }
-        .padding(.vertical, 6)
     }
 
     private func selectedProfileName(_ id: UUID?) -> String {
@@ -441,31 +387,16 @@ private struct ScriptTriggerSettingsView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Script path with status indicator
-            HStack {
+        CompactRow("Script") {
+            HStack(spacing: 8) {
                 TextField("Script path", text: $menuBarManager.settings.scriptTriggerPath)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(.body, design: .monospaced))
+                    .frame(minWidth: 0, maxWidth: 180)
 
-                switch scriptPathStatus {
-                case .empty:
-                    EmptyView()
-                case .ready:
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
-                        .help("Script found and executable")
-                case .notFound:
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.red)
-                        .help("File not found")
-                case .notExecutable:
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
-                        .help("File exists but is not executable (run: chmod +x)")
-                }
+                scriptPathStatusIcon
 
-                Button("Browse...") {
+                Button("Browse…") {
                     let panel = NSOpenPanel()
                     panel.allowedContentTypes = [.unixExecutable, .shellScript, .script, .plainText]
                     panel.canChooseDirectories = false
@@ -476,38 +407,57 @@ private struct ScriptTriggerSettingsView: View {
                         menuBarManager.settings.scriptTriggerPath = url.path
                     }
                 }
+                .buttonStyle(ChromeActionButtonStyle())
             }
+        }
 
-            // Interval stepper
-            CompactRow("Check every") {
-                HStack {
-                    Text(intervalLabel)
-                        .frame(width: 40, alignment: .trailing)
-                    Stepper("", value: $menuBarManager.settings.scriptTriggerInterval, in: 1 ... 60, step: 1)
-                        .labelsHidden()
-                }
+        CompactRow("Check every") {
+            HStack(spacing: 8) {
+                Text(intervalLabel)
+                    .frame(width: 40, alignment: .trailing)
+                Stepper("", value: $menuBarManager.settings.scriptTriggerInterval, in: 1 ... 60, step: 1)
+                    .labelsHidden()
             }
+        }
 
-            // Test button
-            HStack {
+        CompactRow("Test") {
+            HStack(spacing: 8) {
                 Button("Run Now") {
                     runTestScript()
                 }
+                .buttonStyle(ChromeActionButtonStyle())
                 .disabled(scriptPathStatus != .ready)
 
                 if let testResult {
                     Text(testResult)
                         .font(SaneTypography.body)
                         .foregroundStyle(testResult.hasPrefix("Exit 0") ? .green : .orange)
+                        .lineLimit(1)
                 }
             }
-
-            Text("Exit code 0 = show hidden icons, non-zero = hide.")
-                .font(SaneTypography.body)
-                .foregroundStyle(.white.opacity(0.92))
+            .fixedSize(horizontal: true, vertical: false)
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 4)
+        SaneInlineHelp("Exit code 0 = show hidden icons, non-zero = hide.")
+    }
+
+    @ViewBuilder
+    private var scriptPathStatusIcon: some View {
+        switch scriptPathStatus {
+        case .empty:
+            EmptyView()
+        case .ready:
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+                .help("Script found and executable")
+        case .notFound:
+            Image(systemName: "xmark.circle.fill")
+                .foregroundStyle(.red)
+                .help("File not found")
+        case .notExecutable:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+                .help("File exists but is not executable (run: chmod +x)")
+        }
     }
 
     private func runTestScript() {

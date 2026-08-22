@@ -97,8 +97,17 @@ final class RuntimeGuardAppleScriptActivationXCTests: RuntimeGuardTestCase {
                 wizardSource.contains("FirstRunHealthWizardView") &&
                 wizardSource.contains("showIfNeeded()") &&
                 wizardSource.contains("createLayoutRescueRestorePoint(reason: \"health-wizard\")") &&
+                wizardSource.contains("SaneSettingsWindowDefaults.idealWidth") &&
+                wizardSource.contains("saneApplySettingsChrome(preferIdealSize: true)") &&
+                wizardSource.contains("if AccessibilityService.shared.isGranted") &&
+                wizardSource.contains("ActionButton(\"Done\"") &&
+                wizardSource.contains("ActionButton(\"Arrange\"") &&
+                wizardSource.contains("SaneSettingsPage") &&
+                wizardSource.contains("SaneInlineHelp") &&
+                !wizardSource.contains("Button(\"Open Accessibility\")") &&
+                !wizardSource.contains("Button(\"Save Restore Point\")") &&
                 !wizardSource.contains(".onAppear {\n            if menuBarManager.settings.layoutRescueRestorePoint == nil"),
-            "First-run Health Wizard should expose rescue creation without blindly saving an unproven restore point on appearance"
+            "First-run Health Wizard should use SaneUI page chrome and in-row actions, skip auto-open when Accessibility is already granted, and wrap helper copy instead of clipping it"
         )
         XCTAssertTrue(
             onboardingSource.contains("HealthWizardController.shared.showIfNeeded()") &&

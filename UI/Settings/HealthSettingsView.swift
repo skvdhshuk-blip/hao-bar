@@ -40,12 +40,12 @@ struct HealthSettingsView: View {
 
     private var structureLabel: String {
         if runtimeSnapshot.likelySystemSuppressedStatusItems {
-            return "Hidden by macOS"
+            return "Hidden"
         }
         return switch runtimeSnapshot.structuralState {
         case .ready: "Ready"
-        case .missingItems: "Missing Items"
-        case .invisibleItems: "Hidden by macOS"
+        case .missingItems: "Missing"
+        case .invisibleItems: "Hidden"
         case .unattachedWindows: "Detached"
         }
     }
@@ -122,26 +122,20 @@ struct HealthSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        SaneSettingsPage {
                 if runtimeSnapshot.likelySystemSuppressedStatusItems {
                     CompactSection("Icon Missing From the Menu Bar?", icon: "exclamationmark.triangle.fill", iconColor: .orange) {
-                        SaneInlineHelp(
-                            "macOS may be hiding SaneBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move SaneBar's icon to the immediate left of Control Center."
-                        )
-                        .padding(.horizontal, 12)
-                        .padding(.top, 4)
-                        HStack {
+                        CompactRow("Menu Bar settings") {
                             Button("Open Menu Bar Settings") {
                                 openMenuBarSettings()
                             }
                             .buttonStyle(ChromeActionButtonStyle(prominent: true))
                             .saneHelp("Opens macOS System Settings so you can manage which icons are allowed in the menu bar.")
                             .accessibilityLabel("Open macOS Menu Bar settings")
-                            Spacer()
                         }
-                        .padding(.horizontal, 12)
-                        .padding(.bottom, 8)
+                        SaneInlineHelp(
+                            "macOS may be hiding SaneBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move SaneBar's icon to the immediate left of Control Center."
+                        )
                     }
                 }
 
@@ -181,6 +175,7 @@ struct HealthSettingsView: View {
                                 .accessibilityLabel("Fix menu bar geometry")
                             }
                         }
+                        .fixedSize(horizontal: true, vertical: false)
                     }
                     CompactDivider()
                     CompactRow("SaneBar Items") {
@@ -198,26 +193,30 @@ struct HealthSettingsView: View {
                                 .accessibilityLabel("Fix SaneBar items")
                             }
                         }
+                        .fixedSize(horizontal: true, vertical: false)
                     }
                     CompactDivider()
                     CompactRow("Layout Mode") {
-                        HStack(spacing: 8) {
-                            Button("Stability") {
+                        HStack(spacing: 6) {
+                            ChromeSegmentedChoiceButton(
+                                title: "Stability",
+                                isSelected: menuBarManager.settings.layoutMode == .stability
+                            ) {
                                 setLayoutMode(.stability)
                             }
-                            .buttonStyle(ChromeActionButtonStyle(prominent: menuBarManager.settings.layoutMode == .stability))
                             .saneHelp("Hands-off: SaneBar only fixes its icon layout at startup or when you click Fix.")
 
-                            Button("Live") {
+                            ChromeSegmentedChoiceButton(
+                                title: "Live",
+                                isSelected: menuBarManager.settings.layoutMode == .live
+                            ) {
                                 setLayoutMode(.live)
                             }
-                            .buttonStyle(ChromeActionButtonStyle(prominent: menuBarManager.settings.layoutMode == .live))
                             .saneHelp("SaneBar also re-checks the layout after sleep/wake, display changes, and session changes.")
                         }
+                        .fixedSize(horizontal: true, vertical: false)
                     }
                     SaneInlineHelp(layoutModeHelp)
-                        .padding(.horizontal, 12)
-                        .padding(.bottom, 4)
                 }
 
                 CompactSection("Layout Rescue", icon: "lifepreserver", iconColor: .orange) {
@@ -248,12 +247,7 @@ struct HealthSettingsView: View {
                     }
                     if !layoutRescueMessage.isEmpty {
                         CompactDivider()
-                        Text(layoutRescueMessage)
-                            .font(SaneTypography.body)
-                            .foregroundStyle(.white.opacity(0.94))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 12)
-                            .padding(.bottom, 4)
+                        SaneInlineHelp(layoutRescueMessage)
                     }
                 }
 
@@ -286,8 +280,6 @@ struct HealthSettingsView: View {
                 CompactSection("Repair", icon: "wrench.and.screwdriver", iconColor: .orange) {
                     if menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair() {
                         SaneInlineHelp("A layout restore after wake was postponed because icon positions could not be confirmed. Click Run to repair it now.")
-                            .padding(.horizontal, 12)
-                            .padding(.top, 4)
                         CompactDivider()
                     }
                     CompactRow("Arrange Now") {
@@ -323,8 +315,6 @@ struct HealthSettingsView: View {
                         .saneHelp("Copies a support report with current permissions, layout state, item counts, and recent diagnostics to the clipboard.")
                     }
                 }
-            }
-            .padding(20)
         }
         .task {
             await refreshCounts()

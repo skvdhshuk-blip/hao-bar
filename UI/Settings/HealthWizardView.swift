@@ -9,7 +9,12 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
     private var window: NSWindow?
 
     func showIfNeeded() {
-        guard !MenuBarManager.shared.settings.hasCompletedHealthWizard else { return }
+        let manager = MenuBarManager.shared
+        guard !manager.settings.hasCompletedHealthWizard else { return }
+        if AccessibilityService.shared.isGranted {
+            manager.profileWorkflow.completeHealthWizard()
+            return
+        }
         show()
     }
 
@@ -25,9 +30,15 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
             self?.dismiss()
         }
         let hostingController = NSHostingController(rootView: wizardView)
+        hostingController.saneIgnoreIntrinsicWindowSize()
 
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 560, height: 430),
+            contentRect: NSRect(
+                x: 0,
+                y: 0,
+                width: SaneSettingsWindowDefaults.idealWidth,
+                height: SaneSettingsWindowDefaults.idealHeight
+            ),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
@@ -37,8 +48,8 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
-        window.contentMinSize = NSSize(width: 520, height: 380)
         window.contentViewController = hostingController
+        window.saneApplySettingsChrome(preferIdealSize: true)
         window.center()
         window.isReleasedWhenClosed = false
         window.delegate = self
@@ -68,102 +79,101 @@ private struct FirstRunHealthWizardView: View {
     let onComplete: () -> Void
 
     var body: some View {
-        ZStack {
-            Color(red: 0.04, green: 0.07, blue: 0.10).ignoresSafeArea()
-
-            VStack(alignment: .leading, spacing: 18) {
-                header
-                statusSection
-                actionBar
+        SaneSettingsPage {
+            CompactSection("SaneBar Health", icon: "stethoscope", iconColor: .green) {
+                SaneInlineHelp("Finish setup with a permission check and a saved layout restore point.")
+                CompactDivider()
+                accessibilityRow
+                CompactDivider()
+                restorePointRow
+                CompactDivider()
+                repairRow
+                if !rescueMessage.isEmpty {
+                    CompactDivider()
+                    SaneInlineHelp(rescueMessage)
+                }
+                CompactDivider()
+                CompactRow("Close this check") {
+                    ActionButton("Done", style: .primary, action: onComplete)
+                        .saneHelp("Closes this check. Open Settings > Health later if you still need a restore point.")
+                }
             }
-            .padding(24)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
+        .background(
+            SaneGradientBackground(
+                style: .panel,
+                motion: .animated,
+                useSystemVibrancy: true
+            )
+        )
+        .groupBoxStyle(GlassGroupBoxStyle())
         .onAppear {
             rescuePointSaved = menuBarManager.settings.layoutRescueRestorePoint != nil
         }
     }
 
-    private var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("SaneBar Health")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundStyle(.white)
-            Text("Finish setup with a permission check and a saved layout restore point.")
-                .font(.system(size: 14))
-                .foregroundStyle(.white.opacity(0.94))
-        }
-    }
-
-    private var statusSection: some View {
-        CompactSection("First Run Check", icon: "stethoscope", iconColor: .green) {
-            CompactRow("Accessibility") {
+    private var accessibilityRow: some View {
+        CompactRow("Accessibility") {
+            HStack(spacing: 8) {
                 StatusBadge(
                     accessibilityService.isGranted ? "OK" : "Needs Action",
                     color: accessibilityService.isGranted ? .green : .orange,
                     icon: accessibilityService.isGranted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
                 )
                 .saneHelp(accessibilityHelp)
+
+                if !accessibilityService.isGranted {
+                    ActionButton("Open", icon: "gearshape", style: .primary) {
+                        openAccessibilitySettings()
+                    }
+                    .controlSize(.small)
+                    .saneHelp("Opens macOS Privacy & Security > Accessibility.")
+                }
             }
-            CompactDivider()
-            CompactRow("Layout Restore Point") {
+            .fixedSize(horizontal: true, vertical: false)
+        }
+    }
+
+    private var restorePointRow: some View {
+        CompactRow("Layout Restore Point") {
+            HStack(spacing: 8) {
                 StatusBadge(
                     rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? "Saved" : "Not Saved",
                     color: rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? .green : .orange,
                     icon: "lifepreserver"
                 )
                 .saneHelp("The first restore point lets SaneBar return to the current known-good layout later.")
+
+                ActionButton("Save", style: .secondary) {
+                    saveRestorePoint()
+                }
+                .controlSize(.small)
+                .saneHelp("Saves the current menu bar layout as SaneBar's first rescue point.")
             }
-            CompactDivider()
-            CompactRow("Repair Check") {
+            .fixedSize(horizontal: true, vertical: false)
+        }
+    }
+
+    private var repairRow: some View {
+        CompactRow("Repair Check") {
+            HStack(spacing: 8) {
                 StatusBadge(
                     repairRan ? "Run" : "Ready",
                     color: repairRan ? .green : .cyan,
                     icon: "wrench.and.screwdriver"
                 )
                 .saneHelp("Arrange Now uses the same layout rescue path available later in Health.")
-            }
-            if !rescueMessage.isEmpty {
-                CompactDivider()
-                Text(rescueMessage)
-                    .font(SaneTypography.body)
-                    .foregroundStyle(.white.opacity(0.94))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.bottom, 4)
-            }
-        }
-    }
 
-    private var actionBar: some View {
-        HStack(spacing: 10) {
-            Button("Open Accessibility") {
-                openAccessibilitySettings()
-            }
-            .buttonStyle(ChromeActionButtonStyle())
-            .saneHelp("Opens macOS Privacy & Security > Accessibility.")
-
-            Button("Save Restore Point") {
-                saveRestorePoint()
-            }
-            .buttonStyle(ChromeActionButtonStyle(prominent: rescuePointSaved))
-            .saneHelp("Saves the current menu bar layout as SaneBar's first rescue point.")
-
-            Button("Arrange Now") {
-                Task { @MainActor in
-                    _ = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: "health-wizard")
-                    repairRan = true
+                ActionButton("Arrange", style: .secondary) {
+                    Task { @MainActor in
+                        _ = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: "health-wizard")
+                        repairRan = true
+                    }
                 }
+                .controlSize(.small)
+                .saneHelp("Runs an immediate layout repair check.")
             }
-            .buttonStyle(ChromeActionButtonStyle())
-            .saneHelp("Runs an immediate layout repair check.")
-
-            Spacer(minLength: 0)
-
-            Button("Done") {
-                onComplete()
-            }
-            .buttonStyle(ChromeActionButtonStyle(prominent: true))
+            .fixedSize(horizontal: true, vertical: false)
         }
     }
 

@@ -65,19 +65,13 @@ struct SettingsView: View {
                 HealthSettingsView()
                     .navigationTitle("Health")
             case .license:
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        LicenseSettingsView<SaneBarLicenseSettingsAdapter>(
-                            licenseService: SaneBarLicenseSettingsAdapter.shared,
-                            style: .panel
-                        )
-                            .frame(maxWidth: 420, alignment: .leading)
-                        Spacer(minLength: 0)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(20)
+                SaneSettingsPage {
+                    LicenseSettingsView<SaneBarLicenseSettingsAdapter>(
+                        licenseService: SaneBarLicenseSettingsAdapter.shared,
+                        style: .panel,
+                        donationURL: SaneDonation.githubSponsorsURL
+                    )
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .navigationTitle("License")
             case .about:
                 AboutSettingsView()

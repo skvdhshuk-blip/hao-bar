@@ -103,11 +103,18 @@ final class LicenseService: ObservableObject {
         self.keychain = keychain
         self.userDefaults = userDefaults
         self.freeBuildUnlock = freeBuildUnlock
-        let now = Date()
-        proTrialStartedAt = Self.storedTrialDate(userDefaults: userDefaults, keychain: keychain, key: Keys.proTrialStartedAt, now: now, rejectsFutureDate: true)
-        proTrialLastSeenAt = Self.storedTrialDate(userDefaults: userDefaults, keychain: keychain, key: Keys.proTrialLastSeenAt, now: now, rejectsFutureDate: false)
-        hasPaidUnlock = Self.storedPaidLicensePresent(keychain: keychain)
-        hasLegacyPaidUnlock = hasPaidUnlock
+        if freeBuildUnlock {
+            proTrialStartedAt = nil
+            proTrialLastSeenAt = nil
+            hasPaidUnlock = true
+            hasLegacyPaidUnlock = false
+        } else {
+            let now = Date()
+            proTrialStartedAt = Self.storedTrialDate(userDefaults: userDefaults, keychain: keychain, key: Keys.proTrialStartedAt, now: now, rejectsFutureDate: true)
+            proTrialLastSeenAt = Self.storedTrialDate(userDefaults: userDefaults, keychain: keychain, key: Keys.proTrialLastSeenAt, now: now, rejectsFutureDate: false)
+            hasPaidUnlock = Self.storedPaidLicensePresent(keychain: keychain)
+            hasLegacyPaidUnlock = hasPaidUnlock
+        }
     }
 
     nonisolated static func resolvedDistributionChannel(

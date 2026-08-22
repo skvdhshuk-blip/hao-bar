@@ -15,8 +15,8 @@ extension Notification.Name {
 }
 
 private enum SaneBarSettingsWindowMetrics {
-    static let idealWidth: CGFloat = 600
-    static let idealHeight: CGFloat = 560
+    static let idealWidth: CGFloat = SaneSettingsWindowDefaults.idealWidth
+    static let idealHeight: CGFloat = SaneSettingsWindowDefaults.idealHeight
 }
 
 // MARK: - AppDelegate
@@ -548,9 +548,11 @@ enum SettingsOpener {
         let window: NSWindow
         if let existingWindow = settingsWindow {
             if let tab {
-                existingWindow.contentViewController = NSHostingController(rootView: SettingsView(defaultTab: tab))
+                let hostingController = NSHostingController(rootView: SettingsView(defaultTab: tab))
+                hostingController.saneIgnoreIntrinsicWindowSize()
+                existingWindow.contentViewController = hostingController
             }
-            enforceUsableWindowSize(existingWindow, preferIdealSize: false)
+            existingWindow.saneApplySettingsChrome(preferIdealSize: false)
             window = existingWindow
         } else {
             window = makeWindow(defaultTab: tab ?? .control)
@@ -591,9 +593,15 @@ enum SettingsOpener {
     @MainActor private static func makeWindow(defaultTab: SettingsView.SettingsTab = .control) -> NSWindow {
         let settingsView = SettingsView(defaultTab: defaultTab)
         let hostingController = NSHostingController(rootView: settingsView)
+        hostingController.saneIgnoreIntrinsicWindowSize()
 
         let window = SaneSettingsWindow(
-            contentRect: .zero,
+            contentRect: NSRect(
+                x: 0,
+                y: 0,
+                width: SaneSettingsWindowDefaults.idealWidth,
+                height: SaneSettingsWindowDefaults.idealHeight
+            ),
             styleMask: [.titled, .closable, .resizable, .miniaturizable],
             backing: .buffered,
             defer: false
@@ -601,7 +609,7 @@ enum SettingsOpener {
         window.contentViewController = hostingController
         window.title = "SaneBar Settings"
         window.appearance = NSAppearance(named: .darkAqua)
-        enforceUsableWindowSize(window, preferIdealSize: true)
+        window.saneApplySettingsChrome(preferIdealSize: true)
         window.center()
         window.isReleasedWhenClosed = false
 
@@ -610,32 +618,6 @@ enum SettingsOpener {
         windowDelegate = delegate
         settingsWindow = window
         return window
-    }
-
-    @MainActor private static func enforceUsableWindowSize(_ window: NSWindow, preferIdealSize: Bool) {
-        let minimumSize = NSSize(
-            width: SaneSettingsWindowDefaults.minWidth,
-            height: SaneSettingsWindowDefaults.minHeight
-        )
-        window.contentMinSize = minimumSize
-
-        let contentSize = window.contentLayoutRect.size
-        guard preferIdealSize || contentSize.width < minimumSize.width || contentSize.height < minimumSize.height else {
-            return
-        }
-
-        let targetSize = if preferIdealSize {
-            NSSize(
-                width: max(SaneBarSettingsWindowMetrics.idealWidth, minimumSize.width),
-                height: max(SaneBarSettingsWindowMetrics.idealHeight, minimumSize.height)
-            )
-        } else {
-            NSSize(
-                width: max(contentSize.width, minimumSize.width),
-                height: max(contentSize.height, minimumSize.height)
-            )
-        }
-        window.setContentSize(targetSize)
     }
 
     private static func snapshotOutputURL(for path: String) -> URL? {

@@ -18,96 +18,76 @@ struct ImportPreviewSheet: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Import Settings")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(.white)
-                Text("\(plan.sourceKind.rawValue): \(plan.fileName)")
-                    .font(SaneTypography.body)
-                    .foregroundStyle(.white.opacity(0.94))
-                    .lineLimit(2)
-            }
+        VStack(alignment: .leading, spacing: 24) {
+            CompactSection("Import Settings") {
+                CompactRow("Source") {
+                    Text("\(plan.sourceKind.rawValue): \(plan.fileName)")
+                        .lineLimit(2)
+                        .multilineTextAlignment(.trailing)
+                }
 
-            VStack(alignment: .leading, spacing: 10) {
                 if hasRuleDetails {
-                    previewRow("Show", value: "\(plan.showItemIds.count) items")
-                    previewRow("Hide", value: "\(plan.hideItemIds.count) items")
-                    previewRow("Always Hide", value: "\(plan.alwaysHideItemIds.count) items")
-                    previewRow("All Others", value: plan.hideAllOtherItems ? "On" : "Off")
+                    CompactDivider()
+                    CompactRow("Show") { Text("\(plan.showItemIds.count) items") }
+                    CompactDivider()
+                    CompactRow("Hide") { Text("\(plan.hideItemIds.count) items") }
+                    CompactDivider()
+                    CompactRow("Always Hide") { Text("\(plan.alwaysHideItemIds.count) items") }
+                    CompactDivider()
+                    CompactRow("All Others") { Text(plan.hideAllOtherItems ? "On" : "Off") }
                 } else {
-                    previewRow("Profile rules", value: "No visibility rules")
+                    CompactDivider()
+                    CompactRow("Profile rules") { Text("No visibility rules") }
                 }
 
                 if plan.savedProfileCount > 0 {
-                    previewRow("Saved profiles", value: "\(plan.savedProfileCount)")
+                    CompactDivider()
+                    CompactRow("Saved profiles") { Text("\(plan.savedProfileCount)") }
                 }
                 if plan.includesLayoutSnapshot {
-                    previewRow("Layout snapshot", value: "Included")
+                    CompactDivider()
+                    CompactRow("Layout snapshot") { Text("Included") }
                 }
                 if plan.includesCustomIconSnapshot {
-                    previewRow("Custom icon", value: "Included")
+                    CompactDivider()
+                    CompactRow("Custom icon") { Text("Included") }
                 }
                 if !plan.behavioralSettings.isEmpty {
-                    previewRow("Settings", value: "\(plan.behavioralSettings.count) changes")
+                    CompactDivider()
+                    CompactRow("Settings") { Text("\(plan.behavioralSettings.count) changes") }
                 }
                 if !plan.missingItemIds.isEmpty {
-                    previewRow("Missing items", value: "\(plan.missingItemIds.count)")
+                    CompactDivider()
+                    CompactRow("Missing items") { Text("\(plan.missingItemIds.count)") }
                 }
                 if !plan.skippedItemIds.isEmpty {
-                    previewRow("Skipped items", value: "\(plan.skippedItemIds.count)")
+                    CompactDivider()
+                    CompactRow("Skipped items") { Text("\(plan.skippedItemIds.count)") }
+                }
+
+                if plan.hideAllOtherItems {
+                    SaneInlineHelp("This import will keep the shown items visible and hide newly detected menu bar items by default.")
+                }
+                if enablesScriptTrigger {
+                    SaneInlineHelp("This import enables script-based control. Only import files you trust.")
                 }
             }
-            .padding(12)
-            .background(
-                ChromeGlassRoundedBackground(
-                    cornerRadius: 8,
-                    tint: SaneBarChrome.panelTint,
-                    tintStrength: 0.12,
-                    shadowOpacity: 0.10,
-                    shadowRadius: 8,
-                    shadowY: 3
-                )
-            )
 
-            if plan.hideAllOtherItems {
-                Text("This import will keep the shown items visible and hide newly detected menu bar items by default.")
-                    .font(SaneTypography.body)
-                    .foregroundStyle(.white.opacity(0.94))
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            if enablesScriptTrigger {
-                Text("This import enables script-based control. Only import files you trust.")
-                    .font(SaneTypography.body)
-                    .foregroundStyle(.white)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            HStack {
-                Button("Cancel", action: onCancel)
-                    .buttonStyle(ChromeActionButtonStyle())
-                Spacer()
-                Button("Import", action: onImport)
-                    .buttonStyle(ChromeActionButtonStyle())
-                    .keyboardShortcut(.defaultAction)
+            CompactRow("Actions") {
+                HStack(spacing: 8) {
+                    Button("Cancel", action: onCancel)
+                        .buttonStyle(ChromeActionButtonStyle())
+                    Button("Import", action: onImport)
+                        .buttonStyle(ChromeActionButtonStyle(prominent: true))
+                        .keyboardShortcut(.defaultAction)
+                }
+                .fixedSize(horizontal: true, vertical: false)
             }
         }
-        .padding(20)
+        .padding(SaneSettingsChrome.gutter)
         .frame(width: 420)
         .background {
             SaneGradientBackground(style: .panel)
         }
-    }
-
-    private func previewRow(_ label: String, value: String) -> some View {
-        HStack {
-            Text(label)
-                .foregroundStyle(.white.opacity(0.94))
-            Spacer()
-            Text(value)
-                .foregroundStyle(.white)
-                .fontWeight(.semibold)
-        }
-        .font(SaneTypography.body)
     }
 }

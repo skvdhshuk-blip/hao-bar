@@ -77,8 +77,7 @@ struct AppearanceSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        SaneSettingsPage {
                 // 0. Icon Style
                 CompactSection("Menu Bar Icon") {
                     CompactRow("Icon") {
@@ -145,8 +144,6 @@ struct AppearanceSettingsView: View {
                             }
                         }
                         SaneInlineHelp("Adds small line/dot menu bar items. Command-drag them into place. They do not create extra hidden sections or menu-bar layers.")
-                            .padding(.horizontal, 12)
-                            .padding(.bottom, 4)
 
                         if menuBarManager.settings.spacerCount > 0 {
                             CompactDivider()
@@ -283,16 +280,7 @@ struct AppearanceSettingsView: View {
                             }
 
                             CompactDivider()
-                            HStack {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundStyle(.orange)
-                                Text("Log out to verify changes.")
-                                    .font(SaneTypography.body)
-                                    .foregroundStyle(.white.opacity(0.92))
-                                Spacer()
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 4)
+                            SaneInlineHelp("Log out to verify changes.")
                         }
                     } else {
                         proGatedRow(feature: .iconSpacing, label: "Reduce space between icons")
@@ -302,8 +290,6 @@ struct AppearanceSettingsView: View {
                         proGatedRow(feature: .iconSpacing, label: "Click Area")
                     }
                 }
-            }
-            .padding(20)
         }
         .sheet(item: $proUpsellFeature) { feature in
             ProUpsellView(feature: feature)

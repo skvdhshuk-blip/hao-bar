@@ -57,8 +57,8 @@ struct LicenseServiceTests {
         #expect(service.licenseEmail == nil)
     }
 
-    @Test("Free build preserves legacy paid unlock distinction")
-    func freeBuildPreservesLegacyPaidUnlockDistinction() throws {
+    @Test("Free build does not read the login keychain")
+    func freeBuildDoesNotReadLoginKeychain() throws {
         let keychain = MockKeychainService()
         try keychain.set("test-license-key-123", forKey: "pro_license_key")
 
@@ -67,7 +67,7 @@ struct LicenseServiceTests {
 
         #expect(service.isPro)
         #expect(service.hasPaidUnlock)
-        #expect(service.hasLegacyPaidUnlock)
+        #expect(!service.hasLegacyPaidUnlock)
     }
 
     @Test("Fresh install starts the 14-day Pro trial")

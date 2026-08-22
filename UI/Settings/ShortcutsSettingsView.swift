@@ -72,114 +72,72 @@ struct ShortcutsSettingsView: View {
     ]
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                // 1. Free shortcuts
+        SaneSettingsPage {
                 CompactSection("Global Hotkeys") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack {
-                            Text("Browse Icons")
-                            Spacer()
-                            KeyboardShortcuts.Recorder(for: .searchMenuBar)
-                                .help("Open the icon panel or second menu bar")
+                    CompactRow("Browse Icons") {
+                        KeyboardShortcuts.Recorder(for: .searchMenuBar)
+                            .fixedSize()
+                            .help("Open the icon panel or second menu bar")
+                    }
+                    CompactDivider()
+                    CompactRow("Show / Hide icons") {
+                        KeyboardShortcuts.Recorder(for: .toggleHiddenItems)
+                            .fixedSize()
+                            .help("Toggle hidden icons visible or hidden")
+                    }
+
+                    if licenseService.isPro {
+                        CompactDivider()
+                        CompactRow("Show icons") {
+                            KeyboardShortcuts.Recorder(for: .showHiddenItems)
+                                .fixedSize()
+                                .help("Reveal hidden menu bar icons")
                         }
                         CompactDivider()
-                        HStack {
-                            Text("Show / Hide icons")
-                            Spacer()
-                            KeyboardShortcuts.Recorder(for: .toggleHiddenItems)
-                                .help("Toggle hidden icons visible or hidden")
+                        CompactRow("Hide icons") {
+                            KeyboardShortcuts.Recorder(for: .hideItems)
+                                .fixedSize()
+                                .help("Hide menu bar icons again")
                         }
-
-                        // Additional shortcuts — Pro
-                        if licenseService.isPro {
-                            CompactDivider()
-                            HStack {
-                                Text("Show icons")
-                                Spacer()
-                                KeyboardShortcuts.Recorder(for: .showHiddenItems)
-                                    .help("Reveal hidden menu bar icons")
-                            }
-                            CompactDivider()
-                            HStack {
-                                Text("Hide icons")
-                                Spacer()
-                                KeyboardShortcuts.Recorder(for: .hideItems)
-                                    .help("Hide menu bar icons again")
-                            }
-                            CompactDivider()
-                            HStack {
-                                Text("Open Settings")
-                                Spacer()
-                                KeyboardShortcuts.Recorder(for: .openSettings)
-                                    .help("Open the SaneBar settings window")
-                            }
-                        } else {
-                            CompactDivider()
-                            proLockedRow(feature: .additionalShortcuts, label: "Show icons")
-                            CompactDivider()
-                            proLockedRow(feature: .additionalShortcuts, label: "Hide icons")
-                            CompactDivider()
-                            proLockedRow(feature: .additionalShortcuts, label: "Open Settings")
+                        CompactDivider()
+                        CompactRow("Open Settings") {
+                            KeyboardShortcuts.Recorder(for: .openSettings)
+                                .fixedSize()
+                                .help("Open the SaneBar settings window")
                         }
+                    } else {
+                        CompactDivider()
+                        proLockedRow(feature: .additionalShortcuts, label: "Show icons")
+                        CompactDivider()
+                        proLockedRow(feature: .additionalShortcuts, label: "Hide icons")
+                        CompactDivider()
+                        proLockedRow(feature: .additionalShortcuts, label: "Open Settings")
                     }
-                    .padding(4)
                 }
 
                 // 2. Automation — Pro
                 CompactSection("Automation") {
-                    if licenseService.isPro {
-                        VStack(alignment: .leading, spacing: 0) {
-                            ForEach(Array(automationCommands.enumerated()), id: \.element.id) { index, item in
-                                CompactRow(item.title) {
-                                    HStack {
-                                        Text(item.command)
-                                            .font(SaneTypography.body)
-                                            .textSelection(.enabled)
-                                            .lineLimit(1)
-                                            .truncationMode(.tail)
-                                            .help("Use this command in Alfred, scripts, or shell automation")
-
-                                        Spacer()
-
-                                        Button {
-                                            copyToClipboard(item)
-                                        } label: {
-                                            Label {
-                                                Text(copiedAutomationCommandID == item.id ? "Copied" : "Copy")
-                                                    .font(SaneTypography.label)
-                                            } icon: {
-                                                Image(systemName: copiedAutomationCommandID == item.id ? "checkmark" : "doc.on.doc")
-                                                    .font(SaneTypography.label)
-                                            }
-                                        }
-                                        .buttonStyle(
-                                            ChromeActionButtonStyle(
-                                                prominent: copiedAutomationCommandID == item.id,
-                                                compact: true
-                                            )
-                                        )
-                                        .help("Copy command to clipboard")
-                                    }
+                    ForEach(Array(automationCommands.enumerated()), id: \.element.id) { index, item in
+                        if licenseService.isPro {
+                            CompactRow(item.title) {
+                                ActionButton(
+                                    copiedAutomationCommandID == item.id ? "Copied" : "Copy",
+                                    icon: copiedAutomationCommandID == item.id ? "checkmark" : "doc.on.doc",
+                                    style: copiedAutomationCommandID == item.id ? .primary : .secondary
+                                ) {
+                                    copyToClipboard(item)
                                 }
-
-                                if index < automationCommands.count - 1 {
-                                    CompactDivider()
-                                }
+                                .help("Copy command to clipboard")
                             }
+                            SaneInlineHelp(item.command)
+                        } else {
+                            proGatedRow(feature: .appleScript, label: item.title)
+                            SaneInlineHelp(item.command)
                         }
-                        .padding(4)
-                    } else {
-                        VStack(alignment: .leading, spacing: 0) {
-                            ForEach(Array(automationCommands.enumerated()), id: \.element.id) { index, item in
-                                proAutomationCommandRow(item)
 
-                                if index < automationCommands.count - 1 {
-                                    CompactDivider()
-                                }
-                            }
+                        if index < automationCommands.count - 1 {
+                            CompactDivider()
                         }
-                        .padding(4)
                     }
                 }
 
@@ -200,8 +158,6 @@ struct ShortcutsSettingsView: View {
                         proLockedRow(feature: .appleScript, label: "Search action")
                     }
                 }
-            }
-            .padding(20)
         }
         .sheet(item: $proUpsellFeature) { feature in
             ProUpsellView(feature: feature)
@@ -222,32 +178,7 @@ struct ShortcutsSettingsView: View {
     }
 
     private func proLockedRow(feature: ProFeature, label: String) -> some View {
-        Button {
-            proUpsellFeature = feature
-        } label: {
-            CompactRow(label) {
-                ChromeBadge(title: "Pro", systemImage: "lock.fill")
-            }
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func proAutomationCommandRow(_ command: AutomationCommand) -> some View {
-        Button {
-            proUpsellFeature = .appleScript
-        } label: {
-            CompactRow(command.title) {
-                HStack(spacing: 8) {
-                    Text(command.command)
-                        .font(SaneTypography.body)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                    ChromeBadge(title: "Pro", systemImage: "lock.fill")
-                }
-            }
-        }
-        .buttonStyle(.plain)
-        .help("Unlock Pro to copy and use this automation command")
+        proGatedRow(feature: feature, label: label)
     }
 
     private func copyToClipboard(_ command: AutomationCommand) {

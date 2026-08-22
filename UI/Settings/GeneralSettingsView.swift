@@ -148,8 +148,7 @@ struct GeneralSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        SaneSettingsPage {
                 // 1. Browse Icons
                 GeneralSettingsBrowseSection(
                     menuBarManager: menuBarManager,
@@ -228,8 +227,6 @@ struct GeneralSettingsView: View {
                             .saneHelp(layoutModeDescription)
                     }
                     SaneInlineHelp(layoutModeDescription)
-                        .padding(.horizontal, 12)
-                        .padding(.bottom, 4)
                     CompactDivider()
                     CompactRow("Arrange Now") {
                         Button("Run") {
@@ -268,13 +265,13 @@ struct GeneralSettingsView: View {
                 CompactSection("Data") {
                     if licenseService.isPro {
                         CompactRow("Settings") {
-                            Button("Export Settings...") {
-                                exportSettings()
-                            }
-                            .buttonStyle(ChromeActionButtonStyle())
-
-                            Button("Import Settings...") {
-                                importSettings()
+                            HStack(spacing: 8) {
+                                Button("Export Settings...") {
+                                    exportSettings()
+                                }
+                                Button("Import Settings...") {
+                                    importSettings()
+                                }
                             }
                             .buttonStyle(ChromeActionButtonStyle())
                         }
@@ -307,8 +304,6 @@ struct GeneralSettingsView: View {
                         .help("Reset all settings to factory defaults")
                     }
                 }
-            }
-            .padding(20)
         }
         .onAppear {
             normalizeBrowseModeSettingsForCurrentPlan()

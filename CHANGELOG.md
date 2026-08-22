@@ -8,6 +8,12 @@ All notable changes to SaneBar are documented here.
 
 ---
 
+## [2.1.90] - 2026-08-22
+
+Settings uses the shared SaneUI page on every tab: one gutter, a 720-wide window that can resize without stretching off-screen, and the same label-left / control-right rows. About has More Apps (saneapps.com) and a working Donate button. Shortcuts no longer shifts the left margin. First-run Health no longer crams four buttons off the window, and the check does not auto-open when Accessibility is already granted. Free builds skip the login-keychain prompt at launch.
+
+---
+
 ## [2.1.89] - 2026-07-04
 
 Donation prompt and onboarding polish for the open-source SaneBar build.

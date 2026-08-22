@@ -18,10 +18,6 @@ struct GeneralSettingsBrowseSection: View {
         !licenseService.isPro && menuBarManager.settings.useSecondMenuBar
     }
 
-    private var browseOpenActionLabel: String {
-        menuBarManager.settings.useSecondMenuBar ? "Open Second Menu Bar" : "Open Icon Panel"
-    }
-
     private var secondMenuBarRowsSummary: String {
         var rows = ["Hidden"]
         if menuBarManager.settings.secondMenuBarShowVisible {
@@ -74,22 +70,8 @@ struct GeneralSettingsBrowseSection: View {
     @ViewBuilder
     private var proSecondMenuBarRows: some View {
         CompactDivider()
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 5) {
-                Text("Rows shown in Second Menu Bar")
-                    .foregroundStyle(.white.opacity(0.94))
-
-                Image(systemName: "questionmark.circle.fill")
-                    .font(SaneTypography.label)
-                    .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
-                    .help(secondMenuBarRowsSummary)
-            }
-
-            LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: 112), spacing: 6, alignment: .leading)],
-                alignment: .leading,
-                spacing: 6
-            ) {
+        CompactRow("Rows shown in Second Menu Bar") {
+            HStack(spacing: 6) {
                 ForEach(GeneralSettingsSecondMenuBarPreset.allCases) { preset in
                     segmentedChoiceButton(preset.title, isSelected: secondMenuBarPreset.wrappedValue == preset) {
                         secondMenuBarPreset.wrappedValue = preset
@@ -97,9 +79,9 @@ struct GeneralSettingsBrowseSection: View {
                     .help(secondMenuBarPresetHelp(preset))
                 }
             }
+            .fixedSize(horizontal: true, vertical: false)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+        .saneHelp(secondMenuBarRowsSummary)
 
         if secondMenuBarPreset.wrappedValue == .power {
             powerRows
@@ -131,32 +113,18 @@ struct GeneralSettingsBrowseSection: View {
     }
 
     private var leftClickRows: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                HStack(spacing: 5) {
-                    Text("Left-click SaneBar icon")
-                        .font(SaneTypography.label)
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(SaneTypography.label)
-                        .foregroundStyle(SaneBarChrome.accentHighlight.opacity(0.86))
-                        .help("Right-click the SaneBar icon to open the app menu.")
-                }
-                Spacer()
-            }
-            .foregroundStyle(SaneTypography.text)
-
+        CompactRow("Left-click SaneBar icon") {
             HStack(spacing: 6) {
                 ForEach(GeneralSettingsBrowseLeftClickMode.allCases) { mode in
-                    segmentedChoiceButton(leftClickModeTitle(mode), isSelected: leftClickMode.wrappedValue == mode) {
+                    segmentedChoiceButton(mode.title, isSelected: leftClickMode.wrappedValue == mode) {
                         leftClickMode.wrappedValue = mode
                     }
                     .help(leftClickModeHelp(mode))
                 }
             }
-            .frame(maxWidth: .infinity)
+            .fixedSize(horizontal: true, vertical: false)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+        .saneHelp("Right-click the SaneBar icon to open the app menu.")
     }
 
     private func segmentedChoiceButton(
@@ -175,15 +143,6 @@ struct GeneralSettingsBrowseSection: View {
                 ChromeBadge(title: "Pro", systemImage: "lock.fill")
             }
             .buttonStyle(.plain)
-        }
-    }
-
-    private func leftClickModeTitle(_ mode: GeneralSettingsBrowseLeftClickMode) -> String {
-        switch mode {
-        case .toggleHidden:
-            "Toggle Hidden"
-        case .openBrowseIcons:
-            browseOpenActionLabel
         }
     }
 

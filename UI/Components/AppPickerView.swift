@@ -1,4 +1,5 @@
 import AppKit
+import SaneUI
 import SwiftUI
 
 /// A picker that shows running apps instead of requiring bundle IDs
@@ -17,34 +18,38 @@ struct AppPickerView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            if selectedBundleIDs.isEmpty {
-                Text("None selected")
-                    .foregroundStyle(.white.opacity(0.92))
-            } else {
-                ForEach(selectedBundleIDs, id: \.self) { bundleID in
-                    HStack(spacing: 6) {
-                        Text(appName(for: bundleID))
-                        Spacer()
-                        Button {
-                            selectedBundleIDs.removeAll { $0 == bundleID }
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.white.opacity(0.9))
-                        }
-                        .buttonStyle(.plain)
-                    }
+        CompactRow("If these apps open") {
+            HStack(spacing: 8) {
+                if selectedBundleIDs.isEmpty {
+                    Text("None selected")
+                        .font(SaneTypography.body)
+                        .foregroundStyle(SaneTypography.text)
+                        .lineLimit(1)
                 }
+                Button("Add App…") {
+                    loadApps()
+                    showingPicker = true
+                }
+                .buttonStyle(SaneActionButtonStyle())
             }
-
-            Button("Add App…") {
-                loadApps()
-                showingPicker = true
-            }
-            .buttonStyle(.borderless)
+            .fixedSize(horizontal: true, vertical: false)
         }
         .sheet(isPresented: $showingPicker) {
             appPickerSheet
+        }
+
+        ForEach(selectedBundleIDs, id: \.self) { bundleID in
+            CompactDivider()
+            CompactRow(appName(for: bundleID)) {
+                Button {
+                    selectedBundleIDs.removeAll { $0 == bundleID }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.white.opacity(0.9))
+                }
+                .buttonStyle(.plain)
+                .help("Remove this app")
+            }
         }
     }
 
@@ -57,6 +62,7 @@ struct AppPickerView: View {
                 Button("Done") {
                     showingPicker = false
                 }
+                .buttonStyle(SaneActionButtonStyle())
                 .keyboardShortcut(.escape, modifiers: [])
             }
             .padding()

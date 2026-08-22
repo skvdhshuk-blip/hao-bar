@@ -218,8 +218,9 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains("runRepair(reason: \"health-items-fix\"") &&
                 healthSource.contains(".accessibilityLabel(\"Fix SaneBar items\")") &&
                 healthSource.contains("menuBarManager.profileWorkflow.setLayoutMode(mode, reason: \"health\")") &&
-                healthSource.contains("Button(\"Stability\")") &&
-                healthSource.contains("Button(\"Live\")") &&
+                healthSource.contains("title: \"Stability\"") &&
+                healthSource.contains("title: \"Live\"") &&
+                healthSource.contains("ChromeSegmentedChoiceButton") &&
                 healthSource.contains("func setLayoutMode(_ mode: SaneBarSettings.LayoutMode)"),
             "Health should explain status rows, provide one-click repair actions for warning states, and expose clickable Stability/Live layout mode choices"
         )
@@ -327,6 +328,8 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 appSource.contains("window.contentViewController = hostingController") &&
                 appSource.contains("SaneSettingsWindowDefaults.minWidth") &&
                 appSource.contains("SaneBarSettingsWindowMetrics.idealHeight") &&
+                appSource.contains("saneIgnoreIntrinsicWindowSize()") &&
+                appSource.contains("saneApplySettingsChrome(preferIdealSize: true)") &&
                 settingsSource.contains("SaneSettingsContainer(defaultTab: defaultTab, windowSizing: .embedded)") &&
                 settingsSource.contains("SaneSettingsResizeGrip()") &&
                 !settingsSource.contains("struct SettingsResizeGrip") &&
@@ -385,11 +388,10 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
 
         XCTAssertTrue(
             source.contains("if let existingWindow = settingsWindow") &&
-                source.contains("existingWindow.contentViewController = NSHostingController(rootView: SettingsView(defaultTab: tab))") &&
-                source.contains("enforceUsableWindowSize(existingWindow, preferIdealSize: false)") &&
-                source.contains("enforceUsableWindowSize(window, preferIdealSize: true)") &&
-                source.contains("width: max(contentSize.width, minimumSize.width)") &&
-                source.contains("height: max(contentSize.height, minimumSize.height)"),
+                source.contains("NSHostingController(rootView: SettingsView(defaultTab: tab))") &&
+                source.contains("saneIgnoreIntrinsicWindowSize()") &&
+                source.contains("saneApplySettingsChrome(preferIdealSize: false)") &&
+                source.contains("saneApplySettingsChrome(preferIdealSize: true)"),
             "SettingsOpener should switch an already-open settings window when Health/Repair deep links request a specific tab without collapsing below the shared settings window minimum"
         )
     }
