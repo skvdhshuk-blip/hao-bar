@@ -2,6 +2,26 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>SaneBar Changelog</title>
+        <item>
+            <title>2.1.90</title>
+            <link>https://sanebar.com/download</link>
+            <pubDate>Sat, 22 Aug 2026 19:16:44 -0400</pubDate>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description>
+                <![CDATA[
+                <h2>What's New</h2>
+                <ul>
+                <li>Settings uses the shared SaneUI page on every tab: one gutter, a 720-wide window that can resize without stretching off-screen, and the same label-left / control-right rows. About has More Apps (saneapps.com) and a working Donate button. Shortcuts no longer shifts the left margin. First-run Health no longer crams four buttons off the window, and the check does not auto-open when Accessibility is already granted. Free builds skip the login-keychain prompt at launch.</li>
+                </ul>
+                ]]>
+            </description>
+            <enclosure url="https://dist.sanebar.com/updates/SaneBar-2.1.90.zip"
+                       sparkle:version="2190"
+                       sparkle:shortVersionString="2.1.90"
+                       length="8376192"
+                       type="application/octet-stream"
+                       sparkle:edSignature="rV5dyB6m6499+JKnXP6hXRc+c7NAYs9RfusIBo2WAbrpYlIh0We29yu8v6bVjisFONzwBjXmz//h7D1P63fZDw=="/>
+        </item>
 <item>
             <title>2.1.89</title>
             <link>https://sanebar.com/download</link>
