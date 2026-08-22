@@ -164,7 +164,7 @@ class ProjectQA
   ].freeze
   STABILITY_SUITE_RETRIES = 1
   EXPECTED_TEST_MODE_APPS = %w[
-    SaneBar SaneClip SaneClick SaneHosts SaneSales SaneSync SaneVideo
+    SaneBar SaneClip SaneClick SaneHosts SaneSales SaneVideo
   ].freeze
   RUNTIME_SMOKE_LOG_PATH = '/tmp/sanebar_runtime_smoke.log'
   RUNTIME_LAUNCH_LOG_PATH = '/tmp/sanebar_runtime_launch.log'
