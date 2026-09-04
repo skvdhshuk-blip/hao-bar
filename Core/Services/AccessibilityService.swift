@@ -196,18 +196,19 @@ final class AccessibilityService: ObservableObject {
                 try? await Task.sleep(for: .milliseconds(250))
 
                 await MainActor.run {
-                    self?.checkAndUpdatePermissionStatus()
+                    self?.refreshPermissionStatus()
                 }
             }
         }
     }
 
     /// Polling fallback: DistributedNotificationCenter is unreliable for TCC changes.
-    /// Poll AXIsProcessTrusted() at startup until granted, then stop.
-    /// Fast at first (0.5s), slows down after 10s (2s intervals), stops once granted.
+    /// Fast at first (0.5s), then 2s intervals, until granted.
+    /// `refreshPermissionStatus()` restarts this after the user returns from System Settings.
     private func startPermissionPolling() {
-        guard !isGranted else { return } // Already granted, no need to poll
+        guard !isGranted else { return }
 
+        permissionPollingTask?.cancel()
         permissionPollingTask = Task { [weak self] in
             var elapsed: TimeInterval = 0
             while !Task.isCancelled {
@@ -217,38 +218,34 @@ final class AccessibilityService: ObservableObject {
 
                 guard let self, !Task.isCancelled else { break }
 
-                let newStatus = AXIsProcessTrusted()
-                if newStatus != isGranted {
-                    isGranted = newStatus
-                    logger.info("Accessibility permission detected via polling: \(newStatus ? "GRANTED" : "REVOKED")")
-                    for continuation in streamContinuations.values {
-                        continuation.yield(newStatus)
-                    }
-                }
-
-                // Once granted, stop polling — revocation is rare and the notification handles it
-                if newStatus {
+                applyPermissionStatus(AXIsProcessTrusted(), reason: "polling")
+                if isGranted {
                     logger.debug("Accessibility granted — stopping permission poll")
-                    break
-                }
-
-                // Give up after 5 minutes — if not granted by then, user isn't actively granting
-                if elapsed > 300 {
-                    logger.debug("Permission poll timed out after 5 minutes")
                     break
                 }
             }
         }
     }
 
-    private func checkAndUpdatePermissionStatus() {
-        let newStatus = AXIsProcessTrusted()
+    /// Re-read `AXIsProcessTrusted()` and republish if the cached status changed.
+    /// Restarts short polling while the process is still untrusted so returning
+    /// from System Settings can flip the Health badge without a relaunch.
+    func refreshPermissionStatus() {
+        applyPermissionStatus(AXIsProcessTrusted(), reason: "refresh")
+        if isGranted {
+            permissionPollingTask?.cancel()
+            permissionPollingTask = nil
+        } else {
+            startPermissionPolling()
+        }
+    }
+
+    private func applyPermissionStatus(_ newStatus: Bool, reason: String) {
         guard newStatus != isGranted else { return }
 
         isGranted = newStatus
-        logger.info("Accessibility permission changed: \(newStatus ? "GRANTED" : "REVOKED")")
+        logger.info("Accessibility permission changed (\(reason)): \(newStatus ? "GRANTED" : "REVOKED")")
 
-        // Notify all streams
         for continuation in streamContinuations.values {
             continuation.yield(newStatus)
         }
@@ -275,18 +272,32 @@ final class AccessibilityService: ObservableObject {
         } else {
             trusted = AXIsProcessTrusted()
         }
-        if !trusted {
-            logger.info("Accessibility not trusted")
+        if trusted {
+            applyPermissionStatus(true, reason: "request")
         } else {
-            // Update our cached state if already granted
-            if !isGranted {
-                isGranted = true
-                for continuation in streamContinuations.values {
-                    continuation.yield(true)
-                }
-            }
+            logger.info("Accessibility not trusted")
         }
         return trusted
+    }
+
+    /// Denied-state copy that names the running bundle so the user can match TCC.
+    nonisolated static func deniedHelpText() -> String {
+        let identity = AppIdentity.runningIdentityLabel()
+        return String(localized: "Open Accessibility settings and enable \(identity). If that switch is already on, it belongs to another HaoBar copy — turn this one off and on, then click Try Again.")
+    }
+
+    /// Re-check trust and ask macOS to register this running binary in Accessibility.
+    func retryAccessibilityPermission() {
+        _ = requestAccessibility(promptUser: true)
+        refreshPermissionStatus()
+    }
+
+    /// Register this process with TCC, then open the Accessibility pane.
+    /// Opening Settings alone can toggle a different HaoBar copy with the same name.
+    @discardableResult
+    func promptAndOpenAccessibilitySettings() -> Bool {
+        retryAccessibilityPermission()
+        return openAccessibilitySettings()
     }
 
     /// Open the Accessibility pane in System Settings.

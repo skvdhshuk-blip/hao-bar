@@ -34,9 +34,10 @@ falls back to `Scripts/SaneMaster_standalone.rb`, which wraps plain
 xcodebuild -scheme SaneBar -configuration Debug build
 ```
 
-Community builds use the `Debug` configuration (ad-hoc signing). The `Release`
-configuration requires the original maintainer's Developer ID and will not
-sign for anyone else.
+HaoBar `Debug` builds sign with Apple Development as `com.haobar.app`,
+the same bundle id as the App Store build, so Accessibility TCC matches
+the HaoBar switch already enabled in System Settings. The
+`Release-AppStore` configuration is the Mac App Store archive.
 
 ## Adding or Removing Files
 

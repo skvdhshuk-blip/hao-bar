@@ -1,3 +1,14 @@
 title: HaoBar
-description: Hide menu bar icons. Keep the ones you need.
-theme: jekyll-theme-cayman
+description: Hide unused menu bar icons. Keep the important ones visible.
+theme: null
+exclude:
+  - "*.md"
+  - class_diagram.puml
+  - E2E_TESTING_CHECKLIST.md
+  - GEOMETRY_TRUST_REVIEW_2026-06-10.md
+  - MENU_BAR_RUNTIME_PLAYBOOK.md
+  - NOTARIZATION.md
+  - NOTCH_MOVE_LIMITATION.md
+  - SCREENSHOTS.md
+  - TEST_BLINDNESS_AUDIT.md
+  - DEBUGGING_MENU_BAR_INTERACTIONS.md

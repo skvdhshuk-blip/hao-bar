@@ -97,13 +97,15 @@ final class RuntimeGuardAppleScriptActivationXCTests: RuntimeGuardTestCase {
                 wizardSource.contains("FirstRunHealthWizardView") &&
                 wizardSource.contains("showIfNeeded()") &&
                 wizardSource.contains("createLayoutRescueRestorePoint(reason: \"health-wizard\")") &&
-                wizardSource.contains("SaneSettingsWindowDefaults.idealWidth") &&
-                wizardSource.contains("saneApplySettingsChrome(preferIdealSize: true)") &&
+                wizardSource.contains("setContentSize(NSSize(width: 480, height: 420))") &&
+                wizardSource.contains(".padding(.top, 36)") &&
+                !wizardSource.contains("saneApplySettingsChrome(preferIdealSize: true)") &&
+                wizardSource.contains("refreshAccessibilityPermission(using: accessibilityService)") &&
                 wizardSource.contains("if AccessibilityService.shared.isGranted") &&
                 wizardSource.contains("ActionButton(\"Done\"") &&
                 wizardSource.contains("ActionButton(\"Arrange\"") &&
                 wizardSource.contains("SaneSettingsPage") &&
-                wizardSource.contains("SaneInlineHelp") &&
+                wizardSource.contains("HealthInlineHelp") &&
                 !wizardSource.contains("Button(\"Open Accessibility\")") &&
                 !wizardSource.contains("Button(\"Save Restore Point\")") &&
                 !wizardSource.contains(".onAppear {\n            if menuBarManager.settings.layoutRescueRestorePoint == nil"),

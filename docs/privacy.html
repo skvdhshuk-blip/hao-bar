@@ -5,49 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HaoBar Privacy Policy</title>
     <meta name="description" content="HaoBar does not collect personal data. Settings stay on your Mac.">
-    <style>
-        :root { color-scheme: dark; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #0b1020;
-            color: #f4f7fb;
-        }
-        main {
-            max-width: 42rem;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-        }
-        h1, h2 { line-height: 1.25; }
-        h2 { margin-top: 2rem; }
-        p, li { color: #d7deea; }
-        a { color: #8be0d0; }
-    </style>
+    <link rel="icon" type="image/png" href="images/haobar-icon.png">
+    <link rel="canonical" href="https://skvdhshuk-blip.github.io/hao-bar/privacy.html">
+    <meta name="theme-color" content="#07090f">
+    <link rel="stylesheet" href="site.css">
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem("haobar-lang");
+                var zh = stored ? stored.indexOf("zh") === 0 : /^\s*zh\b/i.test(navigator.language || "");
+                document.documentElement.lang = zh ? "zh-Hans" : "en";
+            } catch (error) {}
+        })();
+    </script>
 </head>
 <body>
-    <main>
-        <h1>HaoBar Privacy Policy</h1>
-        <p>HaoBar is a menu bar utility that runs on your Mac.</p>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+        <a class="brand" href="index.html">
+            <img src="images/haobar-icon.png" width="28" height="28" alt="">
+            HaoBar
+        </a>
+        <nav class="nav-links" aria-label="HaoBar">
+            <a href="index.html#what"><span class="zh">能做什么</span><span class="en">What it does</span></a>
+            <a href="index.html#limits"><span class="zh">做不到</span><span class="en">Limits</span></a>
+            <a href="privacy.html"><span class="zh">隐私</span><span class="en">Privacy</span></a>
+        </nav>
+        <div class="nav-end">
+            <div class="lang" role="group" aria-label="Language">
+                <button type="button" data-lang="zh-Hans" aria-pressed="false">中文</button>
+                <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            </div>
+            <a class="btn btn-primary" href="https://apps.apple.com/app/id6808477657">Mac App Store</a>
+        </div>
+    </header>
 
-        <h2>What we collect</h2>
-        <p>Nothing. HaoBar does not create an account, does not upload menu bar contents, icon names, files, or identifiers, and does not send usage events to a server.</p>
+    <main id="main" class="wrap legal">
+        <h1>
+            <span class="zh">HaoBar 隐私政策</span>
+            <span class="en">HaoBar Privacy Policy</span>
+        </h1>
+        <p>
+            <span class="zh">HaoBar 是运行在你 Mac 上的菜单栏工具。</span>
+            <span class="en">HaoBar is a menu bar utility that runs on your Mac.</span>
+        </p>
 
-        <h2>What stays on your Mac</h2>
-        <p>Settings, profiles, and an optional custom menu bar icon are stored in the app’s sandbox container.</p>
+        <h2>
+            <span class="zh">我们收集什么</span>
+            <span class="en">What we collect</span>
+        </h2>
+        <p>
+            <span class="zh">什么都不收集。HaoBar 不创建账号，不上传菜单栏内容、图标名、文件或标识符，也不向服务器发送使用事件。</span>
+            <span class="en">Nothing. HaoBar does not create an account, does not upload menu bar contents, icon names, files, or identifiers, and does not send usage events to a server.</span>
+        </p>
 
-        <h2>Permissions</h2>
+        <h2>
+            <span class="zh">什么留在这台 Mac</span>
+            <span class="en">What stays on your Mac</span>
+        </h2>
+        <p>
+            <span class="zh">设置、配置，以及可选的自定义菜单栏图标，都存在应用的沙箱容器里。</span>
+            <span class="en">Settings, profiles, and an optional custom menu bar icon are stored in the app’s sandbox container.</span>
+        </p>
+
+        <h2>
+            <span class="zh">权限</span>
+            <span class="en">Permissions</span>
+        </h2>
         <ul>
-            <li><strong>Accessibility</strong> — required to detect and arrange menu bar icons. HaoBar does not read other apps’ windows or log keystrokes.</li>
-            <li><strong>Apple Events</strong> — so Shortcuts and AppleScript can control HaoBar itself.</li>
+            <li>
+                <span class="zh"><strong>辅助功能</strong> — 用来识别和整理菜单栏图标。HaoBar 不读其他应用的窗口，也不记录按键。</span>
+                <span class="en"><strong>Accessibility</strong> — required to detect and arrange menu bar icons. HaoBar does not read other apps’ windows or log keystrokes.</span>
+            </li>
+            <li>
+                <span class="zh"><strong>Apple Events</strong> — 让快捷指令和 AppleScript 可以控制 HaoBar 自己。</span>
+                <span class="en"><strong>Apple Events</strong> — so Shortcuts and AppleScript can control HaoBar itself.</span>
+            </li>
         </ul>
 
-        <h2>Updates</h2>
-        <p>HaoBar updates through the Mac App Store.</p>
+        <h2>
+            <span class="zh">更新</span>
+            <span class="en">Updates</span>
+        </h2>
+        <p>
+            <span class="zh">HaoBar 通过 Mac App Store 更新。没有 Sparkle，也没有第三方更新检查。</span>
+            <span class="en">HaoBar updates through the Mac App Store. There is no Sparkle feed and no third-party update check.</span>
+        </p>
 
-        <h2>Contact</h2>
+        <h2>
+            <span class="zh">联系</span>
+            <span class="en">Contact</span>
+        </h2>
         <p><a href="https://github.com/skvdhshuk-blip/hao-bar">github.com/skvdhshuk-blip/hao-bar</a></p>
-        <p><a href="index.html">Back to HaoBar</a></p>
+        <p><a href="index.html"><span class="zh">返回 HaoBar</span><span class="en">Back to HaoBar</span></a></p>
     </main>
+
+    <footer class="footer">
+        <div class="wrap footer-row">
+            <div>
+                <span class="zh">© 2026 HaoBar contributors。原始 SaneBar © 2025–2026 SaneApps。</span>
+                <span class="en">© 2026 HaoBar contributors. Original SaneBar © 2025–2026 SaneApps.</span>
+            </div>
+            <nav>
+                <a href="index.html">HaoBar</a>
+                <a href="https://github.com/skvdhshuk-blip/hao-bar"><span class="zh">源码</span><span class="en">Source</span></a>
+            </nav>
+        </div>
+    </footer>
+    <script src="site.js"></script>
 </body>
 </html>

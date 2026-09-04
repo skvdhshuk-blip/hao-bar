@@ -40,7 +40,6 @@ struct StatusBarControllerMenuTests {
             healthAction: #selector(DummyTarget.health),
             settingsAction: #selector(DummyTarget.settings),
             licenseAction: #selector(DummyTarget.license),
-            donateAction: #selector(DummyTarget.donate),
             aboutAndBugReportAction: #selector(DummyTarget.about),
             showReleaseNotesAction: nil,
             checkForUpdatesAction: #selector(DummyTarget.checkForUpdates),
@@ -48,8 +47,8 @@ struct StatusBarControllerMenuTests {
         ))
 
         // Should have: Browse, Toggle, separator, Arrange, Health, separator,
-        // Settings, License, Updates, About / Report, separator, Donate, separator, Quit
-        #expect(menu.items.count == 14, "Menu should have 14 items (10 commands + 4 separators)")
+        // Settings, License, Updates, About / Report, separator, Quit
+        #expect(menu.items.count == 12, "Menu should have 12 items (9 commands + 3 separators)")
 
         // Use named lookups (resilient to menu reordering)
         let findIconItem = menu.item(titled: String(localized: "Browse Icons..."))
@@ -81,7 +80,7 @@ struct StatusBarControllerMenuTests {
         #expect(aboutItem != nil, "Menu should have About / Report item")
 
         let donateItem = menu.item(titled: String(localized: "Donate..."))
-        #expect(donateItem != nil, "Menu should have Donate item")
+        #expect(donateItem == nil, "HaoBar does not expose Donate")
 
         let quitItem = menu.item(titled: "Quit HaoBar")
         #expect(quitItem != nil, "Menu should have Quit item")
@@ -112,7 +111,6 @@ struct StatusBarControllerMenuTests {
             healthAction: #selector(DummyTarget.health),
             settingsAction: #selector(DummyTarget.settings),
             licenseAction: #selector(DummyTarget.license),
-            donateAction: #selector(DummyTarget.donate),
             aboutAndBugReportAction: #selector(DummyTarget.about),
             showReleaseNotesAction: nil,
             checkForUpdatesAction: nil,
@@ -120,7 +118,7 @@ struct StatusBarControllerMenuTests {
         ))
 
         #expect(menu.item(titled: "Check for Updates...") == nil)
-        #expect(menu.items.count == 13, "Menu should remove only the update command")
+        #expect(menu.items.count == 11, "Menu should remove only the update command")
     }
 
     @Test("createMenu leaves item targets unset")
@@ -148,7 +146,6 @@ struct StatusBarControllerMenuTests {
             healthAction: #selector(DummyTarget.health),
             settingsAction: #selector(DummyTarget.settings),
             licenseAction: #selector(DummyTarget.license),
-            donateAction: #selector(DummyTarget.donate),
             aboutAndBugReportAction: #selector(DummyTarget.about),
             showReleaseNotesAction: nil,
             checkForUpdatesAction: #selector(DummyTarget.checkForUpdates),
@@ -199,7 +196,6 @@ struct StatusBarControllerMenuTests {
             healthAction: #selector(DummyTarget.health),
             settingsAction: #selector(DummyTarget.settings),
             licenseAction: #selector(DummyTarget.license),
-            donateAction: #selector(DummyTarget.donate),
             aboutAndBugReportAction: #selector(DummyTarget.about),
             showReleaseNotesAction: nil,
             checkForUpdatesAction: #selector(DummyTarget.checkForUpdates),
@@ -226,7 +222,7 @@ struct StatusBarControllerMenuTests {
         #expect(licenseItem?.action == #selector(DummyTarget.license), "License item should have license action")
         #expect(checkForUpdatesItem?.action == #selector(DummyTarget.checkForUpdates), "Check for Updates item should have action")
         #expect(aboutItem?.action == #selector(DummyTarget.about), "About / Report item should have about action")
-        #expect(donateItem?.action == #selector(DummyTarget.donate), "Donate item should have donate action")
+        #expect(donateItem == nil, "HaoBar does not expose Donate")
         #expect(quitItem?.action == #selector(DummyTarget.quit), "Quit item should have quit action")
     }
 
@@ -257,7 +253,6 @@ struct StatusBarControllerMenuTests {
             healthAction: #selector(DummyTarget.health),
             settingsAction: #selector(DummyTarget.settings),
             licenseAction: #selector(DummyTarget.license),
-            donateAction: #selector(DummyTarget.donate),
             aboutAndBugReportAction: #selector(DummyTarget.about),
             showReleaseNotesAction: nil,
             checkForUpdatesAction: #selector(DummyTarget.checkForUpdates),

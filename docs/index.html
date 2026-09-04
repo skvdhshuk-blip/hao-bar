@@ -1,38 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HaoBar</title>
-    <meta name="description" content="HaoBar hides menu bar icons you do not need and keeps the rest visible. Settings stay on your Mac.">
-    <style>
-        :root { color-scheme: dark; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #0b1020;
-            color: #f4f7fb;
-        }
-        main {
-            max-width: 40rem;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-        }
-        h1 { font-size: 2.4rem; margin-bottom: 0.6rem; }
-        p { color: #d7deea; }
-        a { color: #8be0d0; }
-    </style>
+    <title>HaoBar — 收起用不到的菜单栏图标</title>
+    <meta name="description" content="HaoBar 把用不到的菜单栏图标收起来，重要的留在外面。点一下即可显示或隐藏。设置只存在这台 Mac 上。">
+    <link rel="icon" type="image/png" href="images/haobar-icon.png">
+    <link rel="apple-touch-icon" href="images/haobar-icon.png">
+    <link rel="canonical" href="https://skvdhshuk-blip.github.io/hao-bar/">
+    <meta name="theme-color" content="#07090f">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skvdhshuk-blip.github.io/hao-bar/">
+    <meta property="og:title" content="HaoBar">
+    <meta property="og:description" content="Hide unused menu bar icons. Keep the important ones visible. Settings stay on this Mac.">
+    <meta property="og:image" content="https://skvdhshuk-blip.github.io/hao-bar/images/haobar-general.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="site.css">
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem("haobar-lang");
+                var zh = stored ? stored.indexOf("zh") === 0 : /^\s*zh\b/i.test(navigator.language || "");
+                document.documentElement.lang = zh ? "zh-Hans" : "en";
+            } catch (error) {}
+        })();
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "HaoBar",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "macOS 14+",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "url": "https://skvdhshuk-blip.github.io/hao-bar/",
+      "downloadUrl": "https://apps.apple.com/app/id6808477657"
+    }
+    </script>
 </head>
 <body>
-    <main>
-        <h1>HaoBar</h1>
-        <p>HaoBar hides the menu bar icons you do not need and keeps the rest visible. Settings stay on your Mac.</p>
-        <p>
-            <a href="privacy.html">Privacy Policy</a>
-            ·
-            <a href="https://github.com/skvdhshuk-blip/hao-bar">Source</a>
-        </p>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+        <a class="brand" href="index.html">
+            <img src="images/haobar-icon.png" width="28" height="28" alt="">
+            HaoBar
+        </a>
+        <nav class="nav-links" aria-label="HaoBar">
+            <a href="#what"><span class="zh">能做什么</span><span class="en">What it does</span></a>
+            <a href="#limits"><span class="zh">做不到</span><span class="en">Limits</span></a>
+            <a href="privacy.html"><span class="zh">隐私</span><span class="en">Privacy</span></a>
+        </nav>
+        <div class="nav-end">
+            <div class="lang" role="group" aria-label="Language">
+                <button type="button" data-lang="zh-Hans" aria-pressed="true">中文</button>
+                <button type="button" data-lang="en" aria-pressed="false">EN</button>
+            </div>
+            <a class="btn btn-primary" href="https://apps.apple.com/app/id6808477657">
+                <span class="zh">Mac App Store</span>
+                <span class="en">Mac App Store</span>
+            </a>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero wrap">
+            <img class="hero-icon" src="images/haobar-icon.png" width="88" height="88" alt="HaoBar">
+            <p class="kicker">macOS · Apple Silicon</p>
+            <h1 class="display">
+                <span class="zh">用不到的菜单栏图标，收起来。</span>
+                <span class="en">Hide unused menu bar icons.</span>
+            </h1>
+            <p class="lead">
+                <span class="zh">点一下 HaoBar，藏起来的就会回来。重要的留在外面，其余的不要挡路。设置只存在这台 Mac 上，不用账号，也不上传。</span>
+                <span class="en">Click HaoBar and the tucked-away extras come back. Keep the important ones visible. Settings stay on this Mac — no account, no upload.</span>
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="https://apps.apple.com/app/id6808477657">
+                    <span class="zh">在 Mac App Store 获取，免费</span>
+                    <span class="en">Get it free on the Mac App Store</span>
+                </a>
+                <a class="btn btn-secondary" href="https://github.com/skvdhshuk-blip/hao-bar">
+                    <span class="zh">查看源码</span>
+                    <span class="en">View source</span>
+                </a>
+            </div>
+            <p class="meta">
+                <span class="zh">需要 macOS 14 或更高版本，仅 Apple Silicon。</span>
+                <span class="en">Requires macOS 14 or later on Apple Silicon.</span>
+            </p>
+
+            <div class="demo">
+                <div class="menubar" data-menubar>
+                    <div class="menubar-extras" aria-hidden="true">
+                        <svg class="glyph" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.2a4.2 4.2 0 0 0-1.2 8.2V11h2.4V9.4A4.2 4.2 0 0 0 8 1.2Zm0 1.6a2.6 2.6 0 1 1 0 5.2A2.6 2.6 0 0 1 8 2.8ZM5.6 12.2h4.8c.4 0 .6.3.6.6v1.4H5V12.8c0-.3.2-.6.6-.6Z"/></svg>
+                        <svg class="glyph" viewBox="0 0 16 16" fill="currentColor"><path d="M3 4.2c0-.7.6-1.2 1.2-1.2h7.6c.7 0 1.2.5 1.2 1.2v6.1c0 .7-.5 1.2-1.2 1.2H9.1L8 13.8l-1.1-2.3H4.2C3.5 11.5 3 11 3 10.3V4.2Z"/></svg>
+                        <svg class="glyph" viewBox="0 0 16 16" fill="currentColor"><path d="M4.2 6.2a3.8 3.8 0 0 1 7.6 0v1.1h.7c.6 0 1.1.5 1.1 1.1v4.3c0 .6-.5 1.1-1.1 1.1H3.5c-.6 0-1.1-.5-1.1-1.1V8.4c0-.6.5-1.1 1.1-1.1h.7V6.2Zm1.6 0v1.1h4.4V6.2a2.2 2.2 0 1 0-4.4 0Z"/></svg>
+                        <svg class="glyph" viewBox="0 0 16 16" fill="currentColor"><path d="M4 11.2c1.8-1.8 6.2-1.8 8 0l1.1-1.1C10.6 7.6 5.4 7.6 2.9 10.1L4 11.2Zm2 2c.9-.9 3.1-.9 4 0l1.1-1.1c-1.8-1.7-4.4-1.7-6.2 0L6 13.2ZM8 15l1.2-1.2H6.8L8 15Z"/></svg>
+                    </div>
+                    <span class="menubar-rule" aria-hidden="true"></span>
+                    <button type="button" class="menubar-haobar" data-menubar-toggle aria-pressed="false">
+                        <img src="images/haobar-icon.png" width="15" height="15" alt="">
+                        HaoBar
+                    </button>
+                </div>
+                <p class="caption">
+                    <span class="zh">点 HaoBar：用不到的先收起来，要用时再展开。</span>
+                    <span class="en">Click HaoBar: tuck unused extras away, then bring them back.</span>
+                </p>
+            </div>
+
+            <figure class="shot">
+                <img src="images/haobar-general.png" width="1440" height="900" alt="HaoBar General settings">
+            </figure>
+        </section>
+
+        <section class="wrap" id="what">
+            <h2 class="section-title">
+                <span class="zh">先做最常发生的那件事</span>
+                <span class="en">The everyday path first</span>
+            </h2>
+            <p class="section-lead">
+                <span class="zh">HaoBar 是 SaneBar 的免费 MIT 分支，给 Mac App Store 做了沙箱裁剪。它只做一件事：让菜单栏里真正用得上的图标留在外面。</span>
+                <span class="en">HaoBar is a free MIT fork of SaneBar, trimmed for the Mac App Store sandbox. It does one job: keep the extras you actually use visible.</span>
+            </p>
+            <div class="grid">
+                <article class="card">
+                    <h3>
+                        <span class="zh">点图标，显示或隐藏</span>
+                        <span class="en">Click to show or hide</span>
+                    </h3>
+                    <p>
+                        <span class="zh">点菜单栏里的 HaoBar，藏起来的图标会回来；再点一次，重新收起。</span>
+                        <span class="en">Click HaoBar in the menu bar to reveal tucked-away icons, then click again to put them away.</span>
+                    </p>
+                </article>
+                <article class="card">
+                    <h3>
+                        <span class="zh">图标面板，或第二菜单栏</span>
+                        <span class="en">Icon Panel or Second Menu Bar</span>
+                    </h3>
+                    <p>
+                        <span class="zh">想一次看清隐藏图标，用图标面板；想要一整行，用第二菜单栏。</span>
+                        <span class="en">Browse hidden extras in the Icon Panel, or keep a full extra row with the Second Menu Bar.</span>
+                    </p>
+                </article>
+                <article class="card">
+                    <h3>
+                        <span class="zh">按名字搜索</span>
+                        <span class="en">Search by name</span>
+                    </h3>
+                    <p>
+                        <span class="zh">图标太多时，搜名字，再双击打开对应应用。</span>
+                        <span class="en">When the bar is crowded, search by name and double-click to open the app.</span>
+                    </p>
+                </article>
+                <article class="card">
+                    <h3>
+                        <span class="zh">本机快捷键、配置和 Touch ID</span>
+                        <span class="en">Shortcuts, profiles, Touch ID</span>
+                    </h3>
+                    <p>
+                        <span class="zh">快捷键和配置都存在这台 Mac。需要时，可用 Touch ID 再显示隐藏图标。</span>
+                        <span class="en">Shortcuts and profiles stay on this Mac. Optionally require Touch ID before revealing hidden extras.</span>
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="wrap" id="limits">
+            <div class="limits">
+                <h2 class="section-title">
+                    <span class="zh">沙箱里做不到的，先说清楚</span>
+                    <span class="en">What the sandbox build does not do</span>
+                </h2>
+                <p class="section-lead">
+                    <span class="zh">Mac App Store 版跑在沙箱里。下面这些能力没有包含，避免你装完才发现对不上。</span>
+                    <span class="en">The Mac App Store build is sandboxed. These capabilities are not included, so you are not surprised after install.</span>
+                </p>
+                <ul>
+                    <li>
+                        <span class="zh">没有系统级菜单栏间距。</span>
+                        <span class="en">No system-wide menu bar spacing.</span>
+                    </li>
+                    <li>
+                        <span class="zh">不读取 Focus 文件，也不按 Wi-Fi 名称切换。</span>
+                        <span class="en">No Focus-mode file reads, and no Wi-Fi SSID triggers.</span>
+                    </li>
+                    <li>
+                        <span class="zh">没有用户脚本触发。</span>
+                        <span class="en">No user-script triggers.</span>
+                    </li>
+                    <li>
+                        <span class="zh">面板里移不动某个图标时，按住 ⌘ 在菜单栏里拖。</span>
+                        <span class="en">If a panel cannot move an extra, ⌘-drag it in the menu bar.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="wrap" id="privacy">
+            <div class="privacy-strip">
+                <div>
+                    <h2 class="section-title">
+                        <span class="zh">设置只在这台 Mac</span>
+                        <span class="en">Settings stay on this Mac</span>
+                    </h2>
+                    <p class="section-lead">
+                        <span class="zh">HaoBar 不创建账号，不上传菜单栏内容、图标名或标识符，也不向服务器发送使用事件。辅助功能权限只用来识别和整理菜单栏图标，不读其他窗口，也不记录按键。</span>
+                        <span class="en">HaoBar does not create an account, does not upload menu bar contents, icon names, or identifiers, and does not send usage events. Accessibility is used only to detect and arrange menu bar extras — not to read other windows or log keystrokes.</span>
+                    </p>
+                    <a href="privacy.html">
+                        <span class="zh">阅读隐私政策</span>
+                        <span class="en">Read the privacy policy</span>
+                    </a>
+                </div>
+                <figure class="shot shot-flush">
+                    <img src="images/haobar-about.png" width="1440" height="900" alt="HaoBar About">
+                </figure>
+            </div>
+        </section>
     </main>
+
+    <footer class="footer">
+        <div class="wrap footer-row">
+            <div>
+                <span class="zh">© 2026 HaoBar contributors。原始 SaneBar © 2025–2026 SaneApps。MIT 许可。</span>
+                <span class="en">© 2026 HaoBar contributors. Original SaneBar © 2025–2026 SaneApps. MIT licensed.</span>
+            </div>
+            <nav>
+                <a href="privacy.html"><span class="zh">隐私政策</span><span class="en">Privacy</span></a>
+                <a href="https://github.com/skvdhshuk-blip/hao-bar"><span class="zh">源码</span><span class="en">Source</span></a>
+                <a href="https://apps.apple.com/app/id6808477657">App Store</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="site.js"></script>
 </body>
 </html>

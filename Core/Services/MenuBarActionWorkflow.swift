@@ -179,11 +179,6 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
         SettingsOpener.open(tab: .about)
     }
 
-    @objc func openDonate(_: Any?) {
-        logger.info("Menu: Opening donation page")
-        NSWorkspace.shared.open(LicenseService.donationURL())
-    }
-
     @objc func openAbout(_: Any?) {
         logger.info("Menu: Opening About / Report")
         SettingsOpener.open(tab: .about)

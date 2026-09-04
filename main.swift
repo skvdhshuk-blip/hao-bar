@@ -27,20 +27,15 @@ if args.contains("--unregister") {
 app.setActivationPolicy(.accessory)
 app.appearance = NSAppearance(named: .darkAqua)
 
-// SAFETY: Debug must not steal the App Store container.
+// Local Debug and App Store builds share com.haobar.app so Accessibility TCC
+// matches the HaoBar switch in System Settings. Unsandboxed Debug still writes
+// outside the App Store container.
 let bundleId = Bundle.main.bundleIdentifier ?? "(unknown)"
 #if APP_STORE
     if bundleId != AppIdentity.productionBundleId {
         fatalError("App Store build must use \(AppIdentity.productionBundleId). Found: \(bundleId)")
     }
-#elseif DEBUG
-    if AppIdentity.isProductionBundle(bundleId) {
-        let env = ProcessInfo.processInfo.environment
-        if env["HAOBAR_ALLOW_PROD_BUNDLE"] != "1", env["SANEBAR_ALLOW_PROD_BUNDLE"] != "1" {
-            fatalError("Debug build is using production bundle ID (\(AppIdentity.productionBundleId)). Use Debug-AppStore or set HAOBAR_ALLOW_PROD_BUNDLE=1.")
-        }
-    }
-#else
+#elseif !DEBUG
     if bundleId != AppIdentity.productionBundleId {
         fatalError("Release build must use \(AppIdentity.productionBundleId). Found: \(bundleId)")
     }

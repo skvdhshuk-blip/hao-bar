@@ -143,7 +143,7 @@ struct AppearanceSettingsView: View {
                                     .help("Add small line or dot menu bar items. Command-drag them into place; they do not create extra hidden sections.")
                             }
                         }
-                        SaneInlineHelp(String(localized: "Adds small line/dot menu bar items. Command-drag them into place. They do not create extra hidden sections or menu-bar layers."))
+                        SettingsInlineHelp(String(localized: "Adds small line/dot menu bar items. Command-drag them into place. They do not create extra hidden sections or menu-bar layers."))
 
                         if menuBarManager.settings.spacerCount > 0 {
                             CompactDivider()
@@ -281,7 +281,7 @@ struct AppearanceSettingsView: View {
                             }
 
                             CompactDivider()
-                            SaneInlineHelp(String(localized: "Log out to verify changes."))
+                            SettingsInlineHelp(String(localized: "Log out to verify changes."))
                         }
                     } else {
                         proGatedRow(feature: .iconSpacing, label: String(localized: "Reduce space between icons"))

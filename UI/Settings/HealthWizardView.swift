@@ -30,15 +30,9 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
             self?.dismiss()
         }
         let hostingController = NSHostingController(rootView: wizardView)
-        hostingController.saneIgnoreIntrinsicWindowSize()
 
         let window = NSWindow(
-            contentRect: NSRect(
-                x: 0,
-                y: 0,
-                width: SaneSettingsWindowDefaults.idealWidth,
-                height: SaneSettingsWindowDefaults.idealHeight
-            ),
+            contentRect: NSRect(x: 0, y: 0, width: 480, height: 420),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
@@ -49,7 +43,9 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
         window.contentViewController = hostingController
-        window.saneApplySettingsChrome(preferIdealSize: true)
+        window.contentMinSize = NSSize(width: 440, height: 300)
+        window.contentMaxSize = NSSize(width: 560, height: 720)
+        window.setContentSize(NSSize(width: 480, height: 420))
         window.center()
         window.isReleasedWhenClosed = false
         window.delegate = self
@@ -81,7 +77,7 @@ private struct FirstRunHealthWizardView: View {
     var body: some View {
         SaneSettingsPage {
             CompactSection(String(localized: "HaoBar Health"), icon: "stethoscope", iconColor: .green) {
-                SaneInlineHelp(String(localized: "Finish setup with a permission check and a saved layout restore point."))
+                HealthInlineHelp(String(localized: "Finish setup with a permission check and a saved layout restore point."))
                 CompactDivider()
                 accessibilityRow
                 CompactDivider()
@@ -90,7 +86,7 @@ private struct FirstRunHealthWizardView: View {
                 repairRow
                 if !rescueMessage.isEmpty {
                     CompactDivider()
-                    SaneInlineHelp(rescueMessage)
+                    HealthInlineHelp(rescueMessage)
                 }
                 CompactDivider()
                 CompactRow(String(localized: "Close this check")) {
@@ -99,6 +95,11 @@ private struct FirstRunHealthWizardView: View {
                 }
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: 480)
+        .padding(.horizontal, 20)
+        .padding(.top, 36)
+        .padding(.bottom, 24)
         .background(
             SaneGradientBackground(
                 style: .panel,
@@ -107,30 +108,36 @@ private struct FirstRunHealthWizardView: View {
             )
         )
         .groupBoxStyle(GlassGroupBoxStyle())
+        .refreshAccessibilityPermission(using: accessibilityService)
         .onAppear {
             rescuePointSaved = menuBarManager.settings.layoutRescueRestorePoint != nil
         }
     }
 
     private var accessibilityRow: some View {
-        CompactRow(String(localized: "Accessibility")) {
-            HStack(spacing: 8) {
-                StatusBadge(
-                    accessibilityService.isGranted ? String(localized: "OK") : String(localized: "Needs Action"),
-                    color: accessibilityService.isGranted ? .green : .orange,
-                    icon: accessibilityService.isGranted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
-                )
-                .saneHelp(accessibilityHelp)
+        VStack(alignment: .leading, spacing: 0) {
+            CompactRow(String(localized: "Accessibility")) {
+                HStack(spacing: 8) {
+                    StatusBadge(
+                        accessibilityService.isGranted ? String(localized: "OK") : String(localized: "Needs Action"),
+                        color: accessibilityService.isGranted ? .green : .orange,
+                        icon: accessibilityService.isGranted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
+                    )
+                    .saneHelp(accessibilityHelp)
 
-                if !accessibilityService.isGranted {
-                    ActionButton("Open", icon: "gearshape", style: .primary) {
-                        openAccessibilitySettings()
+                    if !accessibilityService.isGranted {
+                        ActionButton("Open", icon: "gearshape", style: .primary) {
+                            openAccessibilitySettings()
+                        }
+                        .controlSize(.small)
+                        .saneHelp(String(localized: "Opens macOS Privacy & Security > Accessibility."))
                     }
-                    .controlSize(.small)
-                    .saneHelp(String(localized: "Opens macOS Privacy & Security > Accessibility."))
                 }
+                .fixedSize(horizontal: true, vertical: false)
             }
-            .fixedSize(horizontal: true, vertical: false)
+            if !accessibilityService.isGranted {
+                HealthInlineHelp(AccessibilityService.deniedHelpText())
+            }
         }
     }
 
@@ -180,7 +187,7 @@ private struct FirstRunHealthWizardView: View {
     private var accessibilityHelp: String {
         accessibilityService.isGranted
             ? String(localized: "HaoBar can inspect and arrange menu bar items.")
-            : String(localized: "Open Accessibility settings and grant HaoBar before using Browse Icons or Arrange Now.")
+            : AccessibilityService.deniedHelpText()
     }
 
     private func saveRestorePoint() {
@@ -191,7 +198,6 @@ private struct FirstRunHealthWizardView: View {
     }
 
     private func openAccessibilitySettings() {
-        guard let url = URL(string: AccessibilityService.accessibilitySettingsURLString) else { return }
-        NSWorkspace.shared.open(url)
+        _ = accessibilityService.promptAndOpenAccessibilitySettings()
     }
 }

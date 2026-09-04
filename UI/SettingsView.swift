@@ -6,29 +6,26 @@ struct SettingsView: View {
     enum SettingsTab: String, SaneSettingsTab {
         case control = "Control"
         case appearance = "Appearance"
-        case shortcuts = "Shortcuts"
-        case rules = "Rules"
         case health = "Health"
+        case advanced = "Advanced"
         case about = "About"
 
         var title: String {
             switch self {
-            case .control: String(localized: "Control")
+            case .control: String(localized: "General")
             case .appearance: String(localized: "Appearance")
-            case .shortcuts: String(localized: "Shortcuts")
-            case .rules: String(localized: "Rules")
-            case .health: String(localized: "Health")
+            case .health: String(localized: "Permissions")
+            case .advanced: String(localized: "Advanced")
             case .about: String(localized: "About")
             }
         }
 
         var icon: String {
             switch self {
-            case .control: "switch.2"
+            case .control: "gearshape"
             case .appearance: "paintpalette"
-            case .shortcuts: "keyboard"
-            case .rules: "wand.and.stars"
-            case .health: "stethoscope"
+            case .health: "lock.shield"
+            case .advanced: "slider.horizontal.3"
             case .about: "questionmark.circle"
             }
         }
@@ -39,12 +36,10 @@ struct SettingsView: View {
                 SaneSettingsIconSemantic.general.color
             case .appearance:
                 SaneSettingsIconSemantic.appearance.color
-            case .shortcuts:
-                SaneSettingsIconSemantic.shortcuts.color
-            case .rules:
-                SaneSettingsIconSemantic.rules.color
             case .health:
                 .green
+            case .advanced:
+                SaneSettingsIconSemantic.shortcuts.color
             case .about:
                 SaneSettingsIconSemantic.about.color
             }
@@ -58,19 +53,16 @@ struct SettingsView: View {
             switch tab {
             case .control:
                 GeneralSettingsView()
-                    .navigationTitle(String(localized: "Control"))
-            case .rules:
-                RulesSettingsView()
-                    .navigationTitle(String(localized: "Rules"))
+                    .navigationTitle(String(localized: "General"))
             case .appearance:
                 AppearanceSettingsView()
                     .navigationTitle(String(localized: "Appearance"))
-            case .shortcuts:
-                ShortcutsSettingsView()
-                    .navigationTitle(String(localized: "Shortcuts"))
             case .health:
                 HealthSettingsView()
-                    .navigationTitle(String(localized: "Health"))
+                    .navigationTitle(String(localized: "Permissions"))
+            case .advanced:
+                AdvancedSettingsView()
+                    .navigationTitle(String(localized: "Advanced"))
             case .about:
                 AboutSettingsView()
                     .navigationTitle(String(localized: "About"))

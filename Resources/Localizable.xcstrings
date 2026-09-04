@@ -617,6 +617,28 @@
         }
       }
     },
+    "%lld always hidden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld always hidden"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 个始终隐藏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 個一律隱藏"
+          }
+        }
+      }
+    },
     "%lld changes": {
       "localizations": {
         "en": {
@@ -705,6 +727,50 @@
         }
       }
     },
+    "%lld hidden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hidden"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 个已隐藏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 個已隱藏"
+          }
+        }
+      }
+    },
+    "%lld icons": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld icons"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 个图标"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 個圖示"
+          }
+        }
+      }
+    },
     "%lld items": {
       "localizations": {
         "en": {
@@ -789,6 +855,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld item"
+          }
+        }
+      }
+    },
+    "%lld visible": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld visible"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 个可见"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 個可見"
           }
         }
       }
@@ -3605,6 +3693,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Menambah garis/titik kecil. Seret dengan ⌘. Tidak membuat bagian tersembunyi atau lapisan bilah menu ekstra."
+          }
+        }
+      }
+    },
+    "Advanced": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高级"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "進階"
           }
         }
       }
@@ -6513,6 +6623,28 @@
         }
       }
     },
+    "Browse actions help": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Browse actions help"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "浏览操作帮助"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "瀏覽操作說明"
+          }
+        }
+      }
+    },
     "Browse style": {
       "localizations": {
         "en": {
@@ -6773,6 +6905,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "melainkan roh yang membangkitkan kekuatan, kasih, dan ketertiban. »"
+          }
+        }
+      }
+    },
+    "CLICK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CLICK!"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "点击！"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "點一下！"
           }
         }
       }
@@ -9325,6 +9479,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Buat"
+          }
+        }
+      }
+    },
+    "Create a restore point before using layout restore.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a restore point before using layout restore."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先创建还原点，再使用布局还原。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請先建立還原點，再使用佈局還原。"
+          }
+        }
+      }
+    },
+    "Create a restore point first.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a restore point first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先创建还原点。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請先建立還原點。"
           }
         }
       }
@@ -13289,6 +13487,50 @@
         }
       }
     },
+    "Fix HaoBar items": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fix HaoBar items"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修复 HaoBar 项目"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修復 HaoBar 項目"
+          }
+        }
+      }
+    },
+    "Fix menu bar geometry": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fix menu bar geometry"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修复菜单栏几何"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修復選單列幾何"
+          }
+        }
+      }
+    },
     "From": {
       "localizations": {
         "en": {
@@ -13373,6 +13615,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dari"
+          }
+        }
+      }
+    },
+    "General": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一般"
           }
         }
       }
@@ -15056,6 +15320,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "HaoBar melihat grup Terlihat, Tersembunyi, dan Selalu tersembunyi yang diharapkan."
+          }
+        }
+      }
+    },
+    "HaoBar cannot save this layout yet because its menu bar positions need checking. Run Arrange Now, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar cannot save this layout yet because its menu bar positions need checking. Run Arrange Now, then try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 还不能保存此布局，因为菜单栏位置需要检查。请先点「立即整理」，然后再试。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 還不能儲存此佈局，因為選單列位置需要檢查。請先點「立即整理」，然後再試。"
+          }
+        }
+      }
+    },
+    "HaoBar cannot save this layout yet because macOS has not attached its menu bar items. Run Arrange Now, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar cannot save this layout yet because macOS has not attached its menu bar items. Run Arrange Now, then try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 还不能保存此布局，因为 macOS 尚未挂上菜单栏项目。请先点「立即整理」，然后再试。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 還不能儲存此佈局，因為 macOS 尚未掛上選單列項目。請先點「立即整理」，然後再試。"
+          }
+        }
+      }
+    },
+    "HaoBar cannot save this layout yet because macOS has not provided trustworthy menu bar positions. Run Arrange Now, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar cannot save this layout yet because macOS has not provided trustworthy menu bar positions. Run Arrange Now, then try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 还不能保存此布局，因为 macOS 尚未提供可信的菜单栏位置。请先点「立即整理」，然后再试。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 還不能儲存此佈局，因為 macOS 尚未提供可信的選單列位置。請先點「立即整理」，然後再試。"
           }
         }
       }
@@ -19284,6 +19614,28 @@
         }
       }
     },
+    "Import Layout": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import Layout"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入布局"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "匯入佈局"
+          }
+        }
+      }
+    },
     "Import Settings": {
       "localizations": {
         "en": {
@@ -20692,6 +21044,28 @@
         }
       }
     },
+    "Last good layout restored.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last good layout restored."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已恢复上次正常的布局。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已恢復上次正常的佈局。"
+          }
+        }
+      }
+    },
     "Layout Mode": {
       "localizations": {
         "en": {
@@ -21128,6 +21502,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Snapshot tata letak"
+          }
+        }
+      }
+    },
+    "Layout still needs attention.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layout still needs attention."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "布局仍需处理。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "佈局仍需處理。"
           }
         }
       }
@@ -22100,6 +22496,50 @@
         }
       }
     },
+    "Live checks enabled.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live checks enabled."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已启用实时检查。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已啟用即時檢查。"
+          }
+        }
+      }
+    },
+    "Live checks enabled. Verifying layout...": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live checks enabled. Verifying layout..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已启用实时检查。正在验证布局…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已啟用即時檢查。正在驗證佈局…"
+          }
+        }
+      }
+    },
     "Load": {
       "localizations": {
         "en": {
@@ -22360,6 +22800,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS melaporkan beberapa item bilah menu tersembunyi atau tidak tersedia saat ini."
+          }
+        }
+      }
+    },
+    "macOS may be hiding HaoBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move HaoBar's icon to the immediate left of Control Center.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS may be hiding HaoBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move HaoBar's icon to the immediate left of Control Center."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 可能把 HaoBar 的图标藏在刘海后面，或因为菜单栏已满而隐藏。macOS 不允许应用把自己的图标强制拉回屏幕，所以需要在系统层面处理：打开“菜单栏”设置来管理显示内容，移除或重新排列其他菜单栏图标，或把 HaoBar 的图标移到控制中心正左侧。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 可能把 HaoBar 的圖示藏在瀏海後面，或因為選單列已滿而隱藏。macOS 不允許 App 把自己的圖示強制拉回螢幕，所以需要在系統層級處理：打開「選單列」設定來管理顯示內容，移除或重新排列其他選單列圖示，或把 HaoBar 的圖示移到控制中心正左側。"
+          }
+        }
+      }
+    },
+    "macOS may be hiding HaoBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS may be hiding HaoBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 可能正在隐藏 HaoBar 的图标。请到系统设置 > 菜单栏 > 允许在菜单栏中，确认 HaoBar 已开启。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 可能正在隱藏 HaoBar 的圖示。請到系統設定 > 選單列 > 允許在選單列中，確認 HaoBar 已開啟。"
           }
         }
       }
@@ -23152,6 +23636,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pengaturan bilah menu"
+          }
+        }
+      }
+    },
+    "Menu bar health report": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu bar health report"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "菜单栏健康报告"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選單列健康報告"
           }
         }
       }
@@ -24648,6 +25154,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Belum ada Focus. Aktifkan Focus di Pengaturan Sistem untuk menambahkannya di sini."
+          }
+        }
+      }
+    },
+    "No data collected.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No data collected."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不收集数据。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不收集資料。"
           }
         }
       }
@@ -26940,6 +27468,50 @@
         }
       }
     },
+    "Open Accessibility settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Accessibility settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开辅助功能设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開輔助使用設定"
+          }
+        }
+      }
+    },
+    "Open Accessibility settings and enable %@. If that switch is already on, it belongs to another HaoBar copy — turn this one off and on, then click Try Again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Accessibility settings and enable %@. If that switch is already on, it belongs to another HaoBar copy — turn this one off and on, then click Try Again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开辅助功能设置并启用 %@。如果开关已经是开的，那是另一份 HaoBar — 先关掉再打开这一份，然后点「再试一次」。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開輔助功能設定並啟用 %@。如果開關已經是開的，那是另一份 HaoBar — 先關掉再開啟這一份，然後點「再試一次」。"
+          }
+        }
+      }
+    },
     "Open Accessibility Settings": {
       "localizations": {
         "en": {
@@ -27376,6 +27948,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Buka pengaturan bilah menu"
+          }
+        }
+      }
+    },
+    "Open macOS Menu Bar settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open macOS Menu Bar settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 macOS 菜单栏设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開 macOS 選單列設定"
           }
         }
       }
@@ -28788,6 +29382,28 @@
         }
       }
     },
+    "Permissions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permissions"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "权限"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "權限"
+          }
+        }
+      }
+    },
     "Permission granted — you're all set!": {
       "localizations": {
         "en": {
@@ -29756,6 +30372,28 @@
         }
       }
     },
+    "Rechecks this HaoBar copy after you enable the matching switch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechecks this HaoBar copy after you enable the matching switch."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在你打开对应开关后，重新检查这个 HaoBar 副本。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在你打開對應開關後，重新檢查這個 HaoBar 副本。"
+          }
+        }
+      }
+    },
     "Reduce or increase the space between menu bar icons": {
       "localizations": {
         "en": {
@@ -30636,6 +31274,28 @@
         }
       }
     },
+    "Repair check finished.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repair check finished."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修复检查已完成。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "修復檢查已完成。"
+          }
+        }
+      }
+    },
     "Repair check ran.": {
       "localizations": {
         "en": {
@@ -30808,6 +31468,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mode perbaikan"
+          }
+        }
+      }
+    },
+    "Repair is running. HaoBar will clear the wake repair note after the layout restore finishes.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repair is running. HaoBar will clear the wake repair note after the layout restore finishes."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在修复。HaoBar 会在布局还原完成后清除唤醒修复提示。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在修復。HaoBar 會在佈局還原完成後清除喚醒修復提示。"
+          }
+        }
+      }
+    },
+    "Repairing layout...": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repairing layout..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在修复布局…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在修復佈局…"
           }
         }
       }
@@ -45328,6 +46032,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pilih app"
+          }
+        }
+      }
+    },
+    "Restores the saved layout point, recreates HaoBar's menu bar items, then runs the same repair path as Arrange Now.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restores the saved layout point, recreates HaoBar's menu bar items, then runs the same repair path as Arrange Now."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "恢复已保存的布局点，重新创建 HaoBar 的菜单栏项目，然后走与「立即整理」相同的修复路径。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "恢復已儲存的佈局點，重新建立 HaoBar 的選單列項目，然後走與「立即整理」相同的修復路徑。"
           }
         }
       }

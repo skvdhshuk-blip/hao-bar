@@ -44,7 +44,7 @@ struct RulesSettingsView: View {
     }
 
     var body: some View {
-        SaneSettingsPage {
+        Group {
                 // Triggers (Automation) — Pro
                 CompactSection(String(localized: "Automatic Triggers")) {
                     if licenseService.isPro {
@@ -147,7 +147,7 @@ struct RulesSettingsView: View {
                                         .labelsHidden()
                                 }
                             }
-                            SaneInlineHelp(String(localized: "Set the same start/end time for all-day schedule."))
+                            SettingsInlineHelp(String(localized: "Set the same start/end time for all-day schedule."))
 
                             triggerActionControls(
                                 action: $menuBarManager.settings.scheduleTriggerAction,
@@ -172,7 +172,7 @@ struct RulesSettingsView: View {
                         if menuBarManager.settings.showOnNetworkChange {
                             if let ssid = menuBarManager.networkTriggerService.currentSSID {
                                 CompactRow(String(localized: "Current network")) {
-                                    Button("Add \(ssid)") {
+                                    Button(String(localized: "Add \(ssid)")) {
                                         if !menuBarManager.settings.triggerNetworks.contains(ssid) {
                                             menuBarManager.settings.triggerNetworks.append(ssid)
                                         }
@@ -219,7 +219,7 @@ struct RulesSettingsView: View {
                         if menuBarManager.settings.showOnFocusModeChange {
                             if let currentMode = menuBarManager.focusModeService.currentFocusMode {
                                 CompactRow(String(localized: "Current Focus")) {
-                                    Button("Add \(currentMode)") {
+                                    Button(String(localized: "Add \(currentMode)")) {
                                         if !menuBarManager.settings.triggerFocusModes.contains(currentMode) {
                                             menuBarManager.settings.triggerFocusModes.append(currentMode)
                                         }
@@ -252,7 +252,7 @@ struct RulesSettingsView: View {
                             }
 
                             if menuBarManager.settings.triggerFocusModes.isEmpty {
-                                SaneInlineHelp(String(localized: "No Focus Modes configured. Enable a Focus Mode in System Settings to add it here."))
+                                SettingsInlineHelp(String(localized: "No Focus Modes configured. Enable a Focus Mode in System Settings to add it here."))
                             }
 
                             triggerActionControls(
@@ -443,7 +443,7 @@ private struct ScriptTriggerSettingsView: View {
             }
             .fixedSize(horizontal: true, vertical: false)
         }
-        SaneInlineHelp(String(localized: "Exit code 0 = show hidden icons, non-zero = hide."))
+        SettingsInlineHelp(String(localized: "Exit code 0 = show hidden icons, non-zero = hide."))
     }
 
     @ViewBuilder

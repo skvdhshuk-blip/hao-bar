@@ -599,10 +599,9 @@ actions:
   surfaces:
   - Settings window
   - Control tab
-  - Rules tab
   - Appearance tab
-  - Shortcuts tab
   - Health tab
+  - Advanced tab
   - About tab
   steps:
   - Open Settings from the shipped app.
@@ -758,7 +757,7 @@ actions:
 - id: rules-trigger-actions
   title: Rules triggers can be configured and fired or safely simulated
   surfaces:
-  - Settings Rules tab
+  - Settings Advanced tab
   steps:
   - Toggle low battery, app launch, schedule, Wi-Fi, Focus, and script triggers.
   - Change thresholds, weekdays, times, selected apps, networks, Focus modes, trigger
@@ -772,7 +771,7 @@ actions:
     blocking the app.
   - Pro-only trigger controls show the Pro gate in Basic mode.
   evidence:
-  - Mini Rules tab transcript
+  - Mini Advanced tab transcript
   - Trigger service unit guards
   required_proof_level: full_runtime_completion
   required_evidence_types:
@@ -865,7 +864,7 @@ actions:
   title: Shortcuts, URL schemes, App Intents, and AppleScript are equivalent entry
     points
   surfaces:
-  - Settings Shortcuts tab
+  - Settings Advanced tab
   - Global hotkey recorders
   - Automation command copy buttons
   - URL scheme

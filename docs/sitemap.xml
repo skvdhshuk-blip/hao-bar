@@ -1,63 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sanebar.com</loc>
+    <loc>https://skvdhshuk-blip.github.io/hao-bar/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sanebar.com/guides.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-hide-menu-bar-icons-mac.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-lock-menu-bar-icons-touch-id.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-reorder-menu-bar-icons-mac.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-automate-menu-bar-icons-applescript.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-migrate-from-bartender-to-sanebar.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-fix-menu-bar-icons-behind-notch-mac.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-auto-show-menu-bar-icons-mac.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/how-to-customize-menu-bar-appearance-mac.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/privacy.html</loc>
+    <loc>https://skvdhshuk-blip.github.io/hao-bar/privacy.html</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://sanebar.com/thanks.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.6</priority>
   </url>
 </urlset>

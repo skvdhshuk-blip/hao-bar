@@ -72,7 +72,7 @@ struct ShortcutsSettingsView: View {
     ]
 
     var body: some View {
-        SaneSettingsPage {
+        Group {
                 CompactSection(String(localized: "Global Hotkeys")) {
                     CompactRow(String(localized: "Browse Icons")) {
                         KeyboardShortcuts.Recorder(for: .searchMenuBar)
@@ -129,10 +129,10 @@ struct ShortcutsSettingsView: View {
                                 }
                                 .help("Copy command to clipboard")
                             }
-                            SaneInlineHelp(item.command)
+                            SettingsInlineHelp(item.command)
                         } else {
                             proGatedRow(feature: .appleScript, label: item.title)
-                            SaneInlineHelp(item.command)
+                            SettingsInlineHelp(item.command)
                         }
 
                         if index < automationCommands.count - 1 {

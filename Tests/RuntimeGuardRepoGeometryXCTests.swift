@@ -114,14 +114,20 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
             contentsOf: projectRootURL().appendingPathComponent("Core/Services/MenuBarActionWorkflow.swift"),
             encoding: .utf8
         )
-        XCTAssertTrue(menuActionSource.contains("@objc func openDonate"))
-        XCTAssertTrue(menuActionSource.contains("NSWorkspace.shared.open(LicenseService.donationURL())"))
+        XCTAssertFalse(menuActionSource.contains("@objc func openDonate"))
+        XCTAssertFalse(menuActionSource.contains("NSWorkspace.shared.open(LicenseService.donationURL())"))
 
         let menuSetupSource = try String(
             contentsOf: projectRootURL().appendingPathComponent("Core/Services/MenuBarStatusItemSetupWorkflow.swift"),
             encoding: .utf8
         )
-        XCTAssertTrue(menuSetupSource.contains("donateAction: #selector(MenuBarActionWorkflow.openDonate(_:))"))
+        XCTAssertFalse(menuSetupSource.contains("donateAction:"))
+        let aboutSource = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Settings/AboutSettingsView.swift"),
+            encoding: .utf8
+        )
+        XCTAssertFalse(aboutSource.contains("SaneAboutView"))
+        XCTAssertFalse(aboutSource.contains("Donate"))
     }
 
     func testLocalOnboardingPrimaryButtonsUseSharedGlassGradient() throws {

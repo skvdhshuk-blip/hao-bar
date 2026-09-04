@@ -312,9 +312,10 @@ struct MenuBarSearchView: View {
             noteDragStarted: noteModeStripDragStarted(sourceZone:),
             handleGridDrop: handleGridReorderDrop(_:targetApp:),
             openAccessibilitySettings: {
-                _ = AccessibilityService.shared.openAccessibilitySettings()
+                _ = AccessibilityService.shared.promptAndOpenAccessibilitySettings()
             },
             retryAccessibility: {
+                AccessibilityService.shared.refreshPermissionStatus()
                 _ = syncAccessibilityState(forceProbe: true, promptUser: true)
                 loadCachedApps()
                 refreshApps(force: true)

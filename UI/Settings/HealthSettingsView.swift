@@ -78,7 +78,7 @@ struct HealthSettingsView: View {
     private var accessibilityHelp: String {
         accessibilityService.isGranted
             ? String(localized: "HaoBar has Accessibility permission and can inspect, reveal, and arrange menu bar items.")
-            : String(localized: "HaoBar needs Accessibility permission before Browse Icons, Arrange Now, and diagnostics can inspect menu bar items.")
+            : AccessibilityService.deniedHelpText()
     }
 
     private var geometryHelp: String {
@@ -131,10 +131,10 @@ struct HealthSettingsView: View {
                             }
                             .buttonStyle(ChromeActionButtonStyle(prominent: true))
                             .saneHelp(String(localized: "Opens macOS System Settings so you can manage which icons are allowed in the menu bar."))
-                            .accessibilityLabel("Open macOS Menu Bar settings")
+                            .accessibilityLabel(String(localized: "Open macOS Menu Bar settings"))
                         }
-                        SaneInlineHelp(
-                            "macOS may be hiding HaoBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move HaoBar's icon to the immediate left of Control Center."
+                        HealthInlineHelp(
+                            String(localized: "macOS may be hiding HaoBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move HaoBar's icon to the immediate left of Control Center.")
                         )
                     }
                 }
@@ -155,9 +155,18 @@ struct HealthSettingsView: View {
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
                                 .saneHelp(String(localized: "Opens Accessibility settings so you can grant HaoBar permission."))
-                                .accessibilityLabel("Open Accessibility settings")
+                                .accessibilityLabel(String(localized: "Open Accessibility settings"))
+
+                                Button("Try Again") {
+                                    accessibilityService.retryAccessibilityPermission()
+                                }
+                                .buttonStyle(ChromeActionButtonStyle())
+                                .saneHelp(String(localized: "Rechecks this HaoBar copy after you enable the matching switch."))
                             }
                         }
+                    }
+                    if !accessibilityService.isGranted {
+                        HealthInlineHelp(AccessibilityService.deniedHelpText())
                     }
                     CompactDivider()
                     CompactRow(String(localized: "Menu Bar Geometry")) {
@@ -172,7 +181,7 @@ struct HealthSettingsView: View {
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
                                 .disabled(repairInProgress)
                                 .saneHelp(String(localized: "Runs a layout repair check now."))
-                                .accessibilityLabel("Fix menu bar geometry")
+                                .accessibilityLabel(String(localized: "Fix menu bar geometry"))
                             }
                         }
                         .fixedSize(horizontal: true, vertical: false)
@@ -190,7 +199,7 @@ struct HealthSettingsView: View {
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
                                 .disabled(repairInProgress)
                                 .saneHelp(String(localized: "Repairs detached or missing HaoBar item groups."))
-                                .accessibilityLabel("Fix HaoBar items")
+                                .accessibilityLabel(String(localized: "Fix HaoBar items"))
                             }
                         }
                         .fixedSize(horizontal: true, vertical: false)
@@ -216,7 +225,7 @@ struct HealthSettingsView: View {
                         }
                         .fixedSize(horizontal: true, vertical: false)
                     }
-                    SaneInlineHelp(layoutModeHelp)
+                    HealthInlineHelp(layoutModeHelp)
                 }
 
                 CompactSection(String(localized: "Layout Rescue"), icon: "lifepreserver", iconColor: .orange) {
@@ -242,12 +251,12 @@ struct HealthSettingsView: View {
                         .buttonStyle(ChromeActionButtonStyle())
                         .disabled(!canRestoreLayout)
                         .saneHelp(canRestoreLayout
-                            ? "Restores the saved layout point, recreates HaoBar's menu bar items, then runs the same repair path as Arrange Now."
-                            : "Create a restore point before using layout restore.")
+                            ? String(localized: "Restores the saved layout point, recreates HaoBar's menu bar items, then runs the same repair path as Arrange Now.")
+                            : String(localized: "Create a restore point before using layout restore."))
                     }
                     if !layoutRescueMessage.isEmpty {
                         CompactDivider()
-                        SaneInlineHelp(layoutRescueMessage)
+                        HealthInlineHelp(layoutRescueMessage)
                     }
                 }
 
@@ -271,7 +280,7 @@ struct HealthSettingsView: View {
                     }
                     CompactDivider()
                     CompactRow(String(localized: "Last Scan")) {
-                        Text(lastScanDate?.formatted(date: .omitted, time: .shortened) ?? "Not run")
+                        Text(lastScanDate?.formatted(date: .omitted, time: .shortened) ?? String(localized: "Not run"))
                             .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
                     }
@@ -279,7 +288,7 @@ struct HealthSettingsView: View {
 
                 CompactSection(String(localized: "Repair"), icon: "wrench.and.screwdriver", iconColor: .orange) {
                     if menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair() {
-                        SaneInlineHelp(String(localized: "A layout restore after wake was postponed because icon positions could not be confirmed. Click Run to repair it now."))
+                        HealthInlineHelp(String(localized: "A layout restore after wake was postponed because icon positions could not be confirmed. Click Run to repair it now."))
                         CompactDivider()
                     }
                     CompactRow(String(localized: "Arrange Now")) {
@@ -316,6 +325,7 @@ struct HealthSettingsView: View {
                     }
                 }
         }
+        .refreshAccessibilityPermission(using: accessibilityService)
         .task {
             await refreshCounts()
         }
@@ -324,7 +334,7 @@ struct HealthSettingsView: View {
     private func runRepair(reason: String, message: String? = nil) {
         guard !repairInProgress else { return }
         repairInProgress = true
-        layoutRescueMessage = "Repairing layout..."
+        layoutRescueMessage = String(localized: "Repairing layout...")
         Task { @MainActor in
             let hadDeferredWakeRepair = menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair()
             let snapshot = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: reason)
@@ -332,14 +342,14 @@ struct HealthSettingsView: View {
             if MenuBarProfileWorkflow.canCreateLayoutRescueRestorePoint(from: snapshot) {
                 if hadDeferredWakeRepair,
                    menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair() {
-                    layoutRescueMessage = "Repair is running. HaoBar will clear the wake repair note after the layout restore finishes."
+                    layoutRescueMessage = String(localized: "Repair is running. HaoBar will clear the wake repair note after the layout restore finishes.")
                 } else {
-                    layoutRescueMessage = message ?? "Repair check finished."
+                    layoutRescueMessage = message ?? String(localized: "Repair check finished.")
                 }
             } else if snapshot.likelySystemSuppressedStatusItems {
-                layoutRescueMessage = "macOS may be hiding HaoBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar."
+                layoutRescueMessage = String(localized: "macOS may be hiding HaoBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar.")
             } else {
-                layoutRescueMessage = "Layout still needs attention."
+                layoutRescueMessage = String(localized: "Layout still needs attention.")
             }
             await refreshCounts()
             repairInProgress = false
@@ -348,7 +358,7 @@ struct HealthSettingsView: View {
 
     private func createRestorePoint() {
         if menuBarManager.profileWorkflow.createLayoutRescueRestorePoint(reason: "health") {
-            layoutRescueMessage = "Restore point saved."
+            layoutRescueMessage = String(localized: "Restore point saved.")
         } else {
             layoutRescueMessage = MenuBarProfileWorkflow.layoutRescueRestorePointSaveFailureMessage(from: runtimeSnapshot)
         }
@@ -357,24 +367,24 @@ struct HealthSettingsView: View {
     private func restoreLayout() {
         if menuBarManager.profileWorkflow.restoreLayoutRescueRestorePoint(reason: "health") {
             lastRepairDate = Date()
-            layoutRescueMessage = "Last good layout restored."
+            layoutRescueMessage = String(localized: "Last good layout restored.")
             Task {
                 _ = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: "health-restore-layout")
                 await refreshCounts()
             }
         } else {
-            layoutRescueMessage = "Create a restore point first."
+            layoutRescueMessage = String(localized: "Create a restore point first.")
         }
     }
 
     private func setLayoutMode(_ mode: SaneBarSettings.LayoutMode) {
         guard menuBarManager.settings.layoutMode != mode else { return }
         Task { @MainActor in
-            layoutRescueMessage = mode == .live ? "Live checks enabled. Verifying layout..." : ""
+            layoutRescueMessage = mode == .live ? String(localized: "Live checks enabled. Verifying layout...") : ""
             _ = await menuBarManager.profileWorkflow.setLayoutMode(mode, reason: "health")
             if mode == .live {
                 lastRepairDate = Date()
-                layoutRescueMessage = "Live checks enabled."
+                layoutRescueMessage = String(localized: "Live checks enabled.")
             }
             await refreshCounts()
         }
@@ -392,8 +402,7 @@ struct HealthSettingsView: View {
     }
 
     private func openAccessibilitySettings() {
-        guard let url = URL(string: AccessibilityService.accessibilitySettingsURLString) else { return }
-        NSWorkspace.shared.open(url)
+        _ = accessibilityService.promptAndOpenAccessibilitySettings()
     }
 
     private func openMenuBarSettings() {
@@ -411,7 +420,7 @@ struct HealthSettingsView: View {
             await MainActor.run {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(
-                    report.toMarkdown(userDescription: "Menu bar health report"),
+                    report.toMarkdown(userDescription: String(localized: "Menu bar health report")),
                     forType: .string
                 )
                 copiedDiagnostics = true

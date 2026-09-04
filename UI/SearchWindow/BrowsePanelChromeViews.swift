@@ -52,7 +52,7 @@ struct BrowseFooter: View {
                     .controlSize(.small)
             }
 
-            Text("\(filteredCount) \(countLabel)")
+            Text(countText)
                 .foregroundStyle(.white.opacity(0.9))
 
             Spacer()
@@ -64,7 +64,7 @@ struct BrowseFooter: View {
             }
             .buttonStyle(.plain)
             .help("How Browse Icons works")
-            .accessibilityLabel("Browse actions help")
+            .accessibilityLabel(String(localized: "Browse actions help"))
             .popover(isPresented: $showingHelp, arrowEdge: .bottom) {
                 BrowseHelpPopover()
             }
@@ -75,12 +75,12 @@ struct BrowseFooter: View {
         .background(.white.opacity(0.05))
     }
 
-    private var countLabel: String {
+    private var countText: String {
         switch mode {
-        case .hidden: "hidden"
-        case .visible: "visible"
-        case .alwaysHidden: "always hidden"
-        case .all: "icons"
+        case .hidden: String(localized: "\(filteredCount) hidden")
+        case .visible: String(localized: "\(filteredCount) visible")
+        case .alwaysHidden: String(localized: "\(filteredCount) always hidden")
+        case .all: String(localized: "\(filteredCount) icons")
         }
     }
 }
@@ -88,12 +88,12 @@ struct BrowseFooter: View {
 struct BrowseHelpPopover: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("How Browse Icons works")
+            Text(String(localized: "How Browse Icons works"))
                 .font(.system(size: 13, weight: .semibold))
-            Text("1. Use the tabs to browse each row.")
-            Text("2. Click an icon to open it.")
-            Text("3. Drag an icon and drop it on a glowing tab to move it.")
-            Text("4. Right-click an icon for more actions.")
+            Text(String(localized: "1. Use the tabs to browse each row."))
+            Text(String(localized: "2. Click an icon to open it."))
+            Text(String(localized: "3. Drag an icon and drop it on a glowing tab to move it."))
+            Text(String(localized: "4. Right-click an icon for more actions."))
         }
         .font(.system(size: 12))
         .padding(12)
@@ -107,7 +107,7 @@ struct BrowseAccessibilityPrompt: View {
     let retry: () -> Void
 
     var body: some View {
-        VStack(spacing: 18) {
+        VStack(spacing: 24) {
             Image(systemName: "lock.shield.fill")
                 .font(.system(size: 52, weight: .semibold))
                 .foregroundStyle(
@@ -121,27 +121,36 @@ struct BrowseAccessibilityPrompt: View {
                     )
                 )
 
-            Text("Grant Access")
-                .font(.system(size: 24, weight: .bold, design: .serif))
-                .foregroundStyle(.white.opacity(0.97))
+            VStack(spacing: 8) {
+                Text(String(localized: "Grant Access"))
+                    .font(.system(size: 24, weight: .bold, design: .serif))
+                    .foregroundStyle(.white.opacity(0.97))
 
-            VStack(alignment: .leading, spacing: 10) {
-                privacyRow(icon: "video.slash.fill", text: "No screen recording.")
-                privacyRow(icon: "eye.slash.fill", text: "No screenshots.")
-                privacyRow(icon: "icloud.slash", text: "No data collected.")
+                Text(AccessibilityService.deniedHelpText())
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.78))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: 320)
+
+            VStack(alignment: .leading, spacing: 12) {
+                privacyRow(icon: "video.slash.fill", text: String(localized: "No screen recording."))
+                privacyRow(icon: "eye.slash.fill", text: String(localized: "No screenshots."))
+                privacyRow(icon: "icloud.slash", text: String(localized: "No data collected."))
             }
             .font(.system(size: 17, weight: .medium))
-            .padding(.vertical, 2)
+            .frame(maxWidth: 280, alignment: .leading)
 
-            HStack(spacing: 12) {
-                Button("Open Accessibility Settings", action: openSettings)
+            HStack(spacing: 16) {
+                Button(String(localized: "Open Accessibility Settings"), action: openSettings)
                     .buttonStyle(ChromeActionButtonStyle(prominent: true))
 
-                Button("Try Again", action: retry)
+                Button(String(localized: "Try Again"), action: retry)
                     .buttonStyle(ChromeActionButtonStyle())
             }
         }
-        .padding(20)
+        .padding(32)
         .background(
             ChromeGlassRoundedBackground(
                 cornerRadius: 14,
@@ -156,7 +165,7 @@ struct BrowseAccessibilityPrompt: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(SaneBarChrome.rowStroke, lineWidth: 0.8)
         )
-        .padding(14)
+        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
@@ -175,7 +184,7 @@ struct BrowseScanningState: View {
     var body: some View {
         VStack(spacing: 12) {
             ProgressView()
-            Text("Scanning menu bar icons…")
+            Text(String(localized: "Scanning menu bar icons…"))
                 .foregroundStyle(.white.opacity(0.92))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -237,7 +246,7 @@ struct BrowseNoMatchState: View {
                 .font(.system(size: 40))
                 .foregroundStyle(.white.opacity(0.9))
 
-            Text("No matches for \(searchText)")
+            Text(String(localized: "No matches for \(searchText)"))
                 .font(.headline)
                 .foregroundStyle(.white.opacity(0.92))
         }
@@ -260,10 +269,10 @@ struct BrowseCrowdedVisibleHintToast: View {
                     .padding(.top, 1)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("The menu bar is getting crowded.")
+                    Text(String(localized: "The menu bar is getting crowded."))
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(.white.opacity(0.96))
-                    Text("Some Visible icons may still get squeezed off-screen. Second Menu Bar works better for crowded setups.")
+                    Text(String(localized: "Some Visible icons may still get squeezed off-screen. Second Menu Bar works better for crowded setups."))
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.84))
                         .fixedSize(horizontal: false, vertical: true)
@@ -273,10 +282,10 @@ struct BrowseCrowdedVisibleHintToast: View {
             HStack(spacing: 10) {
                 Spacer(minLength: 0)
 
-                Button("OK", action: dismiss)
+                Button(String(localized: "OK"), action: dismiss)
                     .buttonStyle(ChromeActionButtonStyle())
 
-                Button("Enable", action: enableSecondMenuBar)
+                Button(String(localized: "Enable"), action: enableSecondMenuBar)
                     .buttonStyle(ChromeActionButtonStyle(prominent: true))
             }
         }

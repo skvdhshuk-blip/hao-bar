@@ -1,62 +1,40 @@
+import AppKit
 import SaneUI
 import SwiftUI
 
 struct AboutSettingsView: View {
     var body: some View {
-        SaneAboutView(
-            appName: AppIdentity.displayName,
-            githubRepo: AppIdentity.githubRepo,
-            diagnosticsService: .shared,
-            licenses: licenseEntries,
-            feedbackExtraAttachments: [
-                ("menubar.rectangle", String(localized: "Menu bar state snapshot (separator positions and counts)"))
-            ]
-        )
-    }
+        SaneSettingsPage {
+            VStack(spacing: 14) {
+                Image(nsImage: NSApp.applicationIconImage)
+                    .resizable()
+                    .frame(width: 64, height: 64)
+                    .shadow(color: .black.opacity(0.12), radius: 6, x: 0, y: 4)
 
-    private var licenseEntries: [SaneAboutView.LicenseEntry] {
-        [
-            SaneAboutView.LicenseEntry(
-                name: "HaoBar",
-                url: AppIdentity.githubURL.absoluteString,
-                text: """
-                HaoBar is a Mac App Store fork of SaneBar.
+                VStack(spacing: 6) {
+                    Text(AppIdentity.displayName)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.white)
 
-                Copyright (c) 2026 HaoBar contributors
-                Copyright (c) 2025-2026 SaneApps (hi@saneapps.com)
+                    Text(AppIdentity.versionLine())
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white)
 
-                MIT License. The original SaneBar copyright and permission
-                notice are included with this software.
-                """
-            ),
-            SaneAboutView.LicenseEntry(
-                name: "SaneBar / SaneUI",
-                url: "https://github.com/sane-apps/SaneBar",
-                text: """
-                MIT License
+                    Text(AppIdentity.runningIdentityLabel())
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.86))
+                }
 
-                Copyright (c) 2025-2026 SaneApps (hi@saneapps.com)
-
-                Permission is hereby granted, free of charge, to any person obtaining a copy
-                of this software and associated documentation files (the "Software"), to deal
-                in the Software without restriction, including without limitation the rights
-                to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                copies of the Software, and to furnish to persons to whom the Software is
-                furnished to do so, subject to the following conditions:
-
-                The above copyright notice and this permission notice shall be included in all
-                copies or substantial portions of the Software.
-                """
-            ),
-            SaneAboutView.LicenseEntry(
-                name: "KeyboardShortcuts",
-                url: "https://github.com/sindresorhus/KeyboardShortcuts",
-                text: """
-                MIT License (third-party dependency)
-
-                Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-                """
-            )
-        ]
+                Text(AppIdentity.copyrightHolders)
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.86))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: 360)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 28)
+            .padding(.bottom, 20)
+        }
     }
 }

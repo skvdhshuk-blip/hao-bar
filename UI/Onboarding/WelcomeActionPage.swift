@@ -53,7 +53,7 @@ struct WelcomeActionPage: View {
                         HStack(spacing: 5) {
                             Image(systemName: "line.3.horizontal.decrease")
                                 .font(.system(size: 14, weight: .semibold))
-                            Text("CLICK!")
+                            Text(String(localized: "CLICK!"))
                                 .font(.system(size: 13, weight: .bold))
                         }
                         .foregroundStyle(saneAccentSoft)
@@ -79,10 +79,10 @@ struct WelcomeActionPage: View {
 
                 Group {
                     if isHidden {
-                        Text("Hidden! Click again to reveal.")
+                        Text(String(localized: "Hidden! Click again to reveal."))
                             .foregroundStyle(.white)
                     } else {
-                        Text("Tip").foregroundColor(saneAccentSoft).bold() + Text(": ⌘ + drag icons in your menu bar to rearrange").foregroundColor(.white)
+                        Text(String(localized: "Tip")).foregroundColor(saneAccentSoft).bold() + Text(String(localized: ": ⌘ + drag icons in your menu bar to rearrange")).foregroundColor(.white)
                     }
                 }
                 .font(.system(size: 13, weight: .medium))
@@ -118,10 +118,10 @@ struct WelcomeActionPage: View {
                 HStack(spacing: 8) {
                     Image(systemName: "arrow.right.arrow.left.circle.fill")
                         .foregroundStyle(saneAccent)
-                    Text("Switching from \(competitor)?")
+                    Text(String(localized: "Switching from \(competitor)?"))
                         .font(.system(size: 13))
                         .foregroundStyle(.white)
-                    Button(competitor == "Bartender" ? "Import Layout" : "Import Settings") {
+                    Button(competitor == "Bartender" ? String(localized: "Import Layout") : String(localized: "Import Settings")) {
                         performImport(competitor)
                     }
                     .font(.system(size: 13, weight: .semibold))
@@ -131,11 +131,11 @@ struct WelcomeActionPage: View {
                 }
 
                 if competitor == "Ice" {
-                    Text("HaoBar can import your Ice settings here, but Ice does not store icon positions.")
+                    Text(String(localized: "HaoBar can import your Ice settings here, but Ice does not store icon positions."))
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.9))
                 } else {
-                    Text("HaoBar can import your Bartender layout and matching settings from the detected plist.")
+                    Text(String(localized: "HaoBar can import your Bartender layout and matching settings from the detected plist."))
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.9))
                 }

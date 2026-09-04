@@ -569,7 +569,7 @@ struct MenuBarManagerRecoveryPolicyTests {
     }
 
     @Test("Layout rescue save explains when menu bar anchors are not trustworthy")
-    func layoutRescueRestorePointSaveFailureMessageExplainsUnhealthySnapshot() {
+    func layoutRescueRestorePointSaveFailureMessageExplainsUnhealthySnapshot() throws {
         let unhealthy = MenuBarRuntimeSnapshot(
             identityPrecision: .exact,
             geometryConfidence: .missing,
@@ -582,9 +582,21 @@ struct MenuBarManagerRecoveryPolicyTests {
         )
 
         let message = MenuBarProfileWorkflow.layoutRescueRestorePointSaveFailureMessage(from: unhealthy)
+        let key = "HaoBar cannot save this layout yet because macOS has not provided trustworthy menu bar positions. Run Arrange Now, then try again."
+        let catalogURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Resources/Localizable.xcstrings")
+        let catalog = try JSONSerialization.jsonObject(with: Data(contentsOf: catalogURL)) as? [String: Any]
+        let englishSource = (((catalog?["strings"] as? [String: Any])?[key] as? [String: Any])?["localizations"] as? [String: Any])
+            .flatMap { $0["en"] as? [String: Any] }
+            .flatMap { $0["stringUnit"] as? [String: Any] }
+            .flatMap { $0["value"] as? String }
 
-        #expect(message.contains("cannot save this layout yet"))
-        #expect(message.contains("Run Arrange Now"))
+        #expect(englishSource?.contains("cannot save this layout yet") == true)
+        #expect(englishSource?.contains("Run Arrange Now") == true)
+        #expect(message == String(localized: String.LocalizationValue(key)))
+        #expect(!message.contains("SaneBar cannot"))
     }
 
     @Test("Bad data hard-resets only on startup/display-topology; wake/Space/manual preserve the explicit divider (FM-2 #136/#168)")

@@ -384,7 +384,7 @@ struct SecondMenuBarView: View {
         return HStack(spacing: 6) {
             Image(systemName: isTargeted ? "arrow.down.circle.fill" : "tray")
                 .font(.system(size: 11, weight: .semibold))
-            Text("Drag icons here")
+            Text(String(localized: "Drag icons here"))
                 .font(.system(size: 10, weight: .semibold))
         }
         .foregroundStyle(isTargeted ? textPrimary : textMuted)
@@ -411,13 +411,13 @@ struct SecondMenuBarView: View {
 
     private var usageHelpPopover: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("How Browse Icons works")
+            Text(String(localized: "How Browse Icons works"))
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.primary)
-            Text("1. Click any icon here to open it.")
-            Text("2. Drag an icon into another row to move it there.")
-            Text("3. Right-click an icon for more actions.")
-            Text("4. Use the chips above to show or hide rows.")
+            Text(String(localized: "1. Click any icon here to open it."))
+            Text(String(localized: "2. Drag an icon into another row to move it there."))
+            Text(String(localized: "3. Right-click an icon for more actions."))
+            Text(String(localized: "4. Use the chips above to show or hide rows."))
         }
         .font(.system(size: 12))
         .padding(12)
@@ -625,14 +625,14 @@ struct SecondMenuBarView: View {
             if isRefreshing {
                 ProgressView()
                     .controlSize(.small)
-                Text("Scanning...")
+                Text(String(localized: "Scanning..."))
                     .font(.system(size: 11))
                     .foregroundStyle(textSecondary)
             } else {
                 Image(systemName: "menubar.rectangle")
                     .font(.system(size: 18))
                     .foregroundStyle(textMuted)
-                Text("No icons found")
+                Text(String(localized: "No icons found"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(textSecondary)
             }
@@ -650,19 +650,21 @@ struct SecondMenuBarView: View {
                 .font(.system(size: 16))
                 .foregroundStyle(.orange)
 
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Grant Access")
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "Grant Access"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(textPrimary)
-                Text("Required to detect icons")
+                Text(AppIdentity.runningIdentityLabel())
                     .font(.system(size: 11))
                     .foregroundStyle(textSecondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
 
             Spacer()
 
-            Button("Grant") {
-                _ = AccessibilityService.shared.openAccessibilitySettings()
+            Button(String(localized: "Grant")) {
+                _ = AccessibilityService.shared.promptAndOpenAccessibilitySettings()
             }
             .controlSize(.small)
             .buttonStyle(ChromeActionButtonStyle(prominent: true))

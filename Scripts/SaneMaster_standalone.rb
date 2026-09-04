@@ -48,8 +48,9 @@ end
 
 def test_mode
   build
-  app = Dir.glob(File.join(PROJECT_ROOT, "build/**/#{APP_NAME}.app")).first
-  app ||= Dir.glob(File.expand_path("~/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug/#{APP_NAME}.app")).first
+  derived = Dir.glob(File.expand_path("~/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug/#{APP_NAME}.app"))
+  local = Dir.glob(File.join(PROJECT_ROOT, "build/**/#{APP_NAME}.app")).reject { |path| path.include?('.xcarchive') }
+  app = derived.first || local.first
   abort "Could not find built #{APP_NAME}.app" unless app
   system("killall #{APP_NAME} 2>/dev/null")
   sleep 0.5

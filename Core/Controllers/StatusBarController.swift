@@ -14,7 +14,6 @@ struct MenuConfiguration {
     let healthAction: Selector
     let settingsAction: Selector
     let licenseAction: Selector
-    let donateAction: Selector?
     let aboutAndBugReportAction: Selector
     let showReleaseNotesAction: Selector?
     let checkForUpdatesAction: Selector?
@@ -642,9 +641,6 @@ final class StatusBarController: StatusBarControllerProtocol {
             checkForUpdatesAction: configuration.checkForUpdatesAction,
             aboutAndBugReportAction: configuration.aboutAndBugReportAction,
             whatsNewAction: configuration.showReleaseNotesAction,
-            extraUtilityItems: configuration.donateAction.map { action in
-                [SaneStandardMenu.item(title: String(localized: "Donate..."), target: nil, action: action)]
-            } ?? [],
             quitAction: configuration.quitAction,
             settingsKeyEquivalent: ","
         )

@@ -39,7 +39,7 @@ settings:
   ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
   ENABLE_HARDENED_RUNTIME: YES
   GENERATE_INFOPLIST_FILE: YES
-  DEVELOPMENT_TEAM: 5J7WJGPA2Q
+  DEVELOPMENT_TEAM: M2WM2NJP68
   # Recommended warnings
   CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: YES
   CLANG_WARN_BOOL_CONVERSION: YES
@@ -143,7 +143,7 @@ targets:
         PRODUCT_MODULE_NAME: SaneBar
         PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
         MARKETING_VERSION: "1.0.0"
-        CURRENT_PROJECT_VERSION: "100"
+        CURRENT_PROJECT_VERSION: "102"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: NO
         ENABLE_XOJIT_PREVIEWS: NO
@@ -152,16 +152,15 @@ targets:
         MACOSX_DEPLOYMENT_TARGET: 14.0
         ARCHS: arm64
         VALID_ARCHS: arm64
-        DEVELOPMENT_TEAM: 5J7WJGPA2Q
+        DEVELOPMENT_TEAM: M2WM2NJP68
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_INJECT_BASE_ENTITLEMENTS: YES
       configs:
         Debug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.haobar.dev
-          CODE_SIGN_IDENTITY: "-"
-          CODE_SIGN_STYLE: Manual
-          DEVELOPMENT_TEAM: ""
-          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+          PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
+          CODE_SIGN_STYLE: Automatic
+          CODE_SIGN_IDENTITY: "Apple Development"
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: YES
           CODE_SIGN_ENTITLEMENTS: ""
         Debug-AppStore:
           PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
@@ -191,6 +190,34 @@ targets:
           fi
         name: Run SwiftLint
         basedOnDependencyAnalysis: false
+    postBuildScripts:
+      - name: Sign embedded resource bundles
+        basedOnDependencyAnalysis: false
+        script: |
+          set -euo pipefail
+          # 101 failed App Store processing (90284) because this signed SPM
+          # resource bundles with Apple Development. Export resigns the app
+          # with Distribution; leave Release archives for that step.
+          if [ "${CONFIGURATION:-}" = "Release-AppStore" ]; then
+            echo "skip bundle signing: App Store export resigns with Distribution"
+            exit 0
+          fi
+          if [ "${CODE_SIGNING_ALLOWED:-}" != "YES" ]; then
+            echo "skip bundle signing: CODE_SIGNING_ALLOWED=${CODE_SIGNING_ALLOWED:-unset}"
+            exit 0
+          fi
+          IDENTITY="${EXPANDED_CODE_SIGN_IDENTITY:-}"
+          if [ -z "$IDENTITY" ] || [ "$IDENTITY" = "-" ]; then
+            echo "skip bundle signing: no development identity"
+            exit 0
+          fi
+          APP="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+          RESOURCES="${APP}/Contents/Resources"
+          [ -d "$RESOURCES" ] || exit 0
+          find "$RESOURCES" -name '*.bundle' -print0 | while IFS= read -r -d '' bundle; do
+            echo "Signing $bundle with ${EXPANDED_CODE_SIGN_IDENTITY_NAME:-$IDENTITY}"
+            /usr/bin/codesign --force --sign "$IDENTITY" --timestamp=none --generate-entitlement-der "$bundle"
+          done
 
   SaneBarTests:
     type: bundle.unit-test
@@ -208,15 +235,11 @@ targets:
     settings:
       base:
         PRODUCT_MODULE_NAME: SaneBarTests
-        DEVELOPMENT_TEAM: 5J7WJGPA2Q
+        DEVELOPMENT_TEAM: M2WM2NJP68
         CODE_SIGN_STYLE: Automatic
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/HaoBar.app/Contents/MacOS/HaoBar"
         BUNDLE_LOADER: "$(TEST_HOST)"
       configs:
-        Debug:
-          DEVELOPMENT_TEAM: ""
-          CODE_SIGN_STYLE: Manual
-          CODE_SIGN_IDENTITY: "-"
         Debug-AppStore:
           CODE_SIGN_IDENTITY: "Apple Development"
         Release-AppStore:

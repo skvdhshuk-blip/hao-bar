@@ -149,11 +149,17 @@ final class CustomerUIActionContractXCTests: XCTestCase {
         let appearanceSource = try read("UI/Settings/AppearanceSettingsView.swift")
         let shortcutsSource = try read("UI/Settings/ShortcutsSettingsView.swift")
         let healthSource = try read("UI/Settings/HealthSettingsView.swift")
+        let advancedSource = try read("UI/Settings/AdvancedSettingsView.swift")
 
-        for tab in ["Control", "Appearance", "Shortcuts", "Rules", "Health", "About"] {
+        for tab in ["Control", "Appearance", "Health", "Advanced", "About"] {
             XCTAssertTrue(settingsSource.contains(tab), "Expected Settings tab \(tab)")
             XCTAssertTrue(contract.contains("\(tab) tab"), "Contract must require evidence for Settings \(tab)")
         }
+        XCTAssertTrue(
+            advancedSource.contains("ShortcutsSettingsView()") &&
+                advancedSource.contains("RulesSettingsView()"),
+            "Advanced settings should compose shortcuts and automation without copying their controls"
+        )
 
         for label in ["Export Settings...", "Import Settings...", "Import Bartender...", "Import Ice...", "Reset to Defaults"] {
             XCTAssertTrue(generalSource.contains(label), "Expected shipped data action \(label)")

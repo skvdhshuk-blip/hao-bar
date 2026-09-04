@@ -15,6 +15,83 @@ struct AccessibilityServiceCacheAndIdentityTests {
         #expect(service.isTrusted == AXIsProcessTrusted())
     }
 
+    @Test("refreshPermissionStatus republishes the live AX trust status")
+    @MainActor
+    func testRefreshPermissionStatusMatchesSystemStatus() {
+        let service = AccessibilityService.shared
+        service.refreshPermissionStatus()
+        #expect(service.isGranted == AXIsProcessTrusted())
+        #expect(service.isTrusted == service.isGranted)
+    }
+
+    @Test("Denied Accessibility help names the running bundle")
+    func testDeniedHelpTextIncludesBundleIdentifier() {
+        let help = AccessibilityService.deniedHelpText()
+        let bundleID = Bundle.main.bundleIdentifier ?? AppIdentity.productionBundleId
+        #expect(help.contains(bundleID))
+        #expect(help.contains(AppIdentity.displayName))
+        #expect(help.contains(AppIdentity.runningIdentityLabel()))
+    }
+
+    @Test("Running identity label pairs the process display name with its bundle id")
+    func testRunningIdentityLabelPairsDisplayNameAndBundleID() {
+        let label = AppIdentity.runningIdentityLabel()
+        let bundleID = Bundle.main.bundleIdentifier ?? AppIdentity.productionBundleId
+        #expect(label.contains(bundleID))
+        #expect(label.contains("("))
+        #expect(label.contains(")"))
+    }
+
+    @Test("Debug HaoBar uses a stable Apple Development identity")
+    func testDebugProjectUsesStableDevelopmentSigning() throws {
+        let yaml = try String(contentsOf: projectRootURL().appendingPathComponent("project.yml"), encoding: .utf8)
+        let debugApp = debugConfigBlock(in: yaml, after: "        Debug:\n")
+
+        #expect(debugApp.contains("PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app"))
+        #expect(!yaml.contains("PRODUCT_BUNDLE_IDENTIFIER: com.haobar.dev"))
+        #expect(!yaml.contains("CODE_SIGN_IDENTITY: \"-\""))
+        #expect(debugApp.contains("CODE_SIGN_STYLE: Automatic"))
+        #expect(debugApp.contains("CODE_SIGN_IDENTITY: \"Apple Development\""))
+        #expect(yaml.contains("Sign embedded resource bundles"))
+        #expect(yaml.contains("find \"$RESOURCES\" -name '*.bundle'"))
+    }
+
+    @Test("Permission surfaces name the running HaoBar copy and give the grant card room")
+    func testPermissionSurfacesNameRunningCopy() throws {
+        let root = projectRootURL()
+        let browse = try String(contentsOf: root.appendingPathComponent("UI/SearchWindow/BrowsePanelChromeViews.swift"), encoding: .utf8)
+        let health = try String(contentsOf: root.appendingPathComponent("UI/Settings/HealthSettingsView.swift"), encoding: .utf8)
+        let wizard = try String(contentsOf: root.appendingPathComponent("UI/Settings/HealthWizardView.swift"), encoding: .utf8)
+        let second = try String(contentsOf: root.appendingPathComponent("UI/SearchWindow/SecondMenuBarView.swift"), encoding: .utf8)
+        let lifecycle = try String(contentsOf: root.appendingPathComponent("UI/SearchWindow/BrowsePanelLifecycleModifier.swift"), encoding: .utf8)
+
+        #expect(browse.contains("AccessibilityService.deniedHelpText()"))
+        #expect(browse.contains("VStack(spacing: 24)"))
+        #expect(browse.contains(".padding(32)"))
+        #expect(browse.contains("HStack(spacing: 16)"))
+        #expect(health.contains("HealthInlineHelp(AccessibilityService.deniedHelpText())"))
+        #expect(wizard.contains("HealthInlineHelp(AccessibilityService.deniedHelpText())"))
+        #expect(second.contains("AppIdentity.runningIdentityLabel()"))
+        #expect(lifecycle.contains("AccessibilityService.shared.refreshPermissionStatus()"))
+    }
+
+    @Test("About settings keeps only version and app identity")
+    func testAboutSettingsKeepsOnlyVersionAndAppIdentity() throws {
+        let about = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Settings/AboutSettingsView.swift"),
+            encoding: .utf8
+        )
+
+        #expect(about.contains("AppIdentity.displayName"))
+        #expect(about.contains("AppIdentity.versionLine()"))
+        #expect(about.contains("AppIdentity.runningIdentityLabel()"))
+        #expect(about.contains("AppIdentity.copyrightHolders"))
+        #expect(!about.contains("SaneAboutView"))
+        #expect(!about.contains("githubRepo"))
+        #expect(!about.contains("Donate"))
+        #expect(!about.contains("USA"))
+    }
+
     // MARK: - clickMenuBarItem Tests
 
     @Test("clickMenuBarItem returns false for non-existent bundle ID")
@@ -43,6 +120,47 @@ struct AccessibilityServiceCacheAndIdentityTests {
 
         #expect(url != nil, "Accessibility Settings URL must be valid")
         #expect(url?.scheme == "x-apple.systempreferences", "URL scheme must be x-apple.systempreferences")
+    }
+
+    @Test("Open Accessibility registers this process then opens System Settings")
+    func testOpenAccessibilityRegistersRunningProcessThenOpensSettings() throws {
+        let root = projectRootURL()
+        let service = try String(contentsOf: root.appendingPathComponent("Core/Services/AccessibilityService.swift"), encoding: .utf8)
+        let health = try String(contentsOf: root.appendingPathComponent("UI/Settings/HealthSettingsView.swift"), encoding: .utf8)
+        let welcome = try String(contentsOf: root.appendingPathComponent("UI/Onboarding/WelcomePermissionPage.swift"), encoding: .utf8)
+        let wizard = try String(contentsOf: root.appendingPathComponent("UI/Settings/HealthWizardView.swift"), encoding: .utf8)
+        let browse = try String(contentsOf: root.appendingPathComponent("UI/SearchWindow/MenuBarSearchView.swift"), encoding: .utf8)
+
+        #expect(service.contains("func promptAndOpenAccessibilitySettings()"))
+        #expect(service.contains("requestAccessibility(promptUser: true)"))
+        #expect(service.contains("openAccessibilitySettings()"))
+        #expect(health.contains("promptAndOpenAccessibilitySettings()"))
+        #expect(welcome.contains("promptAndOpenAccessibilitySettings()"))
+        #expect(wizard.contains("promptAndOpenAccessibilitySettings()"))
+        #expect(browse.contains("promptAndOpenAccessibilitySettings()"))
+    }
+
+    @Test("Permissions page can retry Accessibility after the user toggles the matching HaoBar row")
+    func testHealthPermissionsHasTryAgain() throws {
+        let health = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Settings/HealthSettingsView.swift"),
+            encoding: .utf8
+        )
+
+        #expect(health.contains("Button(\"Try Again\""))
+        #expect(health.contains("retryAccessibilityPermission()"))
+    }
+
+    @Test("Denied Accessibility help uses a localizable identity placeholder")
+    func testDeniedHelpUsesLocalizableIdentityPlaceholder() throws {
+        let service = try String(
+            contentsOf: projectRootURL().appendingPathComponent("Core/Services/AccessibilityService.swift"),
+            encoding: .utf8
+        )
+
+        #expect(service.contains("let identity = AppIdentity.runningIdentityLabel()"))
+        #expect(service.contains("Open Accessibility settings and enable \\(identity)"))
+        #expect(!service.contains("enable \\(AppIdentity.runningIdentityLabel())"))
     }
 
     @Test("Cache warmup delays prioritize launch immediacy and reveal settling")
@@ -420,5 +538,20 @@ struct AccessibilityServiceCacheAndIdentityTests {
         #expect(source.contains("screenFrames: NSScreen.screens.map(\\.frame)"))
         #expect(source.contains("AccessibilityMenuExtraFrameResolver.resolvedStatusItemIndex"))
         #expect(source.contains("return (true, false)"))
+    }
+
+    private func projectRootURL() -> URL {
+        URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
+
+    private func debugConfigBlock(in yaml: String, after marker: String) -> String {
+        guard let markerRange = yaml.range(of: marker) else { return "" }
+        let tail = yaml[markerRange.upperBound...]
+        if let nextConfig = tail.range(of: "\n        Debug-AppStore:") {
+            return String(tail[..<nextConfig.lowerBound])
+        }
+        return String(tail)
     }
 }

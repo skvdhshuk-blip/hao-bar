@@ -13,6 +13,7 @@
 		047C699A054AC4F4F2251192 /* AccessibilityBoundedAXChildFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B570D399C2B31B886AEE7D9 /* AccessibilityBoundedAXChildFetch.swift */; };
 		04BABC19E5BFB37F80B5BB2F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AE59754E6F1AFF593D071 /* KeychainService.swift */; };
 		057E82F83C16E5791ABD44AD /* StatusBarPositionDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB16BF5297027FA8C77B14DF /* StatusBarPositionDefaultsStore.swift */; };
+		0640D54552A7805607722136 /* AccessibilityPermissionRefreshModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83684791A1A7474E208A5228 /* AccessibilityPermissionRefreshModifier.swift */; };
 		068AAC29F3161987586B4860 /* StatusBarWakeExplicitPositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FFEA1D33118A0B81FEF44F4 /* StatusBarWakeExplicitPositionTests.swift */; };
 		08DAB706A1865F8E3B520362 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F25C7DBC9B39EE94549E08 /* OnboardingController.swift */; };
 		099B0030DB1872705EBCED00 /* AppleScriptIconListingCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44DF28F242D7D401EBBC851 /* AppleScriptIconListingCommands.swift */; };
@@ -237,6 +238,7 @@
 		F4B29C910A1781E9154C38A8 /* WelcomeActionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA3CBB26832D79CDA06C776 /* WelcomeActionPage.swift */; };
 		F5231EF45689247AC31F2B8F /* BartenderImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5EB59517C136E5ACE00286 /* BartenderImportService.swift */; };
 		F5AC77E9344F118679C78D16 /* BrowseSecondMenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109E59A9C569BEC3ECD1EC24 /* BrowseSecondMenuBarPanelView.swift */; };
+		F650F18E449852345CEB3FA6 /* AdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2608C1CE315884BF17942B22 /* AdvancedSettingsView.swift */; };
 		F7416A05707F7F81DD67FAA3 /* AppCapability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1143E4B8A07BC2B76DEDCA /* AppCapability.swift */; };
 		F751946DF0C2F5F22E2F6046 /* MenuBarAutomaticMoveGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F22822682D127C272FEE3A /* MenuBarAutomaticMoveGateTests.swift */; };
 		F7BA27229D32EEA18FB0B952 /* MenuBarAppearanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687209986141F3E438230A39 /* MenuBarAppearanceSettings.swift */; };
@@ -299,6 +301,7 @@
 		24F57C87AAB75F88B773FA46 /* AccessibilityInteractionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityInteractionPolicy.swift; sourceTree = "<group>"; };
 		2561E7768C377C627AACE5BB /* WelcomeOnboardingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeOnboardingStyle.swift; sourceTree = "<group>"; };
 		25CA7756A3A1EE8AFDE3FE28 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2608C1CE315884BF17942B22 /* AdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsView.swift; sourceTree = "<group>"; };
 		274FA00D019C664E4EA2FEDC /* StatusBarPositionRecoveryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarPositionRecoveryStore.swift; sourceTree = "<group>"; };
 		275029C6547BD88D80708D34 /* BrowsePanelModeStripDragMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsePanelModeStripDragMonitor.swift; sourceTree = "<group>"; };
 		277392DB596144A8D4008EDA /* SearchRunningAppsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRunningAppsProvider.swift; sourceTree = "<group>"; };
@@ -374,6 +377,7 @@
 		7E58DF175D9BD4372B63681F /* AppIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentity.swift; sourceTree = "<group>"; };
 		7F4A1A42ED75E793862B484E /* MenuBarVisibilityFlapDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarVisibilityFlapDetectorTests.swift; sourceTree = "<group>"; };
 		811791DA82C601D836AA5DA4 /* EventTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTracker.swift; sourceTree = "<group>"; };
+		83684791A1A7474E208A5228 /* AccessibilityPermissionRefreshModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPermissionRefreshModifier.swift; sourceTree = "<group>"; };
 		8584D412C9CA1A2F1E5D4A26 /* WelcomePlanPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePlanPage.swift; sourceTree = "<group>"; };
 		8D63E80B15D2D4BD8F70F2CD /* AppleScriptIconMoveCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScriptIconMoveCommands.swift; sourceTree = "<group>"; };
 		8F6181853E826EB6D984B8A7 /* MenuBarAppearanceSuppressionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAppearanceSuppressionPolicy.swift; sourceTree = "<group>"; };
@@ -688,6 +692,8 @@
 			isa = PBXGroup;
 			children = (
 				B3021B24B132BD1CF5EB4BEC /* AboutSettingsView.swift */,
+				83684791A1A7474E208A5228 /* AccessibilityPermissionRefreshModifier.swift */,
+				2608C1CE315884BF17942B22 /* AdvancedSettingsView.swift */,
 				AA9A64F4720057AEA3A9D2BF /* AppearanceSettingsView.swift */,
 				F1FC2E8F0087CE346B8FD45C /* GeneralSettingsBrowseModels.swift */,
 				6DC16F07D565F28415B9A59D /* GeneralSettingsBrowseSection.swift */,
@@ -919,6 +925,7 @@
 				ACD4857716FE2B4BB6D40D67 /* Run SwiftLint */,
 				FEB2BBAEB007C7EC59786730 /* Resources */,
 				729C80327D9CB1836E32E1C5 /* Frameworks */,
+				61BF9A1339FF1B5B1FF74DCE /* Sign embedded resource bundles */,
 			);
 			buildRules = (
 			);
@@ -942,6 +949,14 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					020A0F6219F4EE96F9923799 = {
+						DevelopmentTeam = M2WM2NJP68;
+						ProvisioningStyle = Automatic;
+					};
+					1951DC8E5DD83CFDC1E5875B = {
+						DevelopmentTeam = M2WM2NJP68;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 522DFAB53E640DC8E2C4B75C /* Build configuration list for PBXProject "SaneBar" */;
@@ -1005,6 +1020,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		61BF9A1339FF1B5B1FF74DCE /* Sign embedded resource bundles */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sign embedded resource bundles";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -euo pipefail\nif [ \"${CONFIGURATION:-}\" = \"Release-AppStore\" ]; then\n  echo \"skip bundle signing: App Store export resigns with Distribution\"\n  exit 0\nfi\nif [ \"${CODE_SIGNING_ALLOWED:-}\" != \"YES\" ]; then\n  echo \"skip bundle signing: CODE_SIGNING_ALLOWED=${CODE_SIGNING_ALLOWED:-unset}\"\n  exit 0\nfi\nIDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-}\"\nif [ -z \"$IDENTITY\" ] || [ \"$IDENTITY\" = \"-\" ]; then\n  echo \"skip bundle signing: no development identity\"\n  exit 0\nfi\nAPP=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\nRESOURCES=\"${APP}/Contents/Resources\"\n[ -d \"$RESOURCES\" ] || exit 0\nfind \"$RESOURCES\" -name '*.bundle' -print0 | while IFS= read -r -d '' bundle; do\n  echo \"Signing $bundle with ${EXPANDED_CODE_SIGN_IDENTITY_NAME:-$IDENTITY}\"\n  /usr/bin/codesign --force --sign \"$IDENTITY\" --timestamp=none --generate-entitlement-der \"$bundle\"\ndone\n";
+		};
 		ACD4857716FE2B4BB6D40D67 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -1132,11 +1166,13 @@
 				49C231978CFCE626654C2E0D /* AccessibilityMenuBarWindowFallbackPolicy.swift in Sources */,
 				4B23671EE8D05E9767F983CA /* AccessibilityMenuExtraFrameResolver.swift in Sources */,
 				5FC2B77C6B04A1C7591A8D30 /* AccessibilityMenuExtraService.swift in Sources */,
+				0640D54552A7805607722136 /* AccessibilityPermissionRefreshModifier.swift in Sources */,
 				0DE723F29A946495E5D47227 /* AccessibilityService+Cache.swift in Sources */,
 				7FE0E1A0A93B6BBFC56B1326 /* AccessibilityService+Interaction.swift in Sources */,
 				F8943E29E203BC48686879E6 /* AccessibilityService+Scanning.swift in Sources */,
 				A0C50D5E25A04B6896F997D6 /* AccessibilityService.swift in Sources */,
 				90AC51B02894802BF224E4E8 /* AccessibilitySystemWideMenuBarScanner.swift in Sources */,
+				F650F18E449852345CEB3FA6 /* AdvancedSettingsView.swift in Sources */,
 				F7416A05707F7F81DD67FAA3 /* AppCapability.swift in Sources */,
 				24ACA6313EABCEEBAD05AC53 /* AppIdentity.swift in Sources */,
 				78364D2694684C7224FA4CC9 /* AppPickerView.swift in Sources */,
@@ -1294,8 +1330,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 100;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				CURRENT_PROJECT_VERSION = 102;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = NO;
 				ENABLE_XOJIT_PREVIEWS = NO;
@@ -1355,7 +1391,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1394,12 +1430,12 @@
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 100;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 102;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_PREVIEWS = NO;
 				ENABLE_XOJIT_PREVIEWS = NO;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -1410,7 +1446,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.haobar.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haobar.app;
 				PRODUCT_MODULE_NAME = SaneBar;
 				PRODUCT_NAME = HaoBar;
 				SDKROOT = macosx;
@@ -1426,7 +1462,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1449,8 +1485,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 100;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				CURRENT_PROJECT_VERSION = 102;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = NO;
 				ENABLE_XOJIT_PREVIEWS = NO;
@@ -1477,10 +1513,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1500,7 +1535,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1550,7 +1585,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1620,7 +1655,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 5J7WJGPA2Q;
+				DEVELOPMENT_TEAM = M2WM2NJP68;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

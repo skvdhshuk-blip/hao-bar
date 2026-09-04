@@ -18,7 +18,7 @@ The Mac App Store build is sandboxed. System-wide icon spacing, Focus Mode file 
 
 ## Privacy
 
-HaoBar stores settings on this Mac. It does not upload menu bar contents, does not require an account, and does not phone home. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://skvdhshuk-blip.github.io/hao-bar/).
+HaoBar stores settings on this Mac. It does not upload menu bar contents, does not require an account, and does not phone home. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://skvdhshuk-blip.github.io/hao-bar/privacy.html).
 
 ## Build
 

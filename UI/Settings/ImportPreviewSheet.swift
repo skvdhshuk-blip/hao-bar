@@ -28,16 +28,16 @@ struct ImportPreviewSheet: View {
 
                 if hasRuleDetails {
                     CompactDivider()
-                    CompactRow(String(localized: "Show")) { Text("\(plan.showItemIds.count) items") }
+                    CompactRow(String(localized: "Show")) { Text(String(localized: "\(plan.showItemIds.count) items")) }
                     CompactDivider()
-                    CompactRow(String(localized: "Hide")) { Text("\(plan.hideItemIds.count) items") }
+                    CompactRow(String(localized: "Hide")) { Text(String(localized: "\(plan.hideItemIds.count) items")) }
                     CompactDivider()
-                    CompactRow(String(localized: "Always Hide")) { Text("\(plan.alwaysHideItemIds.count) items") }
+                    CompactRow(String(localized: "Always Hide")) { Text(String(localized: "\(plan.alwaysHideItemIds.count) items")) }
                     CompactDivider()
                     CompactRow(String(localized: "All Others")) { Text(plan.hideAllOtherItems ? String(localized: "On") : String(localized: "Off")) }
                 } else {
                     CompactDivider()
-                    CompactRow(String(localized: "Profile rules")) { Text("No visibility rules") }
+                    CompactRow(String(localized: "Profile rules")) { Text(String(localized: "No visibility rules")) }
                 }
 
                 if plan.savedProfileCount > 0 {
@@ -46,15 +46,15 @@ struct ImportPreviewSheet: View {
                 }
                 if plan.includesLayoutSnapshot {
                     CompactDivider()
-                    CompactRow(String(localized: "Layout snapshot")) { Text("Included") }
+                    CompactRow(String(localized: "Layout snapshot")) { Text(String(localized: "Included")) }
                 }
                 if plan.includesCustomIconSnapshot {
                     CompactDivider()
-                    CompactRow(String(localized: "Custom icon")) { Text("Included") }
+                    CompactRow(String(localized: "Custom icon")) { Text(String(localized: "Included")) }
                 }
                 if !plan.behavioralSettings.isEmpty {
                     CompactDivider()
-                    CompactRow(String(localized: "Settings")) { Text("\(plan.behavioralSettings.count) changes") }
+                    CompactRow(String(localized: "Settings")) { Text(String(localized: "\(plan.behavioralSettings.count) changes")) }
                 }
                 if !plan.missingItemIds.isEmpty {
                     CompactDivider()
@@ -66,10 +66,10 @@ struct ImportPreviewSheet: View {
                 }
 
                 if plan.hideAllOtherItems {
-                    SaneInlineHelp(String(localized: "This import will keep the shown items visible and hide newly detected menu bar items by default."))
+                    SettingsInlineHelp(String(localized: "This import will keep the shown items visible and hide newly detected menu bar items by default."))
                 }
                 if enablesScriptTrigger {
-                    SaneInlineHelp(String(localized: "This import enables script-based control. Only import files you trust."))
+                    SettingsInlineHelp(String(localized: "This import enables script-based control. Only import files you trust."))
                 }
             }
 

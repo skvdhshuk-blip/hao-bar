@@ -42,7 +42,6 @@ final class MenuBarStatusItemSetupWorkflow {
             healthAction: #selector(MenuBarActionWorkflow.openHealth(_:)),
             settingsAction: #selector(MenuBarActionWorkflow.openSettings(_:)),
             licenseAction: #selector(MenuBarActionWorkflow.openLicense(_:)),
-            donateAction: #selector(MenuBarActionWorkflow.openDonate(_:)),
             aboutAndBugReportAction: #selector(MenuBarActionWorkflow.openAbout(_:)),
             showReleaseNotesAction: LicenseService.shared.usesSetappDistribution
                 ? #selector(MenuBarActionWorkflow.showReleaseNotes(_:))

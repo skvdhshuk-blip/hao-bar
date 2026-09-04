@@ -76,30 +76,6 @@ struct GeneralSettingsView: View {
         )
     }
 
-    private var liveLayoutChecksBinding: Binding<Bool> {
-        Binding(
-            get: { menuBarManager.settings.layoutMode == .live },
-            set: { enabled in
-                Task { @MainActor in
-                    _ = await menuBarManager.profileWorkflow.setLayoutMode(enabled ? .live : .stability, reason: "control")
-                }
-            }
-        )
-    }
-
-    private var layoutModeDescription: String {
-        layoutModeHelp(menuBarManager.settings.layoutMode)
-    }
-
-    private func layoutModeHelp(_ mode: SaneBarSettings.LayoutMode) -> String {
-        switch mode {
-        case .stability:
-            String(localized: "Stability repairs only at startup or when you click Arrange Now. This is the calm default.")
-        case .live:
-            String(localized: "Live checks after wake and display changes if your icons drift.")
-        }
-    }
-
     /// Custom binding that requires auth to disable the security setting.
     private var requireAuthBinding: Binding<Bool> {
         Binding(
@@ -167,12 +143,21 @@ struct GeneralSettingsView: View {
                     showProUpsell: { proUpsellFeature = $0 }
                 )
 
-                // 3. Profiles                // 3. Profiles — Pro
+                CompactSection(String(localized: "Startup")) {
+                    SaneLoginItemToggle()
+                    CompactDivider()
+                    SaneDockIconToggle(showDockIcon: showDockIconBinding)
+                }
+
+                if AppCapability.sparkleUpdates {
+                    softwareUpdatesSection
+                }
+
                 CompactSection(String(localized: "Saved Profiles")) {
                     if licenseService.isPro {
                         if savedProfiles.isEmpty {
                             CompactRow(String(localized: "Saved")) {
-                                Text("No saved profiles")
+                                Text(String(localized: "No saved profiles"))
                                     .foregroundStyle(.white.opacity(0.92))
                             }
                         } else {
@@ -214,32 +199,6 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // 4. Layout Repair
-                CompactSection(String(localized: "Layout Repair")) {
-                    CompactToggle(
-                        label: String(localized: "Repair after wake or display changes"),
-                        isOn: liveLayoutChecksBinding
-                    )
-                    .saneHelp(String(localized: "Live checks after wake/display changes. Turn it on if icons drift after wake, monitor changes, or fast user switching. Leave it off for the calmer default Stability mode."))
-                    CompactDivider()
-                    CompactRow(String(localized: "Repair Mode")) {
-                        StatusBadge(menuBarManager.settings.layoutMode.localizedTitle, color: .cyan, icon: "slider.horizontal.3")
-                            .saneHelp(layoutModeDescription)
-                    }
-                    SaneInlineHelp(layoutModeDescription)
-                    CompactDivider()
-                    CompactRow(String(localized: "Arrange Now")) {
-                        Button("Run") {
-                            Task { @MainActor in
-                                _ = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: "control")
-                            }
-                        }
-                        .buttonStyle(ChromeActionButtonStyle())
-                        .saneHelp(String(localized: "Runs an immediate layout check, refreshes menu bar anchor positions, and repairs HaoBar's visible, hidden, and always-hidden groups if needed."))
-                    }
-                }
-
-                // 5. Security — Pro
                 CompactSection(String(localized: "Security")) {
                     if licenseService.isPro {
                         CompactToggle(label: String(localized: "Touch ID to unlock hidden icons"), isOn: requireAuthBinding)
@@ -249,19 +208,6 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                // 6. Startup Status
-                CompactSection(String(localized: "Startup")) {
-                    SaneLoginItemToggle()
-                    CompactDivider()
-                    SaneDockIconToggle(showDockIcon: showDockIconBinding)
-                }
-
-                // 7. Updates
-                if AppCapability.sparkleUpdates {
-                    softwareUpdatesSection
-                }
-
-                // 8. Data — Pro
                 CompactSection(String(localized: "Data")) {
                     if licenseService.isPro {
                         CompactRow(String(localized: "Settings")) {
@@ -318,7 +264,7 @@ struct GeneralSettingsView: View {
             Button("Save") { saveCurrentProfile() }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Save your current settings, layout, and icon to restore later.")
+            Text(String(localized: "Save your current settings, layout, and icon to restore later."))
         }
         .alert("Reset Settings?", isPresented: $showingResetAlert) {
             Button("Cancel", role: .cancel) {}
@@ -326,7 +272,7 @@ struct GeneralSettingsView: View {
                 menuBarManager.resetToDefaults()
             }
         } message: {
-            Text("This will reset all settings to their defaults. This cannot be undone.")
+            Text(String(localized: "This will reset all settings to their defaults. This cannot be undone."))
         }
         .sheet(item: $proUpsellFeature) { feature in
             ProUpsellView(feature: feature)

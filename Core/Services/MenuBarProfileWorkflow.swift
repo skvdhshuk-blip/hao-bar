@@ -28,14 +28,14 @@ final class MenuBarProfileWorkflow {
 
     nonisolated static func layoutRescueRestorePointSaveFailureMessage(from snapshot: MenuBarRuntimeSnapshot) -> String {
         if snapshot.structuralState != .ready || !snapshot.startupItemsValid {
-            return "SaneBar cannot save this layout yet because macOS has not attached its menu bar items. Run Arrange Now, then try again."
+            return String(localized: "HaoBar cannot save this layout yet because macOS has not attached its menu bar items. Run Arrange Now, then try again.")
         }
 
         if !snapshot.hasTrustworthyBootstrapAnchors {
-            return "SaneBar cannot save this layout yet because macOS has not provided trustworthy menu bar positions. Run Arrange Now, then try again."
+            return String(localized: "HaoBar cannot save this layout yet because macOS has not provided trustworthy menu bar positions. Run Arrange Now, then try again.")
         }
 
-        return "SaneBar cannot save this layout yet because its menu bar positions need checking. Run Arrange Now, then try again."
+        return String(localized: "HaoBar cannot save this layout yet because its menu bar positions need checking. Run Arrange Now, then try again.")
     }
 
     func savedProfiles() -> [SaneBarProfile] {

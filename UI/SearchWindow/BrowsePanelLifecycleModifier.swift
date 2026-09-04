@@ -67,11 +67,13 @@ struct BrowsePanelLifecycleModifier: ViewModifier {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: SearchWindowController.windowDidShowNotification)) { _ in
+                AccessibilityService.shared.refreshPermissionStatus()
                 _ = syncAccessibilityState()
                 loadCachedApps()
                 refreshApps(isSecondMenuBar)
             }
             .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+                AccessibilityService.shared.refreshPermissionStatus()
                 let nowTrusted = syncAccessibilityState()
                 if nowTrusted {
                     loadCachedApps()
@@ -101,6 +103,7 @@ struct BrowsePanelLifecycleModifier: ViewModifier {
     }
 
     private func handleAppear() {
+        AccessibilityService.shared.refreshPermissionStatus()
         _ = syncAccessibilityState()
         loadCachedApps()
         refreshApps(isSecondMenuBar)

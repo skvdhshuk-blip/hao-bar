@@ -169,7 +169,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         )
         XCTAssertTrue(
             shortcutsSource.contains("proGatedRow(feature: .appleScript, label: item.title)") &&
-                shortcutsSource.contains("SaneInlineHelp(item.command)"),
+                shortcutsSource.contains("SettingsInlineHelp(item.command)"),
             "Shortcuts settings should show each Pro automation command as an individual Basic-visible locked row"
         )
         XCTAssertTrue(
@@ -193,7 +193,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             healthSource.contains("import SaneUI") &&
                 generalSource.contains("import SaneUI") &&
                 healthSource.contains(".saneHelp(") &&
-                healthSource.contains("SaneInlineHelp(") &&
+                healthSource.contains("HealthInlineHelp(") &&
                 !healthSource.contains("overlay(alignment: .bottomTrailing)") &&
                 !healthSource.contains("QuickActionHelpModifier"),
             "Settings should use the shared SaneUI native Apple hover-help standard instead of fragile app-local overlays"
@@ -205,40 +205,72 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains("if runtimeSnapshot.likelySystemSuppressedStatusItems") &&
                 healthSource.contains("return String(localized: \"Hidden by macOS\")") &&
                 healthSource.contains("Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar") &&
-                healthSource.contains("SaneInlineHelp(layoutModeHelp)") &&
+                healthSource.contains("HealthInlineHelp(layoutModeHelp)") &&
                 healthSource.contains("if !accessibilityService.isGranted") &&
                 healthSource.contains("openAccessibilitySettings()") &&
-                healthSource.contains(".accessibilityLabel(\"Open Accessibility settings\")") &&
+                healthSource.contains(".accessibilityLabel(String(localized: \"Open Accessibility settings\"))") &&
                 healthSource.contains("if needsGeometryAction") &&
                 healthSource.contains("runRepair(reason: \"health-geometry-fix\"") &&
                 healthSource.contains("repairMenuBarHealth(reason: reason)") &&
                 healthSource.contains("repairInProgress") &&
-                healthSource.contains(".accessibilityLabel(\"Fix menu bar geometry\")") &&
+                healthSource.contains(".accessibilityLabel(String(localized: \"Fix menu bar geometry\"))") &&
                 healthSource.contains("if needsStructureAction") &&
                 healthSource.contains("runRepair(reason: \"health-items-fix\"") &&
-                healthSource.contains(".accessibilityLabel(\"Fix HaoBar items\")") &&
+                healthSource.contains(".accessibilityLabel(String(localized: \"Fix HaoBar items\"))") &&
                 healthSource.contains("menuBarManager.profileWorkflow.setLayoutMode(mode, reason: \"health\")") &&
                 healthSource.contains("title: String(localized: \"Stability\")") &&
                 healthSource.contains("title: String(localized: \"Live\")") &&
                 healthSource.contains("ChromeSegmentedChoiceButton") &&
-                healthSource.contains("func setLayoutMode(_ mode: SaneBarSettings.LayoutMode)"),
+                healthSource.contains("func setLayoutMode(_ mode: SaneBarSettings.LayoutMode)") &&
+                healthSource.contains("refreshAccessibilityPermission(using: accessibilityService)") &&
+                healthSource.contains("AccessibilityService.deniedHelpText()"),
             "Health should explain status rows, provide one-click repair actions for warning states, and expose clickable Stability/Live layout mode choices"
         )
         XCTAssertTrue(
             healthSource.contains("Copies a support report with current permissions, layout state, item counts, and recent diagnostics"),
             "Health support actions should say exactly what clicking them does"
         )
+        XCTAssertFalse(
+            generalSource.contains("Layout Repair") ||
+                generalSource.contains("liveLayoutChecksBinding") ||
+                generalSource.contains("repairMenuBarHealth(reason: \"control\")"),
+            "Layout repair belongs on the Permissions page, not a second copy on General"
+        )
+    }
+
+    func testSettingsInlineHelpOwnsCardBreathingRoom() throws {
+        let settingsDir = projectRootURL().appendingPathComponent("UI/Settings")
+        let settingsFiles = try FileManager.default.contentsOfDirectory(at: settingsDir, includingPropertiesForKeys: nil)
+            .filter { $0.pathExtension == "swift" }
+
+        for file in settingsFiles {
+            let source = try String(contentsOf: file, encoding: .utf8)
+            XCTAssertFalse(
+                source.contains("SaneInlineHelp("),
+                "Settings cards must use SettingsInlineHelp, not raw SaneInlineHelp: \(file.lastPathComponent)"
+            )
+        }
+
+        let adapter = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Components/CompactSettingsComponents.swift"),
+            encoding: .utf8
+        )
         XCTAssertTrue(
-            generalSource.contains("layoutModeDescription") &&
-                generalSource.contains("liveLayoutChecksBinding") &&
-                generalSource.contains("menuBarManager.profileWorkflow.setLayoutMode(enabled ? .live : .stability, reason: \"control\")") &&
-                generalSource.contains("menuBarManager.profileWorkflow.repairMenuBarHealth(reason: \"control\")") &&
-                generalSource.contains("Live checks after wake/display changes") &&
-                generalSource.contains("Layout Repair") &&
-                generalSource.contains("Repair after wake or display changes") &&
-                generalSource.contains("SaneInlineHelp(layoutModeDescription)") &&
-                generalSource.contains("Stability repairs only at startup"),
-            "Layout Stability should expose Live mode as a plain switch with visible and hover copy instead of a confusing one-option mode selector"
+            adapter.contains("struct SettingsInlineHelp: View") &&
+                adapter.contains("SaneInlineHelp(text)") &&
+                adapter.contains(".padding(.top, 16)") &&
+                adapter.contains(".padding(.bottom, 12)") &&
+                adapter.contains("typealias HealthInlineHelp = SettingsInlineHelp"),
+            "HaoBar should own CompactSection help inset in one settings chrome adapter"
+        )
+
+        let appearance = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Settings/AppearanceSettingsView.swift"),
+            encoding: .utf8
+        )
+        XCTAssertTrue(
+            appearance.contains("SettingsInlineHelp(String(localized: \"Adds small line/dot menu bar items."),
+            "Divider style help must go through the shared card-inset adapter"
         )
     }
 
@@ -523,6 +555,47 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 source.contains("struct CompactToggle") ||
                 source.contains("struct CompactDivider"),
             "SaneBar should not keep local implementations of the shared settings chrome primitives"
+        )
+    }
+
+    func testHealthCustomerCopyMustGoThroughStringCatalog() throws {
+        let healthSource = try String(
+            contentsOf: projectRootURL().appendingPathComponent("UI/Settings/HealthSettingsView.swift"),
+            encoding: .utf8
+        )
+        let profileSource = try String(
+            contentsOf: projectRootURL().appendingPathComponent("Core/Services/MenuBarProfileWorkflow.swift"),
+            encoding: .utf8
+        )
+
+        XCTAssertFalse(
+            healthSource.contains("HealthInlineHelp(\""),
+            "HealthInlineHelp must receive an already-localized String, not a bare English literal"
+        )
+
+        let assignmentLines = healthSource
+            .components(separatedBy: .newlines)
+            .filter { $0.contains("layoutRescueMessage =") }
+        XCTAssertFalse(assignmentLines.isEmpty, "Health should still assign layoutRescueMessage")
+        for line in assignmentLines {
+            let localized =
+                line.contains("String(localized:") ||
+                line.contains("layoutRescueRestorePointSaveFailureMessage") ||
+                line.contains("= \"\"")
+            XCTAssertTrue(
+                localized,
+                "layoutRescueMessage assignments must be localized or empty: \(line.trimmingCharacters(in: .whitespaces))"
+            )
+        }
+
+        XCTAssertTrue(
+            profileSource.contains("func layoutRescueRestorePointSaveFailureMessage") &&
+                profileSource.contains("String(localized:"),
+            "Layout rescue save failures must come from the string catalog"
+        )
+        XCTAssertFalse(
+            profileSource.contains("SaneBar cannot"),
+            "Customer-facing layout rescue copy must use HaoBar, not SaneBar"
         )
     }
 
