@@ -550,7 +550,7 @@ final class StatusBarController: StatusBarControllerProtocol {
     /// Create an SF Symbol image suitable for the menu bar
     static func makeSymbolImage(name: String) -> NSImage? {
         let config = NSImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
-        guard let image = NSImage(systemSymbolName: name, accessibilityDescription: "SaneBar")?.withSymbolConfiguration(config) else {
+        guard let image = NSImage(systemSymbolName: name, accessibilityDescription: AppIdentity.displayName)?.withSymbolConfiguration(config) else {
             return nil
         }
         image.isTemplate = true
@@ -615,20 +615,20 @@ final class StatusBarController: StatusBarControllerProtocol {
     func createMenu(configuration: MenuConfiguration) -> NSMenu {
         let menu = NSMenu()
 
-        let findItem = NSMenuItem(title: "Browse Icons...", action: configuration.findIconAction, keyEquivalent: "")
+        let findItem = NSMenuItem(title: String(localized: "Browse Icons..."), action: configuration.findIconAction, keyEquivalent: "")
         findItem.setShortcut(for: .searchMenuBar)
         menu.addItem(findItem)
 
-        let toggleItem = NSMenuItem(title: "Show / Hide Icons", action: configuration.toggleAction, keyEquivalent: "")
+        let toggleItem = NSMenuItem(title: String(localized: "Show / Hide Icons"), action: configuration.toggleAction, keyEquivalent: "")
         toggleItem.setShortcut(for: .toggleHiddenItems)
         menu.addItem(toggleItem)
 
         menu.addItem(NSMenuItem.separator())
 
-        let arrangeItem = NSMenuItem(title: "Arrange Now", action: configuration.arrangeNowAction, keyEquivalent: "")
+        let arrangeItem = NSMenuItem(title: String(localized: "Arrange Now"), action: configuration.arrangeNowAction, keyEquivalent: "")
         menu.addItem(arrangeItem)
 
-        let healthItem = NSMenuItem(title: "Help / Repair...", action: configuration.healthAction, keyEquivalent: "")
+        let healthItem = NSMenuItem(title: String(localized: "Help / Repair..."), action: configuration.healthAction, keyEquivalent: "")
         menu.addItem(healthItem)
 
         menu.addItem(NSMenuItem.separator())
@@ -643,7 +643,7 @@ final class StatusBarController: StatusBarControllerProtocol {
             aboutAndBugReportAction: configuration.aboutAndBugReportAction,
             whatsNewAction: configuration.showReleaseNotesAction,
             extraUtilityItems: configuration.donateAction.map { action in
-                [SaneStandardMenu.item(title: "Donate...", target: nil, action: action)]
+                [SaneStandardMenu.item(title: String(localized: "Donate..."), target: nil, action: action)]
             } ?? [],
             quitAction: configuration.quitAction,
             settingsKeyEquivalent: ","

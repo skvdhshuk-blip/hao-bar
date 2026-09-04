@@ -77,7 +77,7 @@ final class RuntimeGuardAppleScriptActivationXCTests: RuntimeGuardTestCase {
         let onboardingSource = try String(contentsOf: onboardingURL, encoding: .utf8)
 
         XCTAssertTrue(
-            healthSource.contains("CompactSection(\"Layout Rescue\"") &&
+            healthSource.contains("CompactSection(String(localized: \"Layout Rescue\")") &&
                 healthSource.contains("Save Current Layout") &&
                 healthSource.contains("Restore Last Good Layout"),
             "Health should expose Layout Rescue as a first-class restore-point workflow, not only Arrange Now"

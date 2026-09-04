@@ -46,14 +46,14 @@ struct RulesSettingsView: View {
     var body: some View {
         SaneSettingsPage {
                 // Triggers (Automation) — Pro
-                CompactSection("Automatic Triggers") {
+                CompactSection(String(localized: "Automatic Triggers")) {
                     if licenseService.isPro {
                         // Battery
-                        CompactToggle(label: "Show on Low Battery", isOn: $menuBarManager.settings.showOnLowBattery)
+                        CompactToggle(label: String(localized: "Show on Low Battery"), isOn: $menuBarManager.settings.showOnLowBattery)
                             .help("Reveal battery and power icons when battery is low")
 
                         if menuBarManager.settings.showOnLowBattery {
-                            CompactRow("Threshold") {
+                            CompactRow(String(localized: "Threshold")) {
                                 HStack(spacing: 8) {
                                     Slider(
                                         value: Binding(
@@ -77,8 +77,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Show on Low Battery",
-                            help: "Reveal battery and power icons automatically when battery is low"
+                            label: String(localized: "Show on Low Battery"),
+                            help: String(localized: "Reveal battery and power icons automatically when battery is low")
                         )
                     }
 
@@ -86,14 +86,14 @@ struct RulesSettingsView: View {
 
                     if licenseService.isPro {
                         // App Launch
-                        CompactToggle(label: "Show when specific apps open", isOn: $menuBarManager.settings.showOnAppLaunch)
+                        CompactToggle(label: String(localized: "Show when specific apps open"), isOn: $menuBarManager.settings.showOnAppLaunch)
                             .help("Reveal icons when certain apps are launched")
 
                         if menuBarManager.settings.showOnAppLaunch {
                             CompactDivider()
                             AppPickerView(
                                 selectedBundleIDs: $menuBarManager.settings.triggerApps,
-                                title: "Select Apps"
+                                title: String(localized: "Select Apps")
                             )
 
                             triggerActionControls(
@@ -103,8 +103,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Show when specific apps open",
-                            help: "Reveal chosen menu bar icons automatically when selected apps launch"
+                            label: String(localized: "Show when specific apps open"),
+                            help: String(localized: "Reveal chosen menu bar icons automatically when selected apps launch")
                         )
                     }
 
@@ -112,11 +112,11 @@ struct RulesSettingsView: View {
 
                     if licenseService.isPro {
                         // Schedule
-                        CompactToggle(label: "Show on Schedule", isOn: $menuBarManager.settings.showOnSchedule)
+                        CompactToggle(label: String(localized: "Show on Schedule"), isOn: $menuBarManager.settings.showOnSchedule)
                             .help("Reveal icons when local time enters selected day/time window")
 
                         if menuBarManager.settings.showOnSchedule {
-                            CompactRow("Days") {
+                            CompactRow(String(localized: "Days")) {
                                 HStack(spacing: 6) {
                                     ForEach(scheduleWeekdayOptions, id: \.day) { option in
                                         ChromeSegmentedChoiceButton(
@@ -130,7 +130,7 @@ struct RulesSettingsView: View {
                                 .fixedSize(horizontal: true, vertical: false)
                             }
 
-                            CompactRow("From") {
+                            CompactRow(String(localized: "From")) {
                                 HStack(spacing: 8) {
                                     Text(scheduleStartLabel)
                                         .frame(width: 52, alignment: .trailing)
@@ -139,7 +139,7 @@ struct RulesSettingsView: View {
                                 }
                             }
 
-                            CompactRow("To") {
+                            CompactRow(String(localized: "To")) {
                                 HStack(spacing: 8) {
                                     Text(scheduleEndLabel)
                                         .frame(width: 52, alignment: .trailing)
@@ -147,7 +147,7 @@ struct RulesSettingsView: View {
                                         .labelsHidden()
                                 }
                             }
-                            SaneInlineHelp("Set the same start/end time for all-day schedule.")
+                            SaneInlineHelp(String(localized: "Set the same start/end time for all-day schedule."))
 
                             triggerActionControls(
                                 action: $menuBarManager.settings.scheduleTriggerAction,
@@ -156,8 +156,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Show on Schedule",
-                            help: "Reveal hidden icons only during selected days and time windows"
+                            label: String(localized: "Show on Schedule"),
+                            help: String(localized: "Reveal hidden icons only during selected days and time windows")
                         )
                     }
 
@@ -166,12 +166,12 @@ struct RulesSettingsView: View {
 
                     if licenseService.isPro {
                         // Network
-                        CompactToggle(label: "Show on Wi-Fi Change", isOn: $menuBarManager.settings.showOnNetworkChange)
+                        CompactToggle(label: String(localized: "Show on Wi-Fi Change"), isOn: $menuBarManager.settings.showOnNetworkChange)
                             .help("Reveal icons when connecting to specific Wi-Fi networks")
 
                         if menuBarManager.settings.showOnNetworkChange {
                             if let ssid = menuBarManager.networkTriggerService.currentSSID {
-                                CompactRow("Current network") {
+                                CompactRow(String(localized: "Current network")) {
                                     Button("Add \(ssid)") {
                                         if !menuBarManager.settings.triggerNetworks.contains(ssid) {
                                             menuBarManager.settings.triggerNetworks.append(ssid)
@@ -202,8 +202,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Show on Wi-Fi Change",
-                            help: "Reveal selected icons when your Mac joins specific Wi-Fi networks"
+                            label: String(localized: "Show on Wi-Fi Change"),
+                            help: String(localized: "Reveal selected icons when your Mac joins specific Wi-Fi networks")
                         )
                     }
                     }
@@ -213,12 +213,12 @@ struct RulesSettingsView: View {
 
                     if licenseService.isPro {
                         // Focus Mode
-                        CompactToggle(label: "Show on Focus Mode Change", isOn: $menuBarManager.settings.showOnFocusModeChange)
+                        CompactToggle(label: String(localized: "Show on Focus Mode Change"), isOn: $menuBarManager.settings.showOnFocusModeChange)
                             .help("Reveal icons when entering or exiting specific Focus Modes")
 
                         if menuBarManager.settings.showOnFocusModeChange {
                             if let currentMode = menuBarManager.focusModeService.currentFocusMode {
-                                CompactRow("Current Focus") {
+                                CompactRow(String(localized: "Current Focus")) {
                                     Button("Add \(currentMode)") {
                                         if !menuBarManager.settings.triggerFocusModes.contains(currentMode) {
                                             menuBarManager.settings.triggerFocusModes.append(currentMode)
@@ -229,7 +229,7 @@ struct RulesSettingsView: View {
                             }
 
                             if !menuBarManager.settings.triggerFocusModes.contains("(Focus Off)") {
-                                CompactRow("When Focus is off") {
+                                CompactRow(String(localized: "When Focus is off")) {
                                     Button("Add") {
                                         menuBarManager.settings.triggerFocusModes.append("(Focus Off)")
                                     }
@@ -252,7 +252,7 @@ struct RulesSettingsView: View {
                             }
 
                             if menuBarManager.settings.triggerFocusModes.isEmpty {
-                                SaneInlineHelp("No Focus Modes configured. Enable a Focus Mode in System Settings to add it here.")
+                                SaneInlineHelp(String(localized: "No Focus Modes configured. Enable a Focus Mode in System Settings to add it here."))
                             }
 
                             triggerActionControls(
@@ -262,8 +262,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Show on Focus Mode Change",
-                            help: "Reveal selected icons when Focus turns on, changes, or turns off"
+                            label: String(localized: "Show on Focus Mode Change"),
+                            help: String(localized: "Reveal selected icons when Focus turns on, changes, or turns off")
                         )
                     }
                     }
@@ -273,7 +273,7 @@ struct RulesSettingsView: View {
 
                     if licenseService.isPro {
                         // Script Trigger
-                        CompactToggle(label: "Let a script control visibility", isOn: $menuBarManager.settings.scriptTriggerEnabled)
+                        CompactToggle(label: String(localized: "Let a script control visibility"), isOn: $menuBarManager.settings.scriptTriggerEnabled)
                             .help("Run a script every few seconds. Exit 0 shows icons; any other exit code hides them.")
 
                         if menuBarManager.settings.scriptTriggerEnabled {
@@ -281,8 +281,8 @@ struct RulesSettingsView: View {
                         }
                     } else {
                         proTriggerRow(
-                            label: "Let a script control visibility",
-                            help: "Run your own script to decide when hidden icons should show or hide"
+                            label: String(localized: "Let a script control visibility"),
+                            help: String(localized: "Run your own script to decide when hidden icons should show or hide")
                         )
                     }
                     }
@@ -326,11 +326,11 @@ struct RulesSettingsView: View {
         profileId: Binding<UUID?>
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            CompactRow("Action") {
+            CompactRow(String(localized: "Action")) {
                 HStack(spacing: 6) {
                     ForEach(SaneBarSettings.TriggerAction.allCases, id: \.self) { option in
                         segmentedChoiceButton(
-                            option.rawValue,
+                            option.localizedTitle,
                             isSelected: action.wrappedValue == option
                         ) {
                             action.wrappedValue = option
@@ -344,7 +344,7 @@ struct RulesSettingsView: View {
             }
 
             if action.wrappedValue == .applyProfile {
-                CompactRow("Profile") {
+                CompactRow(String(localized: "Profile")) {
                     Menu(selectedProfileName(profileId.wrappedValue)) {
                         if savedProfiles.isEmpty {
                             Button("No saved profiles") {}
@@ -393,7 +393,7 @@ private struct ScriptTriggerSettingsView: View {
     }
 
     var body: some View {
-        CompactRow("Script") {
+        CompactRow(String(localized: "Script")) {
             HStack(spacing: 8) {
                 TextField("Script path", text: $menuBarManager.settings.scriptTriggerPath)
                     .textFieldStyle(.roundedBorder)
@@ -407,7 +407,7 @@ private struct ScriptTriggerSettingsView: View {
                     panel.allowedContentTypes = [.unixExecutable, .shellScript, .script, .plainText]
                     panel.canChooseDirectories = false
                     panel.allowsMultipleSelection = false
-                    panel.message = "Select a script (must be executable)"
+                    panel.message = String(localized: "Select a script (must be executable)")
 
                     if panel.runModal() == .OK, let url = panel.url {
                         menuBarManager.settings.scriptTriggerPath = url.path
@@ -417,7 +417,7 @@ private struct ScriptTriggerSettingsView: View {
             }
         }
 
-        CompactRow("Check every") {
+        CompactRow(String(localized: "Check every")) {
             HStack(spacing: 8) {
                 Text(intervalLabel)
                     .frame(width: 40, alignment: .trailing)
@@ -426,7 +426,7 @@ private struct ScriptTriggerSettingsView: View {
             }
         }
 
-        CompactRow("Test") {
+        CompactRow(String(localized: "Test")) {
             HStack(spacing: 8) {
                 Button("Run Now") {
                     runTestScript()
@@ -443,7 +443,7 @@ private struct ScriptTriggerSettingsView: View {
             }
             .fixedSize(horizontal: true, vertical: false)
         }
-        SaneInlineHelp("Exit code 0 = show hidden icons, non-zero = hide.")
+        SaneInlineHelp(String(localized: "Exit code 0 = show hidden icons, non-zero = hide."))
     }
 
     @ViewBuilder

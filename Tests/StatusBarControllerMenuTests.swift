@@ -52,18 +52,18 @@ struct StatusBarControllerMenuTests {
         #expect(menu.items.count == 14, "Menu should have 14 items (10 commands + 4 separators)")
 
         // Use named lookups (resilient to menu reordering)
-        let findIconItem = menu.item(titled: "Browse Icons...")
+        let findIconItem = menu.item(titled: String(localized: "Browse Icons..."))
         #expect(findIconItem != nil, "Menu should have Browse Icons item")
         // keyEquivalent is set dynamically via KeyboardShortcuts.setShortcut(for:)
         // so we don't assert on a hardcoded value here
 
-        let toggleItem = menu.item(titled: "Show / Hide Icons")
+        let toggleItem = menu.item(titled: String(localized: "Show / Hide Icons"))
         #expect(toggleItem != nil, "Menu should have Show / Hide Icons item")
 
-        let arrangeItem = menu.item(titled: "Arrange Now")
+        let arrangeItem = menu.item(titled: String(localized: "Arrange Now"))
         #expect(arrangeItem != nil, "Menu should have Arrange Now item")
 
-        let healthItem = menu.item(titled: "Help / Repair...")
+        let healthItem = menu.item(titled: String(localized: "Help / Repair..."))
         #expect(healthItem != nil, "Menu should have Help / Repair item")
 
         let settingsItem = menu.item(titled: "Settings...")
@@ -80,7 +80,7 @@ struct StatusBarControllerMenuTests {
         let aboutItem = menu.item(titled: SaneStandardMenu.aboutAndBugReportTitle)
         #expect(aboutItem != nil, "Menu should have About / Report item")
 
-        let donateItem = menu.item(titled: "Donate...")
+        let donateItem = menu.item(titled: String(localized: "Donate..."))
         #expect(donateItem != nil, "Menu should have Donate item")
 
         let quitItem = menu.item(titled: "Quit HaoBar")
@@ -207,15 +207,15 @@ struct StatusBarControllerMenuTests {
         ))
 
         // Verify each menu item has an action (using named lookups)
-        let findIconItem = menu.item(titled: "Browse Icons...")
-        let toggleItem = menu.item(titled: "Show / Hide Icons")
-        let arrangeItem = menu.item(titled: "Arrange Now")
-        let healthItem = menu.item(titled: "Help / Repair...")
+        let findIconItem = menu.item(titled: String(localized: "Browse Icons..."))
+        let toggleItem = menu.item(titled: String(localized: "Show / Hide Icons"))
+        let arrangeItem = menu.item(titled: String(localized: "Arrange Now"))
+        let healthItem = menu.item(titled: String(localized: "Help / Repair..."))
         let settingsItem = menu.item(titled: "Settings...")
         let licenseItem = menu.item(titled: SaneStandardMenu.licenseTitle)
         let checkForUpdatesItem = menu.item(titled: "Check for Updates...")
         let aboutItem = menu.item(titled: SaneStandardMenu.aboutAndBugReportTitle)
-        let donateItem = menu.item(titled: "Donate...")
+        let donateItem = menu.item(titled: String(localized: "Donate..."))
         let quitItem = menu.item(titled: "Quit HaoBar")
 
         #expect(findIconItem?.action == #selector(DummyTarget.findIcon), "Browse Icons item should have findIcon action")

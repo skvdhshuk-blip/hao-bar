@@ -66,19 +66,19 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         let shortcutsSource = try String(contentsOf: shortcutsURL, encoding: .utf8)
 
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .zoneMoves, label: \"Move icons between Visible, Hidden, and Always Hidden\")"),
+            generalSource.contains("proGatedRow(feature: .zoneMoves, label: String(localized: \"Move icons between Visible, Hidden, and Always Hidden\"))"),
             "General settings should keep the Basic plan on an explicit zone-moves upsell instead of a dead-end row"
         )
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .touchIDProtection, label: \"Touch ID to unlock hidden icons\")"),
+            generalSource.contains("proGatedRow(feature: .touchIDProtection, label: String(localized: \"Touch ID to unlock hidden icons\"))"),
             "General settings should keep Touch ID protection behind an explicit upsell row"
         )
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .settingsProfiles, label: \"Save and load configurations\")"),
+            generalSource.contains("proGatedRow(feature: .settingsProfiles, label: String(localized: \"Save and load configurations\"))"),
             "General settings should keep saved profiles behind an explicit upsell row"
         )
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .exportImport, label: \"Export, import, and migrate settings\")"),
+            generalSource.contains("proGatedRow(feature: .exportImport, label: String(localized: \"Export, import, and migrate settings\"))"),
             "General settings should keep data import/export behind an explicit upsell row"
         )
         XCTAssertTrue(
@@ -91,7 +91,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Appearance settings should route custom icon selection to the Pro upsell instead of silently resetting"
         )
         XCTAssertTrue(
-            appearanceSource.contains("proGatedRow(feature: .spacersConfig, label: \"Extra Dividers\")"),
+            appearanceSource.contains("proGatedRow(feature: .spacersConfig, label: String(localized: \"Extra Dividers\"))"),
             "Appearance settings should keep extra dividers behind an explicit upsell row"
         )
         XCTAssertTrue(
@@ -101,19 +101,19 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Extra Dividers copy should explain that the setting adds movable visual separators, not hidden-section layers"
         )
         XCTAssertTrue(
-            appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Custom Appearance\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Translucent Background\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Light Tint\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Dark Tint\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Shadow\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Border\")") &&
-                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: \"Rounded Corners\")"),
+            appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Custom Appearance\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Translucent Background\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Light Tint\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Dark Tint\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Shadow\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Border\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .menuBarAppearance, label: String(localized: \"Rounded Corners\"))"),
             "Appearance settings should show individual Basic-visible locked rows for menu bar styling value"
         )
         XCTAssertTrue(
-            appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: \"Reduce space between icons\")") &&
-                appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: \"Item Spacing\")") &&
-                appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: \"Click Area\")"),
+            appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: String(localized: \"Reduce space between icons\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: String(localized: \"Item Spacing\"))") &&
+                appearanceSource.contains("proGatedRow(feature: .iconSpacing, label: String(localized: \"Click Area\"))"),
             "Appearance settings should show individual Basic-visible locked rows for menu bar layout value"
         )
         XCTAssertTrue(
@@ -122,7 +122,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         )
 
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .autoRehideCustomization, label: \"Customize auto-hide timing\")"),
+            generalSource.contains("proGatedRow(feature: .autoRehideCustomization, label: String(localized: \"Customize auto-hide timing\"))"),
             "Control settings should keep auto-rehide tuning behind an explicit upsell row"
         )
         XCTAssertTrue(
@@ -131,11 +131,11 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Hover settings should say they reveal hidden icons inline instead of implying they open Browse Icons"
         )
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .autoRehideCustomization, label: \"Always show on external monitors\")"),
+            generalSource.contains("proGatedRow(feature: .autoRehideCustomization, label: String(localized: \"Always show on external monitors\"))"),
             "Control settings should keep external-monitor behavior behind an explicit upsell row"
         )
         XCTAssertTrue(
-            generalSource.contains("proGatedRow(feature: .gestureCustomization, label: \"Customize gesture behavior\")"),
+            generalSource.contains("proGatedRow(feature: .gestureCustomization, label: String(localized: \"Customize gesture behavior\"))"),
             "Control settings should keep gesture customization behind an explicit upsell row"
         )
         XCTAssertFalse(
@@ -144,12 +144,12 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         )
         XCTAssertTrue(
             rulesSource.contains("proTriggerRow(") &&
-                rulesSource.contains("label: \"Show on Low Battery\"") &&
-                rulesSource.contains("label: \"Show when specific apps open\"") &&
-                rulesSource.contains("label: \"Show on Schedule\"") &&
-                rulesSource.contains("label: \"Show on Wi-Fi Change\"") &&
-                rulesSource.contains("label: \"Show on Focus Mode Change\"") &&
-                rulesSource.contains("label: \"Let a script control visibility\""),
+                rulesSource.contains("label: String(localized: \"Show on Low Battery\")") &&
+                rulesSource.contains("label: String(localized: \"Show when specific apps open\")") &&
+                rulesSource.contains("label: String(localized: \"Show on Schedule\")") &&
+                rulesSource.contains("label: String(localized: \"Show on Wi-Fi Change\")") &&
+                rulesSource.contains("label: String(localized: \"Show on Focus Mode Change\")") &&
+                rulesSource.contains("label: String(localized: \"Let a script control visibility\")"),
             "Rules settings should show each advanced trigger as its own Basic-visible locked row"
         )
         XCTAssertTrue(
@@ -162,9 +162,9 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         )
 
         XCTAssertTrue(
-            shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: \"Show icons\")") &&
-                shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: \"Hide icons\")") &&
-                shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: \"Open Settings\")"),
+            shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: String(localized: \"Show icons\"))") &&
+                shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: String(localized: \"Hide icons\"))") &&
+                shortcutsSource.contains("proLockedRow(feature: .additionalShortcuts, label: String(localized: \"Open Settings\"))"),
             "Shortcuts settings should show each Pro hotkey as an individual Basic-visible locked row"
         )
         XCTAssertTrue(
@@ -173,9 +173,9 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Shortcuts settings should show each Pro automation command as an individual Basic-visible locked row"
         )
         XCTAssertTrue(
-            shortcutsSource.contains("proLockedRow(feature: .appleScript, label: \"Toggle action\")") &&
-                shortcutsSource.contains("proLockedRow(feature: .appleScript, label: \"Profiles actions\")") &&
-                shortcutsSource.contains("proLockedRow(feature: .appleScript, label: \"Search action\")"),
+            shortcutsSource.contains("proLockedRow(feature: .appleScript, label: String(localized: \"Toggle action\"))") &&
+                shortcutsSource.contains("proLockedRow(feature: .appleScript, label: String(localized: \"Profiles actions\"))") &&
+                shortcutsSource.contains("proLockedRow(feature: .appleScript, label: String(localized: \"Search action\"))"),
             "Shortcuts settings should show App Shortcuts actions individually in Basic"
         )
         XCTAssertTrue(
@@ -203,7 +203,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains(".saneHelp(geometryHelp)") &&
                 healthSource.contains(".saneHelp(structureHelp)") &&
                 healthSource.contains("if runtimeSnapshot.likelySystemSuppressedStatusItems") &&
-                healthSource.contains("return \"Hidden by macOS\"") &&
+                healthSource.contains("return String(localized: \"Hidden by macOS\")") &&
                 healthSource.contains("Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar") &&
                 healthSource.contains("SaneInlineHelp(layoutModeHelp)") &&
                 healthSource.contains("if !accessibilityService.isGranted") &&
@@ -218,8 +218,8 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains("runRepair(reason: \"health-items-fix\"") &&
                 healthSource.contains(".accessibilityLabel(\"Fix HaoBar items\")") &&
                 healthSource.contains("menuBarManager.profileWorkflow.setLayoutMode(mode, reason: \"health\")") &&
-                healthSource.contains("title: \"Stability\"") &&
-                healthSource.contains("title: \"Live\"") &&
+                healthSource.contains("title: String(localized: \"Stability\")") &&
+                healthSource.contains("title: String(localized: \"Live\")") &&
                 healthSource.contains("ChromeSegmentedChoiceButton") &&
                 healthSource.contains("func setLayoutMode(_ mode: SaneBarSettings.LayoutMode)"),
             "Health should explain status rows, provide one-click repair actions for warning states, and expose clickable Stability/Live layout mode choices"

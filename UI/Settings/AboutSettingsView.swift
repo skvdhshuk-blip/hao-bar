@@ -9,7 +9,7 @@ struct AboutSettingsView: View {
             diagnosticsService: .shared,
             licenses: licenseEntries,
             feedbackExtraAttachments: [
-                ("menubar.rectangle", "Menu bar state snapshot (separator positions and counts)")
+                ("menubar.rectangle", String(localized: "Menu bar state snapshot (separator positions and counts)"))
             ]
         )
     }

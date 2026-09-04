@@ -13,10 +13,10 @@ enum BrowsePanelMode: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .hidden: "Hidden"
-        case .visible: "Visible"
-        case .alwaysHidden: "Always Hidden"
-        case .all: "All"
+        case .hidden: String(localized: "Hidden")
+        case .visible: String(localized: "Visible")
+        case .alwaysHidden: String(localized: "Always Hidden")
+        case .all: String(localized: "All")
         }
     }
 }

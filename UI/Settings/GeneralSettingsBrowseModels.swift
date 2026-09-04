@@ -10,8 +10,8 @@ enum GeneralSettingsBrowseLeftClickMode: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .toggleHidden: "Toggle Hidden"
-        case .openBrowseIcons: "Open Browse"
+        case .toggleHidden: String(localized: "Toggle Hidden")
+        case .openBrowseIcons: String(localized: "Open Browse")
         }
     }
 }
@@ -27,9 +27,9 @@ enum GeneralSettingsSecondMenuBarPreset: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .minimal: "Hidden Row"
-        case .balanced: "Hidden + Visible"
-        case .power: "All Rows"
+        case .minimal: String(localized: "Hidden Row")
+        case .balanced: String(localized: "Hidden + Visible")
+        case .power: String(localized: "All Rows")
         }
     }
 

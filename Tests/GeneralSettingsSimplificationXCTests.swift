@@ -4,12 +4,12 @@ import XCTest
 final class GeneralSettingsSimplificationXCTests: XCTestCase {
     func testLeftClickModeOpenBrowseIconsTitle() {
         let title = GeneralSettingsView.BrowseLeftClickMode.openBrowseIcons.title
-        XCTAssertEqual(title, "Open Browse")
+        XCTAssertEqual(title, String(localized: "Open Browse"))
     }
 
     func testLeftClickModeToggleHiddenTitle() {
         let title = GeneralSettingsView.BrowseLeftClickMode.toggleHidden.title
-        XCTAssertEqual(title, "Toggle Hidden")
+        XCTAssertEqual(title, String(localized: "Toggle Hidden"))
     }
 
     func testSecondMenuBarPresetResolveMinimal() {
@@ -21,9 +21,9 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
     }
 
     func testSecondMenuBarPresetTitlesUsePlainLanguage() {
-        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.minimal.title, "Hidden Row")
-        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.balanced.title, "Hidden + Visible")
-        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.power.title, "All Rows")
+        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.minimal.title, String(localized: "Hidden Row"))
+        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.balanced.title, String(localized: "Hidden + Visible"))
+        XCTAssertEqual(GeneralSettingsView.SecondMenuBarPreset.power.title, String(localized: "All Rows"))
     }
 
     func testSecondMenuBarPresetResolveBalanced() {

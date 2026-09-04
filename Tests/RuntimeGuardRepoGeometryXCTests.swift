@@ -972,7 +972,7 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
 
         XCTAssertTrue(
             source.contains("private var hideNewUnlistedToggleRow: some View") &&
-                source.contains("CompactToggle(label: \"Hide new/unlisted items by default\", isOn: hideAllOtherMenuBarItemsBinding)") &&
+                source.contains("CompactToggle(label: String(localized: \"Hide new/unlisted items by default\"), isOn: hideAllOtherMenuBarItemsBinding)") &&
                 source.contains(".accessibilityIdentifier(\"sanebar-hide-new-unlisted-toggle\")"),
             "Hide new/unlisted must own a real pressable row so customers and the UI sweep can toggle it reliably"
         )

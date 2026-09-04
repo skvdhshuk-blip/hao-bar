@@ -8,32 +8,33 @@ struct GeneralSettingsHidingSection: View {
     @State private var hideAllOtherStatusMessage: String?
 
     private var rehideDelayLabel: String {
-        let value = Int(menuBarManager.settings.rehideDelay)
-        switch value {
-        case 1 ... 5: return "Quick (\(value)s)"
-        case 6 ... 15: return "Normal (\(value)s)"
-        case 16 ... 30: return "Leisurely (\(value)s)"
-        default: return "Extended (\(value)s)"
-        }
+        delaySecondsLabel(Int(menuBarManager.settings.rehideDelay))
     }
 
     private var findIconDelayLabel: String {
-        let value = Int(menuBarManager.settings.findIconRehideDelay)
+        delaySecondsLabel(Int(menuBarManager.settings.findIconRehideDelay))
+    }
+
+    private func delaySecondsLabel(_ value: Int) -> String {
         switch value {
-        case 1 ... 5: return "Quick (\(value)s)"
-        case 6 ... 15: return "Normal (\(value)s)"
-        case 16 ... 30: return "Leisurely (\(value)s)"
-        default: return "Extended (\(value)s)"
+        case 1 ... 5:
+            String(format: String(localized: "Quick (%ds)"), value)
+        case 6 ... 15:
+            String(format: String(localized: "Normal (%ds)"), value)
+        case 16 ... 30:
+            String(format: String(localized: "Leisurely (%ds)"), value)
+        default:
+            String(format: String(localized: "Extended (%ds)"), value)
         }
     }
 
     private func delayLabel(_ seconds: Double) -> String {
         let ms = Int(seconds * 1000)
         switch ms {
-        case 0 ... 150: return "Instant"
-        case 151 ... 350: return "Quick"
-        case 351 ... 600: return "Normal"
-        default: return "Patient"
+        case 0 ... 150: return String(localized: "Instant")
+        case 151 ... 350: return String(localized: "Quick")
+        case 351 ... 600: return String(localized: "Normal")
+        default: return String(localized: "Patient")
         }
     }
 
@@ -42,11 +43,11 @@ struct GeneralSettingsHidingSection: View {
             get: { menuBarManager.settings.hideAllOtherMenuBarItems },
             set: { isEnabled in
                 if isEnabled {
-                    hideAllOtherStatusMessage = "Checking current menu bar..."
+                    hideAllOtherStatusMessage = String(localized: "Checking current menu bar...")
                     menuBarManager.hideAllOtherWorkflow.enableFromCurrentLayout { enabled in
                         hideAllOtherStatusMessage = enabled
                             ? nil
-                            : "HaoBar couldn't turn this on safely. Open Health and repair menu bar detection, then try again."
+                            : String(localized: "HaoBar couldn't turn this on safely. Open Health and repair menu bar detection, then try again.")
                     }
                 } else {
                     hideAllOtherStatusMessage = nil
@@ -59,13 +60,13 @@ struct GeneralSettingsHidingSection: View {
 
     private var gestureModeSummary: String {
         menuBarManager.settings.gestureMode == .showOnly
-            ? "Gestures reveal hidden icons."
-            : "Scroll up shows icons, scroll down hides icons."
+            ? String(localized: "Gestures reveal hidden icons.")
+            : String(localized: "Scroll up shows icons, scroll down hides icons.")
     }
 
     var body: some View {
-        CompactSection("Hiding Behavior") {
-            CompactToggle(label: "Hide icons automatically", isOn: $menuBarManager.settings.autoRehide)
+        CompactSection(String(localized: "Hiding Behavior")) {
+            CompactToggle(label: String(localized: "Hide icons automatically"), isOn: $menuBarManager.settings.autoRehide)
                 .help("Hide revealed icons again after the delay below.")
 
             if menuBarManager.settings.autoRehide {
@@ -73,14 +74,14 @@ struct GeneralSettingsHidingSection: View {
             }
 
             CompactDivider()
-            CompactToggle(label: "Reveal hidden icons on hover", isOn: $menuBarManager.settings.showOnHover)
+            CompactToggle(label: String(localized: "Reveal hidden icons on hover"), isOn: $menuBarManager.settings.showOnHover)
                 .help("Hover near the menu bar to reveal hidden icons inline. Click the HaoBar icon to open or toggle manually.")
             if menuBarManager.settings.showOnHover {
                 revealDelayRow
             }
 
             CompactDivider()
-            CompactToggle(label: "Show when scrolling on menu bar", isOn: $menuBarManager.settings.showOnScroll)
+            CompactToggle(label: String(localized: "Show when scrolling on menu bar"), isOn: $menuBarManager.settings.showOnScroll)
             if menuBarManager.settings.showOnScroll {
                 // Shared reveal delay also governs scroll; show it here only when
                 // hover (which already shows it) is off, so it never appears twice.
@@ -91,18 +92,18 @@ struct GeneralSettingsHidingSection: View {
             }
 
             CompactDivider()
-            CompactToggle(label: "Show when rearranging icons", isOn: $menuBarManager.settings.showOnUserDrag)
+            CompactToggle(label: String(localized: "Show when rearranging icons"), isOn: $menuBarManager.settings.showOnUserDrag)
 
             CompactDivider()
             if licenseService.isPro {
-                CompactToggle(label: "Always show on external monitors", isOn: $menuBarManager.settings.disableOnExternalMonitor)
+                CompactToggle(label: String(localized: "Always show on external monitors"), isOn: $menuBarManager.settings.disableOnExternalMonitor)
                     .help("Keep icons visible on external displays where menu bar space is less constrained.")
             } else {
-                proGatedRow(feature: .autoRehideCustomization, label: "Always show on external monitors")
+                proGatedRow(feature: .autoRehideCustomization, label: String(localized: "Always show on external monitors"))
             }
 
             CompactDivider()
-            CompactToggle(label: "Hide app menus during inline reveal", isOn: $menuBarManager.settings.hideApplicationMenusOnInlineReveal)
+            CompactToggle(label: String(localized: "Hide app menus during inline reveal"), isOn: $menuBarManager.settings.hideApplicationMenusOnInlineReveal)
                 .help("Temporarily hides File/Edit/View if needed to make room in the menu bar. Only affects inline reveal.")
 
             CompactDivider()
@@ -115,13 +116,13 @@ struct GeneralSettingsHidingSection: View {
                         .accessibilityIdentifier("sanebar-hide-new-unlisted-status")
                 }
             } else {
-                proGatedRow(feature: .zoneMoves, label: "Hide new/unlisted items by default")
+                proGatedRow(feature: .zoneMoves, label: String(localized: "Hide new/unlisted items by default"))
             }
         }
     }
 
     private var hideNewUnlistedToggleRow: some View {
-        CompactToggle(label: "Hide new/unlisted items by default", isOn: hideAllOtherMenuBarItemsBinding)
+        CompactToggle(label: String(localized: "Hide new/unlisted items by default"), isOn: hideAllOtherMenuBarItemsBinding)
             .accessibilityIdentifier("sanebar-hide-new-unlisted-toggle")
     }
 
@@ -129,7 +130,7 @@ struct GeneralSettingsHidingSection: View {
     private var autoRehideRows: some View {
         if licenseService.isPro {
             CompactDivider()
-            CompactRow("Wait before hiding") {
+            CompactRow(String(localized: "Wait before hiding")) {
                 HStack(spacing: 8) {
                     Text(rehideDelayLabel)
                         .font(SaneTypography.label)
@@ -142,7 +143,7 @@ struct GeneralSettingsHidingSection: View {
                 }
             }
             CompactDivider()
-            CompactRow("Wait after Browse Icons") {
+            CompactRow(String(localized: "Wait after Browse Icons")) {
                 HStack(spacing: 8) {
                     Text(findIconDelayLabel)
                         .font(SaneTypography.label)
@@ -155,10 +156,10 @@ struct GeneralSettingsHidingSection: View {
                 }
             }
             CompactDivider()
-            CompactToggle(label: "Hide when app changes", isOn: $menuBarManager.settings.rehideOnAppChange)
+            CompactToggle(label: String(localized: "Hide when app changes"), isOn: $menuBarManager.settings.rehideOnAppChange)
         } else {
             CompactDivider()
-            proGatedRow(feature: .autoRehideCustomization, label: "Customize auto-hide timing")
+            proGatedRow(feature: .autoRehideCustomization, label: String(localized: "Customize auto-hide timing"))
         }
     }
 
@@ -167,7 +168,7 @@ struct GeneralSettingsHidingSection: View {
     @ViewBuilder
     private var revealDelayRow: some View {
         CompactDivider()
-        CompactRow("Reveal delay") {
+        CompactRow(String(localized: "Reveal delay")) {
             HStack(spacing: 8) {
                 Slider(value: $menuBarManager.settings.hoverDelay, in: 0.05 ... 2.0, step: 0.05)
                     .frame(width: 100)
@@ -185,11 +186,11 @@ struct GeneralSettingsHidingSection: View {
     private var scrollGestureRows: some View {
         CompactDivider()
         if licenseService.isPro {
-            CompactRow("Gesture behavior") {
+            CompactRow(String(localized: "Gesture behavior")) {
                 HStack(spacing: 6) {
                     ForEach(SaneBarSettings.GestureMode.allCases, id: \.self) { mode in
                         ChromeSegmentedChoiceButton(
-                            title: mode.rawValue,
+                            title: mode.localizedTitle,
                             isSelected: menuBarManager.settings.gestureMode == mode
                         ) {
                             menuBarManager.settings.gestureMode = mode
@@ -201,16 +202,16 @@ struct GeneralSettingsHidingSection: View {
             }
             SaneInlineHelp(gestureModeSummary)
         } else {
-            proGatedRow(feature: .gestureCustomization, label: "Customize gesture behavior")
+            proGatedRow(feature: .gestureCustomization, label: String(localized: "Customize gesture behavior"))
         }
     }
 
     private func gestureModeHelp(_ mode: SaneBarSettings.GestureMode) -> String {
         switch mode {
         case .showOnly:
-            "Gestures only reveal hidden icons."
+            String(localized: "Gestures only reveal hidden icons.")
         case .showAndHide:
-            "Gestures toggle visibility. Scroll up shows icons, scroll down hides them."
+            String(localized: "Gestures toggle visibility. Scroll up shows icons, scroll down hides them.")
         }
     }
 

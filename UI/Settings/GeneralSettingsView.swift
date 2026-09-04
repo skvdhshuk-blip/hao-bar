@@ -94,9 +94,9 @@ struct GeneralSettingsView: View {
     private func layoutModeHelp(_ mode: SaneBarSettings.LayoutMode) -> String {
         switch mode {
         case .stability:
-            "Stability repairs only at startup or when you click Arrange Now. This is the calm default."
+            String(localized: "Stability repairs only at startup or when you click Arrange Now. This is the calm default.")
         case .live:
-            "Live checks after wake and display changes if your icons drift."
+            String(localized: "Live checks after wake and display changes if your icons drift.")
         }
     }
 
@@ -133,7 +133,7 @@ struct GeneralSettingsView: View {
 
     private func authenticateToDisable() async -> Bool {
         let context = LAContext()
-        context.localizedCancelTitle = "Cancel"
+        context.localizedCancelTitle = String(localized: "Cancel")
 
         var error: NSError?
         let policy: LAPolicy = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
@@ -141,7 +141,7 @@ struct GeneralSettingsView: View {
             : .deviceOwnerAuthenticationWithBiometrics
 
         return await withCheckedContinuation { continuation in
-            context.evaluatePolicy(policy, localizedReason: "Disable password protection for hidden icons") { success, _ in
+            context.evaluatePolicy(policy, localizedReason: String(localized: "Disable password protection for hidden icons")) { success, _ in
                 continuation.resume(returning: success)
             }
         }
@@ -168,10 +168,10 @@ struct GeneralSettingsView: View {
                 )
 
                 // 3. Profiles                // 3. Profiles — Pro
-                CompactSection("Saved Profiles") {
+                CompactSection(String(localized: "Saved Profiles")) {
                     if licenseService.isPro {
                         if savedProfiles.isEmpty {
-                            CompactRow("Saved") {
+                            CompactRow(String(localized: "Saved")) {
                                 Text("No saved profiles")
                                     .foregroundStyle(.white.opacity(0.92))
                             }
@@ -201,7 +201,7 @@ struct GeneralSettingsView: View {
 
                         CompactDivider()
 
-                        CompactRow("Current Settings") {
+                        CompactRow(String(localized: "Current Settings")) {
                             Button("Save as Profile…") {
                                 newProfileName = SaneBarProfile.generateName(basedOn: savedProfiles.map(\.name))
                                 showingSaveProfileAlert = true
@@ -210,47 +210,47 @@ struct GeneralSettingsView: View {
                             .help("Save your current settings, layout, and custom icon as a named profile")
                         }
                     } else {
-                        proGatedRow(feature: .settingsProfiles, label: "Save and load configurations")
+                        proGatedRow(feature: .settingsProfiles, label: String(localized: "Save and load configurations"))
                     }
                 }
 
                 // 4. Layout Repair
-                CompactSection("Layout Repair") {
+                CompactSection(String(localized: "Layout Repair")) {
                     CompactToggle(
-                        label: "Repair after wake or display changes",
+                        label: String(localized: "Repair after wake or display changes"),
                         isOn: liveLayoutChecksBinding
                     )
-                    .saneHelp("Live checks after wake/display changes. Turn it on if icons drift after wake, monitor changes, or fast user switching. Leave it off for the calmer default Stability mode.")
+                    .saneHelp(String(localized: "Live checks after wake/display changes. Turn it on if icons drift after wake, monitor changes, or fast user switching. Leave it off for the calmer default Stability mode."))
                     CompactDivider()
-                    CompactRow("Repair Mode") {
-                        StatusBadge(menuBarManager.settings.layoutMode.rawValue, color: .cyan, icon: "slider.horizontal.3")
+                    CompactRow(String(localized: "Repair Mode")) {
+                        StatusBadge(menuBarManager.settings.layoutMode.localizedTitle, color: .cyan, icon: "slider.horizontal.3")
                             .saneHelp(layoutModeDescription)
                     }
                     SaneInlineHelp(layoutModeDescription)
                     CompactDivider()
-                    CompactRow("Arrange Now") {
+                    CompactRow(String(localized: "Arrange Now")) {
                         Button("Run") {
                             Task { @MainActor in
                                 _ = await menuBarManager.profileWorkflow.repairMenuBarHealth(reason: "control")
                             }
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs HaoBar's visible, hidden, and always-hidden groups if needed.")
+                        .saneHelp(String(localized: "Runs an immediate layout check, refreshes menu bar anchor positions, and repairs HaoBar's visible, hidden, and always-hidden groups if needed."))
                     }
                 }
 
                 // 5. Security — Pro
-                CompactSection("Security") {
+                CompactSection(String(localized: "Security")) {
                     if licenseService.isPro {
-                        CompactToggle(label: "Touch ID to unlock hidden icons", isOn: requireAuthBinding)
+                        CompactToggle(label: String(localized: "Touch ID to unlock hidden icons"), isOn: requireAuthBinding)
                             .help("Require Touch ID (or password on Macs without Touch ID) to reveal hidden menu bar icons")
                     } else {
-                        proGatedRow(feature: .touchIDProtection, label: "Touch ID to unlock hidden icons")
+                        proGatedRow(feature: .touchIDProtection, label: String(localized: "Touch ID to unlock hidden icons"))
                     }
                 }
 
                 // 6. Startup Status
-                CompactSection("Startup") {
+                CompactSection(String(localized: "Startup")) {
                     SaneLoginItemToggle()
                     CompactDivider()
                     SaneDockIconToggle(showDockIcon: showDockIconBinding)
@@ -262,9 +262,9 @@ struct GeneralSettingsView: View {
                 }
 
                 // 8. Data — Pro
-                CompactSection("Data") {
+                CompactSection(String(localized: "Data")) {
                     if licenseService.isPro {
-                        CompactRow("Settings") {
+                        CompactRow(String(localized: "Settings")) {
                             HStack(spacing: 8) {
                                 Button("Export Settings...") {
                                     exportSettings()
@@ -278,7 +278,7 @@ struct GeneralSettingsView: View {
 
                         CompactDivider()
 
-                        CompactRow("Migration") {
+                        CompactRow(String(localized: "Migration")) {
                             HStack(spacing: 8) {
                                 Button("Import Bartender...") {
                                     importBartenderSettings()
@@ -290,13 +290,13 @@ struct GeneralSettingsView: View {
                             .buttonStyle(ChromeActionButtonStyle())
                         }
                     } else {
-                        proGatedRow(feature: .exportImport, label: "Export, import, and migrate settings")
+                        proGatedRow(feature: .exportImport, label: String(localized: "Export, import, and migrate settings"))
                     }
                 }
 
                 // 9. Troubleshooting
-                CompactSection("Maintenance") {
-                    CompactRow("Reset App") {
+                CompactSection(String(localized: "Maintenance")) {
+                    CompactRow(String(localized: "Reset App")) {
                         Button("Reset to Defaults…") {
                             showingResetAlert = true
                         }
@@ -343,16 +343,16 @@ struct GeneralSettingsView: View {
     // MARK: - Pro Gating Helper
 
     private var softwareUpdatesSection: some View {
-        CompactSection("Software Updates") {
+        CompactSection(String(localized: "Software Updates")) {
             CompactToggle(
-                label: "Check for updates automatically",
+                label: String(localized: "Check for updates automatically"),
                 isOn: $menuBarManager.settings.checkForUpdatesAutomatically
             )
             .help("Periodically check for new versions")
 
             CompactDivider()
 
-            CompactRow("Check frequency") {
+            CompactRow(String(localized: "Check frequency")) {
                 HStack(spacing: 6) {
                     ForEach(UpdateCheckFrequency.allCases) { frequency in
                         ChromeSegmentedChoiceButton(
@@ -371,7 +371,7 @@ struct GeneralSettingsView: View {
 
             CompactDivider()
 
-            CompactRow("Actions") {
+            CompactRow(String(localized: "Actions")) {
                 Button(isCheckingForUpdates ? "Checking…" : "Check Now") {
                     triggerManualUpdateCheck()
                 }
@@ -515,7 +515,7 @@ struct GeneralSettingsView: View {
         let panel = NSSavePanel()
         panel.allowedContentTypes = [.json]
         panel.nameFieldStringValue = "HaoBar-settings.json"
-        panel.title = "Export Settings"
+        panel.title = String(localized: "Export Settings")
 
         guard panel.runModal() == .OK, let url = panel.url else {
             settingsLogger.log("📤 Export cancelled")
@@ -540,7 +540,7 @@ struct GeneralSettingsView: View {
             settingsLogger.log("📤 Exported settings to \(url.lastPathComponent, privacy: .public)")
         } catch {
             settingsLogger.error("📤 Export failed: \(error.localizedDescription, privacy: .public)")
-            showError(title: "Export Failed", error: error)
+            showError(title: String(localized: "Export Failed"), error: error)
         }
     }
 
@@ -549,7 +549,7 @@ struct GeneralSettingsView: View {
         panel.allowedContentTypes = [.json]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.title = "Import Settings"
+        panel.title = String(localized: "Import Settings")
 
         guard panel.runModal() == .OK, let url = panel.url else {
             settingsLogger.log("📥 Import cancelled")
@@ -573,7 +573,7 @@ struct GeneralSettingsView: View {
             }
         } catch {
             settingsLogger.error("📥 Import failed: \(error.localizedDescription, privacy: .public)")
-            showError(title: "Import Failed", error: error)
+            showError(title: String(localized: "Import Failed"), error: error)
         }
     }
 
@@ -605,9 +605,9 @@ struct GeneralSettingsView: View {
             Task { @MainActor in
                 do {
                     let summary = try await BartenderImportService.importSettings(from: url, menuBarManager: menuBarManager)
-                    showInfo(title: "Bartender Import Complete", message: summary.description)
+                    showInfo(title: String(localized: "Bartender Import Complete"), message: summary.description)
                 } catch {
-                    showError(title: "Bartender Import Failed", error: error)
+                    showError(title: String(localized: "Bartender Import Failed"), error: error)
                 }
             }
         }
@@ -679,7 +679,7 @@ struct GeneralSettingsView: View {
             settingsLogger.log("\(successLog, privacy: .public)")
         } catch {
             settingsLogger.error("📥 Configuration apply failed: \(error.localizedDescription, privacy: .public)")
-            showError(title: "Import Failed", error: error)
+            showError(title: String(localized: "Import Failed"), error: error)
         }
     }
 
@@ -690,9 +690,9 @@ struct GeneralSettingsView: View {
         panel.allowedContentTypes = [.propertyList]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.title = "Import Bartender Settings"
-        panel.message = "Select your Bartender plist (usually com.surteesstudios.Bartender.plist in ~/Library/Preferences)"
-        panel.prompt = "Import"
+        panel.title = String(localized: "Import Bartender Settings")
+        panel.message = String(localized: "Select your Bartender plist (usually com.surteesstudios.Bartender.plist in ~/Library/Preferences)")
+        panel.prompt = String(localized: "Import")
         if let prefsURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?.appendingPathComponent("Preferences") {
             panel.directoryURL = prefsURL
         }
@@ -707,7 +707,7 @@ struct GeneralSettingsView: View {
                 let preview = try await BartenderImportPreviewPlanner.previewImport(from: url)
                 pendingImport = .bartender(url, preview)
             } catch {
-                showError(title: "Bartender Import Failed", error: error)
+                showError(title: String(localized: "Bartender Import Failed"), error: error)
             }
         }
     }
@@ -722,9 +722,9 @@ struct GeneralSettingsView: View {
         panel.allowedContentTypes = [.propertyList]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.title = "Import Ice Settings"
-        panel.message = "Select your Ice plist (usually com.jordanbaird.Ice.plist in ~/Library/Preferences)"
-        panel.prompt = "Import"
+        panel.title = String(localized: "Import Ice Settings")
+        panel.message = String(localized: "Select your Ice plist (usually com.jordanbaird.Ice.plist in ~/Library/Preferences)")
+        panel.prompt = String(localized: "Import")
         if FileManager.default.fileExists(atPath: defaultPath.path) {
             panel.directoryURL = defaultPath.deletingLastPathComponent()
             panel.nameFieldStringValue = defaultPath.lastPathComponent
@@ -739,9 +739,9 @@ struct GeneralSettingsView: View {
 
         do {
             let summary = try IceImportService.importSettings(from: url, menuBarManager: menuBarManager)
-            showInfo(title: "Ice Import Complete", message: summary.description)
+            showInfo(title: String(localized: "Ice Import Complete"), message: summary.description)
         } catch {
-            showError(title: "Ice Import Failed", error: error)
+            showError(title: String(localized: "Ice Import Failed"), error: error)
         }
     }
 

@@ -11,6 +11,17 @@ struct SettingsView: View {
         case health = "Health"
         case about = "About"
 
+        var title: String {
+            switch self {
+            case .control: String(localized: "Control")
+            case .appearance: String(localized: "Appearance")
+            case .shortcuts: String(localized: "Shortcuts")
+            case .rules: String(localized: "Rules")
+            case .health: String(localized: "Health")
+            case .about: String(localized: "About")
+            }
+        }
+
         var icon: String {
             switch self {
             case .control: "switch.2"
@@ -47,22 +58,22 @@ struct SettingsView: View {
             switch tab {
             case .control:
                 GeneralSettingsView()
-                    .navigationTitle("Control")
+                    .navigationTitle(String(localized: "Control"))
             case .rules:
                 RulesSettingsView()
-                    .navigationTitle("Rules")
+                    .navigationTitle(String(localized: "Rules"))
             case .appearance:
                 AppearanceSettingsView()
-                    .navigationTitle("Appearance")
+                    .navigationTitle(String(localized: "Appearance"))
             case .shortcuts:
                 ShortcutsSettingsView()
-                    .navigationTitle("Shortcuts")
+                    .navigationTitle(String(localized: "Shortcuts"))
             case .health:
                 HealthSettingsView()
-                    .navigationTitle("Health")
+                    .navigationTitle(String(localized: "Health"))
             case .about:
                 AboutSettingsView()
-                    .navigationTitle("About")
+                    .navigationTitle(String(localized: "About"))
             }
         }
         .overlay(alignment: .bottomTrailing) {
@@ -70,7 +81,7 @@ struct SettingsView: View {
                 .frame(width: 22, height: 22)
                 .padding(.trailing, 7)
                 .padding(.bottom, 7)
-                .saneHelp("Drag the corner to resize Settings.")
+                .saneHelp(String(localized: "Drag the corner to resize Settings."))
         }
     }
 }

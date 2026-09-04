@@ -18,7 +18,7 @@ struct AppPickerView: View {
     }
 
     var body: some View {
-        CompactRow("If these apps open") {
+        CompactRow(String(localized: "If these apps open")) {
             HStack(spacing: 8) {
                 if selectedBundleIDs.isEmpty {
                     Text("None selected")

@@ -607,7 +607,7 @@ enum SettingsOpener {
             defer: false
         )
         window.contentViewController = hostingController
-        window.title = "\(AppIdentity.displayName) Settings"
+        window.title = String(localized: "HaoBar Settings")
         window.minSize = NSSize(
             width: SaneSettingsWindowDefaults.minWidth,
             height: SaneSettingsWindowDefaults.minHeight

@@ -678,7 +678,7 @@ final class SearchWindowController: NSObject, NSWindowDelegate {
         )
 
         window.contentView = hostingView
-        window.title = "Icon Panel"
+        window.title = String(localized: "Icon Panel")
         window.titlebarSeparatorStyle = .line
         window.backgroundColor = .windowBackgroundColor
         window.isMovableByWindowBackground = true

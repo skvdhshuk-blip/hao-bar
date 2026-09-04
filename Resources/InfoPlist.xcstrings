@@ -1,0 +1,196 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Visible app name. Do not translate HaoBar.",
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar"
+          }
+        }
+      }
+    },
+    "NSAccessibilityUsageDescription" : {
+      "comment" : "Shown by macOS when asking for Accessibility permission.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar needs accessibility permission to detect and arrange menu bar icons."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 需要辅助功能权限，才能识别并整理菜单栏图标。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 需要輔助使用權限，才能辨識並整理選單列圖示。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBarがメニューバーのアイコンを検出して整理するには、アクセシビリティの許可が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar가 메뉴 막대 아이콘을 찾아 정리하려면 손쉬운 사용 권한이 필요합니다."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar benötigt Bedienungshilfen, um Menüleisten-Symbole zu erkennen und zu ordnen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar a besoin de l’accès Accessibilité pour détecter et ranger les icônes de la barre des menus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar necesita acceso de Accesibilidad para detectar y organizar los iconos de la barra de menús."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O HaoBar precisa de permissão de Acessibilidade para detectar e organizar os ícones da barra de menus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar richiede l’accesso Accessibilità per rilevare e organizzare le icone della barra dei menu."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar heeft Toegankelijkheid nodig om menubalkpictogrammen te herkennen en te ordenen."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar cần quyền Trợ năng để nhận diện và sắp xếp các biểu tượng trên thanh menu."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar ต้องได้รับสิทธิ์การเข้าถึงเพื่อตรวจจับและจัดเรียงไอคอนบนแถบเมนู"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar memerlukan izin Aksesibilitas untuk mendeteksi dan merapikan ikon bilah menu."
+          }
+        }
+      }
+    },
+    "NSAppleEventsUsageDescription" : {
+      "comment" : "Shown by macOS when HaoBar sends Apple Events to itself.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar uses Apple Events so Shortcuts and AppleScript can control HaoBar itself."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 使用 Apple 事件，以便快捷指令和 AppleScript 控制 HaoBar 自己。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 使用 Apple 事件，讓捷徑和 AppleScript 能控制 HaoBar 本身。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBarは、ショートカットとAppleScriptがHaoBar自身を操作できるようAppleイベントを使います。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar는 단축어와 AppleScript가 HaoBar 자신을 제어할 수 있도록 Apple 이벤트를 사용합니다."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar nutzt Apple Events, damit Kurzbefehle und AppleScript HaoBar selbst steuern können."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar utilise les Apple Events pour que Raccourcis et AppleScript puissent piloter HaoBar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar usa Apple Events para que Atajos y AppleScript puedan controlar HaoBar."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O HaoBar usa Apple Events para que Atalhos e AppleScript possam controlar o próprio HaoBar."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar usa gli Apple Event così Comandi e AppleScript possono controllare HaoBar."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar gebruikt Apple Events zodat Opdrachten en AppleScript HaoBar zelf kunnen bedienen."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar dùng Apple Events để Phím tắt và AppleScript có thể điều khiển chính HaoBar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar ใช้ Apple Events เพื่อให้คำสั่งลัดและ AppleScript ควบคุม HaoBar เองได้"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar memakai Apple Events agar Pintasan dan AppleScript dapat mengontrol HaoBar sendiri."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

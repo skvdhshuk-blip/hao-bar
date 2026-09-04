@@ -373,13 +373,13 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
     }
 
     private func rebuildProfileSubmenu(in menu: NSMenu) {
-        let title = "Profiles"
+        let title = String(localized: "Profiles")
         let profileMenuItem: NSMenuItem
         if let existing = menu.items.first(where: { $0.title == title }) {
             profileMenuItem = existing
         } else {
             profileMenuItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
-            if let insertAfter = menu.items.firstIndex(where: { $0.title == "Show / Hide Icons" }) {
+            if let insertAfter = menu.items.firstIndex(where: { $0.title == String(localized: "Show / Hide Icons") }) {
                 menu.insertItem(profileMenuItem, at: insertAfter + 1)
             } else {
                 menu.insertItem(profileMenuItem, at: min(2, menu.items.count))
@@ -389,7 +389,7 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
         let submenu = NSMenu()
         let profiles = manager.profileWorkflow.savedProfiles()
         if profiles.isEmpty {
-            let empty = NSMenuItem(title: "No Saved Profiles", action: nil, keyEquivalent: "")
+            let empty = NSMenuItem(title: String(localized: "No Saved Profiles"), action: nil, keyEquivalent: "")
             empty.isEnabled = false
             submenu.addItem(empty)
         } else {
@@ -401,7 +401,7 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
             }
         }
         submenu.addItem(NSMenuItem.separator())
-        let saveItem = NSMenuItem(title: "Save Current as Profile", action: #selector(MenuBarActionWorkflow.saveCurrentProfileFromMenuAction(_:)), keyEquivalent: "")
+        let saveItem = NSMenuItem(title: String(localized: "Save Current as Profile"), action: #selector(MenuBarActionWorkflow.saveCurrentProfileFromMenuAction(_:)), keyEquivalent: "")
         saveItem.target = self
         submenu.addItem(saveItem)
         profileMenuItem.submenu = submenu

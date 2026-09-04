@@ -44,7 +44,7 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
             defer: false
         )
         window.appearance = NSAppearance(named: .darkAqua)
-        window.title = "HaoBar Health"
+        window.title = String(localized: "HaoBar Health")
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
@@ -80,8 +80,8 @@ private struct FirstRunHealthWizardView: View {
 
     var body: some View {
         SaneSettingsPage {
-            CompactSection("HaoBar Health", icon: "stethoscope", iconColor: .green) {
-                SaneInlineHelp("Finish setup with a permission check and a saved layout restore point.")
+            CompactSection(String(localized: "HaoBar Health"), icon: "stethoscope", iconColor: .green) {
+                SaneInlineHelp(String(localized: "Finish setup with a permission check and a saved layout restore point."))
                 CompactDivider()
                 accessibilityRow
                 CompactDivider()
@@ -93,9 +93,9 @@ private struct FirstRunHealthWizardView: View {
                     SaneInlineHelp(rescueMessage)
                 }
                 CompactDivider()
-                CompactRow("Close this check") {
+                CompactRow(String(localized: "Close this check")) {
                     ActionButton("Done", style: .primary, action: onComplete)
-                        .saneHelp("Closes this check. Open Settings > Health later if you still need a restore point.")
+                        .saneHelp(String(localized: "Closes this check. Open Settings > Health later if you still need a restore point."))
                 }
             }
         }
@@ -113,10 +113,10 @@ private struct FirstRunHealthWizardView: View {
     }
 
     private var accessibilityRow: some View {
-        CompactRow("Accessibility") {
+        CompactRow(String(localized: "Accessibility")) {
             HStack(spacing: 8) {
                 StatusBadge(
-                    accessibilityService.isGranted ? "OK" : "Needs Action",
+                    accessibilityService.isGranted ? String(localized: "OK") : String(localized: "Needs Action"),
                     color: accessibilityService.isGranted ? .green : .orange,
                     icon: accessibilityService.isGranted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
                 )
@@ -127,7 +127,7 @@ private struct FirstRunHealthWizardView: View {
                         openAccessibilitySettings()
                     }
                     .controlSize(.small)
-                    .saneHelp("Opens macOS Privacy & Security > Accessibility.")
+                    .saneHelp(String(localized: "Opens macOS Privacy & Security > Accessibility."))
                 }
             }
             .fixedSize(horizontal: true, vertical: false)
@@ -135,34 +135,34 @@ private struct FirstRunHealthWizardView: View {
     }
 
     private var restorePointRow: some View {
-        CompactRow("Layout Restore Point") {
+        CompactRow(String(localized: "Layout Restore Point")) {
             HStack(spacing: 8) {
                 StatusBadge(
-                    rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? "Saved" : "Not Saved",
+                    rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? String(localized: "Saved") : String(localized: "Not Saved"),
                     color: rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? .green : .orange,
                     icon: "lifepreserver"
                 )
-                .saneHelp("The first restore point lets HaoBar return to the current known-good layout later.")
+                .saneHelp(String(localized: "The first restore point lets HaoBar return to the current known-good layout later."))
 
                 ActionButton("Save", style: .secondary) {
                     saveRestorePoint()
                 }
                 .controlSize(.small)
-                .saneHelp("Saves the current menu bar layout as HaoBar's first rescue point.")
+                .saneHelp(String(localized: "Saves the current menu bar layout as HaoBar's first rescue point."))
             }
             .fixedSize(horizontal: true, vertical: false)
         }
     }
 
     private var repairRow: some View {
-        CompactRow("Repair Check") {
+        CompactRow(String(localized: "Repair Check")) {
             HStack(spacing: 8) {
                 StatusBadge(
-                    repairRan ? "Run" : "Ready",
+                    repairRan ? String(localized: "Run") : String(localized: "Ready"),
                     color: repairRan ? .green : .cyan,
                     icon: "wrench.and.screwdriver"
                 )
-                .saneHelp("Arrange Now uses the same layout rescue path available later in Health.")
+                .saneHelp(String(localized: "Arrange Now uses the same layout rescue path available later in Health."))
 
                 ActionButton("Arrange", style: .secondary) {
                     Task { @MainActor in
@@ -171,7 +171,7 @@ private struct FirstRunHealthWizardView: View {
                     }
                 }
                 .controlSize(.small)
-                .saneHelp("Runs an immediate layout repair check.")
+                .saneHelp(String(localized: "Runs an immediate layout repair check."))
             }
             .fixedSize(horizontal: true, vertical: false)
         }
@@ -179,15 +179,15 @@ private struct FirstRunHealthWizardView: View {
 
     private var accessibilityHelp: String {
         accessibilityService.isGranted
-            ? "HaoBar can inspect and arrange menu bar items."
-            : "Open Accessibility settings and grant HaoBar before using Browse Icons or Arrange Now."
+            ? String(localized: "HaoBar can inspect and arrange menu bar items.")
+            : String(localized: "Open Accessibility settings and grant HaoBar before using Browse Icons or Arrange Now.")
     }
 
     private func saveRestorePoint() {
         rescuePointSaved = menuBarManager.profileWorkflow.createLayoutRescueRestorePoint(reason: "health-wizard")
         rescueMessage = rescuePointSaved
-            ? "Restore point saved."
-            : "Run Arrange Now after Accessibility is granted, then save a restore point."
+            ? String(localized: "Restore point saved.")
+            : String(localized: "Run Arrange Now after Accessibility is granted, then save a restore point.")
     }
 
     private func openAccessibilitySettings() {

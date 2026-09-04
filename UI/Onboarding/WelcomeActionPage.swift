@@ -178,26 +178,26 @@ struct WelcomeActionPage: View {
 
         if competitor == "Ice" {
             guard let url = detectedCompetitorPlistURL else {
-                importResult = "Import available in Settings → General → Data"
+                importResult = String(localized: "Import available in Settings → General → Data")
                 return
             }
             do {
                 let summary = try IceImportService.importSettings(from: url, menuBarManager: manager)
-                importResult = "Imported \(summary.applied.count) settings from Ice"
+                importResult = String(localized: "Imported \(summary.applied.count) settings from Ice")
             } catch {
-                importResult = "Import available in Settings → General → Data"
+                importResult = String(localized: "Import available in Settings → General → Data")
             }
         } else {
             guard let url = detectedCompetitorPlistURL else {
-                importResult = "Import available in Settings → General → Data"
+                importResult = String(localized: "Import available in Settings → General → Data")
                 return
             }
             Task { @MainActor in
                 do {
                     let summary = try await BartenderImportService.importSettings(from: url, menuBarManager: manager)
-                    importResult = "Imported Bartender layout (\(summary.totalMoved) icons moved)"
+                    importResult = String(localized: "Imported Bartender layout (\(summary.totalMoved) icons moved)")
                 } catch {
-                    importResult = "Import available in Settings → General → Data"
+                    importResult = String(localized: "Import available in Settings → General → Data")
                 }
             }
         }

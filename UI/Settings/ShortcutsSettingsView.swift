@@ -16,71 +16,71 @@ struct ShortcutsSettingsView: View {
     private let automationCommands: [AutomationCommand] = [
         .init(
             id: "toggle",
-            title: "Toggle hidden icons",
+            title: String(localized: "Toggle hidden icons"),
             command: "open \"\(AppIdentity.urlScheme)://toggle\""
         ),
         .init(
             id: "show",
-            title: "Show hidden icons",
+            title: String(localized: "Show hidden icons"),
             command: "open \"\(AppIdentity.urlScheme)://show\""
         ),
         .init(
             id: "hide",
-            title: "Hide icons",
+            title: String(localized: "Hide icons"),
             command: "open \"\(AppIdentity.urlScheme)://hide\""
         ),
         .init(
             id: "search",
-            title: "Open search",
+            title: String(localized: "Open search"),
             command: "open \"\(AppIdentity.urlScheme)://search\""
         ),
         .init(
             id: "search-query",
-            title: "Search text",
+            title: String(localized: "Search text"),
             command: "open \"\(AppIdentity.urlScheme)://search?q=wifi\""
         ),
         .init(
             id: "settings",
-            title: "Open settings",
+            title: String(localized: "Open settings"),
             command: "open \"\(AppIdentity.urlScheme)://settings\""
         ),
         .init(
             id: "health",
-            title: "Open health",
+            title: String(localized: "Open health"),
             command: "open \"\(AppIdentity.urlScheme)://health\""
         ),
         .init(
             id: "applescript-toggle",
-            title: "AppleScript toggle",
+            title: String(localized: "AppleScript toggle"),
             command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to toggle'"
         ),
         .init(
             id: "applescript-search",
-            title: "AppleScript search",
+            title: String(localized: "AppleScript search"),
             command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to quick search \"wifi\"'"
         ),
         .init(
             id: "applescript-move-before",
-            title: "AppleScript move before",
+            title: String(localized: "AppleScript move before"),
             command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to move icon before \"SOURCE_ID\" target icon \"TARGET_ID\"'"
         ),
         .init(
             id: "applescript-move-after",
-            title: "AppleScript move after",
+            title: String(localized: "AppleScript move after"),
             command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to move icon after \"SOURCE_ID\" target icon \"TARGET_ID\"'"
         )
     ]
 
     var body: some View {
         SaneSettingsPage {
-                CompactSection("Global Hotkeys") {
-                    CompactRow("Browse Icons") {
+                CompactSection(String(localized: "Global Hotkeys")) {
+                    CompactRow(String(localized: "Browse Icons")) {
                         KeyboardShortcuts.Recorder(for: .searchMenuBar)
                             .fixedSize()
                             .help("Open the icon panel or second menu bar")
                     }
                     CompactDivider()
-                    CompactRow("Show / Hide icons") {
+                    CompactRow(String(localized: "Show / Hide icons")) {
                         KeyboardShortcuts.Recorder(for: .toggleHiddenItems)
                             .fixedSize()
                             .help("Toggle hidden icons visible or hidden")
@@ -88,35 +88,35 @@ struct ShortcutsSettingsView: View {
 
                     if licenseService.isPro {
                         CompactDivider()
-                        CompactRow("Show icons") {
+                        CompactRow(String(localized: "Show icons")) {
                             KeyboardShortcuts.Recorder(for: .showHiddenItems)
                                 .fixedSize()
                                 .help("Reveal hidden menu bar icons")
                         }
                         CompactDivider()
-                        CompactRow("Hide icons") {
+                        CompactRow(String(localized: "Hide icons")) {
                             KeyboardShortcuts.Recorder(for: .hideItems)
                                 .fixedSize()
                                 .help("Hide menu bar icons again")
                         }
                         CompactDivider()
-                        CompactRow("Open Settings") {
+                        CompactRow(String(localized: "Open Settings")) {
                             KeyboardShortcuts.Recorder(for: .openSettings)
                                 .fixedSize()
                                 .help("Open the HaoBar settings window")
                         }
                     } else {
                         CompactDivider()
-                        proLockedRow(feature: .additionalShortcuts, label: "Show icons")
+                        proLockedRow(feature: .additionalShortcuts, label: String(localized: "Show icons"))
                         CompactDivider()
-                        proLockedRow(feature: .additionalShortcuts, label: "Hide icons")
+                        proLockedRow(feature: .additionalShortcuts, label: String(localized: "Hide icons"))
                         CompactDivider()
-                        proLockedRow(feature: .additionalShortcuts, label: "Open Settings")
+                        proLockedRow(feature: .additionalShortcuts, label: String(localized: "Open Settings"))
                     }
                 }
 
                 // 2. Automation — Pro
-                CompactSection("Automation") {
+                CompactSection(String(localized: "Automation")) {
                     ForEach(Array(automationCommands.enumerated()), id: \.element.id) { index, item in
                         if licenseService.isPro {
                             CompactRow(item.title) {
@@ -141,21 +141,21 @@ struct ShortcutsSettingsView: View {
                     }
                 }
 
-                CompactSection("App Shortcuts") {
+                CompactSection(String(localized: "App Shortcuts")) {
                     if licenseService.isPro {
-                        CompactRow("Actions") {
+                        CompactRow(String(localized: "Actions")) {
                             HStack(spacing: 8) {
-                                StatusBadge("Toggle", color: .cyan, icon: "line.3.horizontal.decrease")
-                                StatusBadge("Profiles", color: .green, icon: "rectangle.stack")
-                                StatusBadge("Search", color: .blue, icon: "magnifyingglass")
+                                StatusBadge(String(localized: "Toggle"), color: .cyan, icon: "line.3.horizontal.decrease")
+                                StatusBadge(String(localized: "Profiles"), color: .green, icon: "rectangle.stack")
+                                StatusBadge(String(localized: "Search"), color: .blue, icon: "magnifyingglass")
                             }
                         }
                     } else {
-                        proLockedRow(feature: .appleScript, label: "Toggle action")
+                        proLockedRow(feature: .appleScript, label: String(localized: "Toggle action"))
                         CompactDivider()
-                        proLockedRow(feature: .appleScript, label: "Profiles actions")
+                        proLockedRow(feature: .appleScript, label: String(localized: "Profiles actions"))
                         CompactDivider()
-                        proLockedRow(feature: .appleScript, label: "Search action")
+                        proLockedRow(feature: .appleScript, label: String(localized: "Search action"))
                     }
                 }
         }

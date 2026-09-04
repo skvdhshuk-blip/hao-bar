@@ -64,7 +64,7 @@ enum BrowsePanelGroupEditor {
         selectGroup: (UUID?) -> Void
     ) {
         let alert = NSAlert()
-        alert.messageText = "New Custom Group"
+        alert.messageText = String(localized: "New Custom Group")
         alert.informativeText = "Name this group."
         alert.addButton(withTitle: "Create")
         alert.addButton(withTitle: "Cancel")

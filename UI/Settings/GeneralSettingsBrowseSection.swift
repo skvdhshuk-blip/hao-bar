@@ -11,7 +11,7 @@ struct GeneralSettingsBrowseSection: View {
     let showProUpsell: (ProFeature) -> Void
 
     private var browseDestinationLabel: String {
-        menuBarManager.settings.useSecondMenuBar ? "Second Menu Bar" : "Icon Panel"
+        menuBarManager.settings.useSecondMenuBar ? String(localized: "Second Menu Bar") : String(localized: "Icon Panel")
     }
 
     private var isBasicSecondMenuBar: Bool {
@@ -19,26 +19,26 @@ struct GeneralSettingsBrowseSection: View {
     }
 
     private var secondMenuBarRowsSummary: String {
-        var rows = ["Hidden"]
+        var rows = [String(localized: "Hidden")]
         if menuBarManager.settings.secondMenuBarShowVisible {
-            rows.append("Visible")
+            rows.append(String(localized: "Visible"))
         }
         if menuBarManager.settings.secondMenuBarShowAlwaysHidden {
-            rows.append("Always Hidden")
+            rows.append(String(localized: "Always Hidden"))
         }
         return rows.joined(separator: " + ")
     }
 
     var body: some View {
-        CompactSection("Browse Icons") {
-            CompactRow("Browse Icons view") {
+        CompactSection(String(localized: "Browse Icons")) {
+            CompactRow(String(localized: "Browse Icons view")) {
                 HStack(spacing: 6) {
-                    segmentedChoiceButton("Icon Panel", isSelected: !menuBarManager.settings.useSecondMenuBar) {
+                    segmentedChoiceButton(String(localized: "Icon Panel"), isSelected: !menuBarManager.settings.useSecondMenuBar) {
                         applyBrowseIconsViewSelection(false)
                     }
                     .help(browseIconsViewOptionHelp(useSecondMenuBar: false))
 
-                    segmentedChoiceButton("Second Menu Bar", isSelected: menuBarManager.settings.useSecondMenuBar) {
+                    segmentedChoiceButton(String(localized: "Second Menu Bar"), isSelected: menuBarManager.settings.useSecondMenuBar) {
                         applyBrowseIconsViewSelection(true)
                     }
                     .help(browseIconsViewOptionHelp(useSecondMenuBar: true))
@@ -50,16 +50,16 @@ struct GeneralSettingsBrowseSection: View {
                 proSecondMenuBarRows
             } else if isBasicSecondMenuBar {
                 CompactDivider()
-                CompactRow("Rows shown in Second Menu Bar") {
+                CompactRow(String(localized: "Rows shown in Second Menu Bar")) {
                     Text("Hidden + Visible")
                         .font(SaneTypography.label)
                         .foregroundStyle(.white.opacity(0.94))
                 }
                 CompactDivider()
-                proGatedRow(feature: .alwaysHidden, label: "Always Hidden row")
+                proGatedRow(feature: .alwaysHidden, label: String(localized: "Always Hidden row"))
             } else if !licenseService.isPro {
                 CompactDivider()
-                proGatedRow(feature: .zoneMoves, label: "Move icons between Visible, Hidden, and Always Hidden")
+                proGatedRow(feature: .zoneMoves, label: String(localized: "Move icons between Visible, Hidden, and Always Hidden"))
             }
 
             CompactDivider()
@@ -70,7 +70,7 @@ struct GeneralSettingsBrowseSection: View {
     @ViewBuilder
     private var proSecondMenuBarRows: some View {
         CompactDivider()
-        CompactRow("Rows shown in Second Menu Bar") {
+        CompactRow(String(localized: "Rows shown in Second Menu Bar")) {
             HStack(spacing: 6) {
                 ForEach(GeneralSettingsSecondMenuBarPreset.allCases) { preset in
                     segmentedChoiceButton(preset.title, isSelected: secondMenuBarPreset.wrappedValue == preset) {
@@ -91,7 +91,7 @@ struct GeneralSettingsBrowseSection: View {
     @ViewBuilder
     private var powerRows: some View {
         CompactDivider()
-        CompactRow("Custom rows") {
+        CompactRow(String(localized: "Custom rows")) {
             Button(showBrowseRowCustomization ? "Hide" : "Show") {
                 withAnimation(.easeInOut(duration: 0.18)) {
                     showBrowseRowCustomization.toggle()
@@ -103,17 +103,17 @@ struct GeneralSettingsBrowseSection: View {
 
         if showBrowseRowCustomization {
             CompactDivider()
-            CompactToggle(label: "Show Visible row", isOn: $menuBarManager.settings.secondMenuBarShowVisible)
+            CompactToggle(label: String(localized: "Show Visible row"), isOn: $menuBarManager.settings.secondMenuBarShowVisible)
                 .help("Show the Visible destination row in the Second Menu Bar.")
 
             CompactDivider()
-            CompactToggle(label: "Show Always Hidden row", isOn: $menuBarManager.settings.secondMenuBarShowAlwaysHidden)
+            CompactToggle(label: String(localized: "Show Always Hidden row"), isOn: $menuBarManager.settings.secondMenuBarShowAlwaysHidden)
                 .help("Show the Always Hidden destination row in the Second Menu Bar.")
         }
     }
 
     private var leftClickRows: some View {
-        CompactRow("Left-click HaoBar icon") {
+        CompactRow(String(localized: "Left-click HaoBar icon")) {
             HStack(spacing: 6) {
                 ForEach(GeneralSettingsBrowseLeftClickMode.allCases) { mode in
                     segmentedChoiceButton(mode.title, isSelected: leftClickMode.wrappedValue == mode) {
@@ -124,7 +124,7 @@ struct GeneralSettingsBrowseSection: View {
             }
             .fixedSize(horizontal: true, vertical: false)
         }
-        .saneHelp("Right-click the HaoBar icon to open the app menu.")
+        .saneHelp(String(localized: "Right-click the HaoBar icon to open the app menu."))
     }
 
     private func segmentedChoiceButton(
@@ -149,37 +149,37 @@ struct GeneralSettingsBrowseSection: View {
     private func browseIconsViewOptionHelp(useSecondMenuBar: Bool) -> String {
         if useSecondMenuBar {
             if licenseService.isPro {
-                return "Open a row-based strip under the menu bar."
+                return String(localized: "Open a row-based strip under the menu bar.")
             }
-            return "Open a row-based strip under the menu bar. Basic includes browsing and clicking there. Pro adds moving icons and Always Hidden."
+            return String(localized: "Open a row-based strip under the menu bar. Basic includes browsing and clicking there. Pro adds moving icons and Always Hidden.")
         }
 
         if licenseService.isPro {
-            return "Open the Icon Panel window with search and icon actions."
+            return String(localized: "Open the Icon Panel window with search and icon actions.")
         }
-        return "Open the Icon Panel window with search and icon clicking. Pro adds moving icons and Always Hidden."
+        return String(localized: "Open the Icon Panel window with search and icon clicking. Pro adds moving icons and Always Hidden.")
     }
 
     private func secondMenuBarPresetHelp(_ preset: GeneralSettingsSecondMenuBarPreset) -> String {
         switch preset {
         case .minimal:
-            "Show only the Hidden row in the Second Menu Bar."
+            String(localized: "Show only the Hidden row in the Second Menu Bar.")
         case .balanced:
-            "Show Hidden and Visible rows in the Second Menu Bar."
+            String(localized: "Show Hidden and Visible rows in the Second Menu Bar.")
         case .power:
-            "Show Hidden, Visible, and Always Hidden rows in the Second Menu Bar."
+            String(localized: "Show Hidden, Visible, and Always Hidden rows in the Second Menu Bar.")
         }
     }
 
     private func leftClickModeHelp(_ mode: GeneralSettingsBrowseLeftClickMode) -> String {
         switch mode {
         case .toggleHidden:
-            return "Left-click the HaoBar icon to show or hide icons."
+            return String(localized: "Left-click the HaoBar icon to show or hide icons.")
         case .openBrowseIcons:
             if licenseService.isPro {
-                return "Left-click the HaoBar icon to open \(browseDestinationLabel)."
+                return String(localized: "Left-click the HaoBar icon to open \(browseDestinationLabel).")
             }
-            return "Left-click the HaoBar icon to open \(browseDestinationLabel) for browsing and clicking icons."
+            return String(localized: "Left-click the HaoBar icon to open \(browseDestinationLabel) for browsing and clicking icons.")
         }
     }
 }

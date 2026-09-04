@@ -19,8 +19,8 @@ struct ImportPreviewSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            CompactSection("Import Settings") {
-                CompactRow("Source") {
+            CompactSection(String(localized: "Import Settings")) {
+                CompactRow(String(localized: "Source")) {
                     Text("\(plan.sourceKind.rawValue): \(plan.fileName)")
                         .lineLimit(2)
                         .multilineTextAlignment(.trailing)
@@ -28,52 +28,52 @@ struct ImportPreviewSheet: View {
 
                 if hasRuleDetails {
                     CompactDivider()
-                    CompactRow("Show") { Text("\(plan.showItemIds.count) items") }
+                    CompactRow(String(localized: "Show")) { Text("\(plan.showItemIds.count) items") }
                     CompactDivider()
-                    CompactRow("Hide") { Text("\(plan.hideItemIds.count) items") }
+                    CompactRow(String(localized: "Hide")) { Text("\(plan.hideItemIds.count) items") }
                     CompactDivider()
-                    CompactRow("Always Hide") { Text("\(plan.alwaysHideItemIds.count) items") }
+                    CompactRow(String(localized: "Always Hide")) { Text("\(plan.alwaysHideItemIds.count) items") }
                     CompactDivider()
-                    CompactRow("All Others") { Text(plan.hideAllOtherItems ? "On" : "Off") }
+                    CompactRow(String(localized: "All Others")) { Text(plan.hideAllOtherItems ? String(localized: "On") : String(localized: "Off")) }
                 } else {
                     CompactDivider()
-                    CompactRow("Profile rules") { Text("No visibility rules") }
+                    CompactRow(String(localized: "Profile rules")) { Text("No visibility rules") }
                 }
 
                 if plan.savedProfileCount > 0 {
                     CompactDivider()
-                    CompactRow("Saved profiles") { Text("\(plan.savedProfileCount)") }
+                    CompactRow(String(localized: "Saved profiles")) { Text("\(plan.savedProfileCount)") }
                 }
                 if plan.includesLayoutSnapshot {
                     CompactDivider()
-                    CompactRow("Layout snapshot") { Text("Included") }
+                    CompactRow(String(localized: "Layout snapshot")) { Text("Included") }
                 }
                 if plan.includesCustomIconSnapshot {
                     CompactDivider()
-                    CompactRow("Custom icon") { Text("Included") }
+                    CompactRow(String(localized: "Custom icon")) { Text("Included") }
                 }
                 if !plan.behavioralSettings.isEmpty {
                     CompactDivider()
-                    CompactRow("Settings") { Text("\(plan.behavioralSettings.count) changes") }
+                    CompactRow(String(localized: "Settings")) { Text("\(plan.behavioralSettings.count) changes") }
                 }
                 if !plan.missingItemIds.isEmpty {
                     CompactDivider()
-                    CompactRow("Missing items") { Text("\(plan.missingItemIds.count)") }
+                    CompactRow(String(localized: "Missing items")) { Text("\(plan.missingItemIds.count)") }
                 }
                 if !plan.skippedItemIds.isEmpty {
                     CompactDivider()
-                    CompactRow("Skipped items") { Text("\(plan.skippedItemIds.count)") }
+                    CompactRow(String(localized: "Skipped items")) { Text("\(plan.skippedItemIds.count)") }
                 }
 
                 if plan.hideAllOtherItems {
-                    SaneInlineHelp("This import will keep the shown items visible and hide newly detected menu bar items by default.")
+                    SaneInlineHelp(String(localized: "This import will keep the shown items visible and hide newly detected menu bar items by default."))
                 }
                 if enablesScriptTrigger {
-                    SaneInlineHelp("This import enables script-based control. Only import files you trust.")
+                    SaneInlineHelp(String(localized: "This import enables script-based control. Only import files you trust."))
                 }
             }
 
-            CompactRow("Actions") {
+            CompactRow(String(localized: "Actions")) {
                 HStack(spacing: 8) {
                     Button("Cancel", action: onCancel)
                         .buttonStyle(ChromeActionButtonStyle())

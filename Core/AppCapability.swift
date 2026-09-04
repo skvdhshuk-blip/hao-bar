@@ -27,7 +27,7 @@ enum AppCapability {
     }
 
     static var simulatedDragFallbackMessage: String {
-        "HaoBar couldn’t move that icon in the sandbox. ⌘-drag it in the menu bar instead."
+        String(localized: "HaoBar couldn’t move that icon in the sandbox. ⌘-drag it in the menu bar instead.")
     }
 }
 

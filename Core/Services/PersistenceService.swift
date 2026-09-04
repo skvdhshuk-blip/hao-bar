@@ -59,16 +59,37 @@ struct SaneBarSettings: Codable, Equatable {
     enum GestureMode: String, Codable, CaseIterable {
         case showOnly = "Show only"
         case showAndHide = "Show and hide"
+
+        var localizedTitle: String {
+            switch self {
+            case .showOnly: String(localized: "Show only")
+            case .showAndHide: String(localized: "Show and hide")
+            }
+        }
     }
 
     enum LayoutMode: String, Codable, CaseIterable {
         case stability = "Stability"
         case live = "Live"
+
+        var localizedTitle: String {
+            switch self {
+            case .stability: String(localized: "Stability")
+            case .live: String(localized: "Live")
+            }
+        }
     }
 
     enum TriggerAction: String, Codable, CaseIterable {
         case showIcons = "Show Icons"
         case applyProfile = "Apply Profile"
+
+        var localizedTitle: String {
+            switch self {
+            case .showIcons: String(localized: "Show Icons")
+            case .applyProfile: String(localized: "Apply Profile")
+            }
+        }
     }
 
     /// User-created icon group for organizing menu bar apps

@@ -27,25 +27,25 @@ enum ProFeature: String, Identifiable, CaseIterable {
 
     var description: String {
         switch self {
-        case .iconActivation: "Click icons directly from the panel to open their menus"
-        case .rightClickFromPanels: "Right-click icons from the panel for quick actions"
-        case .zoneMoves: "Drag icons between Visible, Hidden, and Always Hidden zones"
-        case .alwaysHidden: "A third zone for icons you never want to see"
-        case .perIconHotkeys: "Assign a unique keyboard shortcut to any icon"
-        case .iconGroups: "Organize icons into custom named groups"
-        case .advancedTriggers: "Auto-show icons on Wi-Fi, Focus, battery, app launch, or script"
-        case .gestureCustomization: "Toggle mode, directional scroll, and more gesture options"
-        case .autoRehideCustomization: "Custom timing, hide-on-app-change, external monitor rules"
-        case .menuBarAppearance: "Tint colors, glass effects, borders, corners, and shadows"
-        case .iconSpacing: "Reduce or increase the space between menu bar icons"
-        case .touchIDProtection: "Protect hidden icons with Touch ID or your password"
-        case .settingsProfiles: "Save and load different configurations"
-        case .exportImport: "Export settings to share or back up, import from file"
-        case .competitorImport: "Import settings from Bartender or Ice"
-        case .customIcon: "Use your own image as the HaoBar menu bar icon"
-        case .spacersConfig: "Add extra visual dividers to organize your menu bar"
-        case .additionalShortcuts: "Show-only, hide-only, open settings, and more shortcuts"
-        case .appleScript: "Control HaoBar from scripts and automation tools"
+        case .iconActivation: String(localized: "Click icons directly from the panel to open their menus")
+        case .rightClickFromPanels: String(localized: "Right-click icons from the panel for quick actions")
+        case .zoneMoves: String(localized: "Drag icons between Visible, Hidden, and Always Hidden zones")
+        case .alwaysHidden: String(localized: "A third zone for icons you never want to see")
+        case .perIconHotkeys: String(localized: "Assign a unique keyboard shortcut to any icon")
+        case .iconGroups: String(localized: "Organize icons into custom named groups")
+        case .advancedTriggers: String(localized: "Auto-show icons on Wi-Fi, Focus, battery, app launch, or script")
+        case .gestureCustomization: String(localized: "Toggle mode, directional scroll, and more gesture options")
+        case .autoRehideCustomization: String(localized: "Custom timing, hide-on-app-change, external monitor rules")
+        case .menuBarAppearance: String(localized: "Tint colors, glass effects, borders, corners, and shadows")
+        case .iconSpacing: String(localized: "Reduce or increase the space between menu bar icons")
+        case .touchIDProtection: String(localized: "Protect hidden icons with Touch ID or your password")
+        case .settingsProfiles: String(localized: "Save and load different configurations")
+        case .exportImport: String(localized: "Export settings to share or back up, import from file")
+        case .competitorImport: String(localized: "Import settings from Bartender or Ice")
+        case .customIcon: String(localized: "Use your own image as the HaoBar menu bar icon")
+        case .spacersConfig: String(localized: "Add extra visual dividers to organize your menu bar")
+        case .additionalShortcuts: String(localized: "Show-only, hide-only, open settings, and more shortcuts")
+        case .appleScript: String(localized: "Control HaoBar from scripts and automation tools")
         }
     }
 

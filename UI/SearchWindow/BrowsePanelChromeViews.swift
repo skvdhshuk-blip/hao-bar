@@ -207,23 +207,23 @@ struct BrowseEmptyState: View {
 
     private var title: String {
         switch mode {
-        case .hidden: "No hidden icons"
-        case .visible: "No visible icons"
-        case .alwaysHidden: "No always hidden icons"
-        case .all: "No menu bar icons"
+        case .hidden: String(localized: "No hidden icons")
+        case .visible: String(localized: "No visible icons")
+        case .alwaysHidden: String(localized: "No always hidden icons")
+        case .all: String(localized: "No menu bar icons")
         }
     }
 
     private var subtitle: String {
         switch mode {
         case .hidden:
-            "All your menu bar icons are visible.\nUse ⌘-drag to hide icons left of the separator."
+            String(localized: "All your menu bar icons are visible.\nUse ⌘-drag to hide icons left of the separator.")
         case .visible:
-            "All your menu bar icons are hidden.\nUse ⌘-drag to show icons right of the separator."
+            String(localized: "All your menu bar icons are hidden.\nUse ⌘-drag to show icons right of the separator.")
         case .alwaysHidden:
-            "Nothing is in the always-hidden zone.\nDrag an icon onto the glowing Always Hidden tab or use the context menu."
+            String(localized: "Nothing is in the always-hidden zone.\nDrag an icon onto the glowing Always Hidden tab or use the context menu.")
         case .all:
-            "Try Refresh, or grant Accessibility permission."
+            String(localized: "Try Refresh, or grant Accessibility permission.")
         }
     }
 }
