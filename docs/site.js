@@ -21,6 +21,9 @@
         document.querySelectorAll("[data-lang]").forEach(function (button) {
             button.setAttribute("aria-pressed", String(button.getAttribute("data-lang") === lang));
         });
+        document.title = lang === "en"
+            ? "HaoBar — Hide unused menu bar icons"
+            : "HaoBar — 收起用不到的菜单栏图标";
     }
 
     setLang(currentLang());

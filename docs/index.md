@@ -2,14 +2,14 @@
 
 Hide unused menu bar icons. Keep the important ones visible.
 
-Click HaoBar and the tucked-away extras come back. Settings stay on this Mac — no account, no upload.
+Click HaoBar and the tucked-away icons come back. Settings stay on this Mac — no account, no upload.
 
 The live site is [`index.html`](index.html).
 
 ## What it does
 
 - Click the HaoBar extra to show or hide tucked-away menu bar apps
-- Browse hidden extras in the Icon Panel or a Second Menu Bar
+- Browse hidden icons in the Icon Panel or a Second Menu Bar
 - Search by name and open an app with a double-click
 - Local profiles, keyboard shortcuts, and optional Touch ID
 

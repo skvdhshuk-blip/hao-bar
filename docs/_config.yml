@@ -1,6 +1,5 @@
 title: HaoBar
 description: Hide unused menu bar icons. Keep the important ones visible.
-theme: null
 exclude:
   - "*.md"
   - class_diagram.puml
