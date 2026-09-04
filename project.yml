@@ -1,28 +1,23 @@
 name: SaneBar
 options:
-  bundleIdPrefix: com.sanebar
+  bundleIdPrefix: com.haobar
   deploymentTarget:
     macOS: 14.0
   xcodeVersion: 16.0
+  knownRegions:
+    - en
+    - zh-Hans
+    - Base
 
 configs:
   Debug: debug
-  ProdDebug: debug
-  ProdDebug-Setapp: debug
-  Release: release
+  Debug-AppStore: debug
   Release-AppStore: release
-  Release-Setapp: release
 
 packages:
   KeyboardShortcuts:
     url: https://github.com/sindresorhus/KeyboardShortcuts
     from: 2.4.0
-  Setapp:
-    url: https://github.com/MacPaw/Setapp-framework.git
-    from: 5.0.1
-  Sparkle:
-    url: https://github.com/sparkle-project/Sparkle
-    from: 2.8.0
   SaneUI:
     url: https://github.com/sane-apps/SaneUI.git
     revision: 3850741e78a539cc130697bae7ffa5ac9741508a
@@ -32,6 +27,7 @@ settings:
   ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
   ENABLE_HARDENED_RUNTIME: YES
   GENERATE_INFOPLIST_FILE: YES
+  DEVELOPMENT_TEAM: 5J7WJGPA2Q
   # Recommended warnings
   CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING: YES
   CLANG_WARN_BOOL_CONVERSION: YES
@@ -71,13 +67,13 @@ schemes:
       targets:
         - SaneBarTests
     profile:
-      config: Release
+      config: Debug
     run:
       config: Debug
     archive:
-      config: Release
+      config: Release-AppStore
 
-  SaneBarSetapp:
+  HaoBar:
     build:
       targets:
         SaneBar: all
@@ -86,17 +82,17 @@ schemes:
       targets:
         - SaneBarTests
     profile:
-      config: Release-Setapp
+      config: Debug-AppStore
     run:
-      config: ProdDebug-Setapp
+      config: Debug-AppStore
     archive:
-      config: Release-Setapp
+      config: Release-AppStore
 
 targets:
   SaneBar:
     type: application
     platform: macOS
-    bundleId: com.sanebar.app
+    bundleId: com.haobar.app
     deploymentTarget:
       macOS: 14.0
     sources:
@@ -112,33 +108,30 @@ targets:
       - SaneBar/PrivacyInfo.xcprivacy
     dependencies:
       - package: KeyboardShortcuts
-      - package: Setapp
-      - package: Sparkle
       - package: SaneUI
     info:
       path: SaneBar/Info.plist
       properties:
         NSAppleScriptEnabled: true
         OSAScriptingDefinition: SaneBar.sdef
-        NSAppleEventsUsageDescription: "SaneBar needs to control other applications to manage your menu bar items."
-        NSAccessibilityUsageDescription: "SaneBar needs accessibility permissions to detect and manage menu bar items."
+        NSAppleEventsUsageDescription: "HaoBar uses Apple Events so Shortcuts and AppleScript can control HaoBar itself."
+        NSAccessibilityUsageDescription: "HaoBar needs accessibility permission to detect and arrange menu bar icons."
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        CFBundleDisplayName: HaoBar
         CFBundleURLTypes:
-          - CFBundleURLName: "com.sanebar.app"
+          - CFBundleURLName: "com.haobar.app"
             CFBundleURLSchemes:
-              - "sanebar"
+              - "haobar"
         LSApplicationCategoryType: "public.app-category.utilities"
-        SUFeedURL: "https://sanebar.com/appcast.xml"
-        SUEnableSystemProfiling: false
-        SUEnableAutomaticChecks: true
-        SUPublicEDKey: "7Pl/8cwfb2vm4Dm65AByslkMCScLJ9tbGlwGGx81qYU="
+        ITSAppUsesNonExemptEncryption: false
     settings:
       base:
-        PRODUCT_NAME: SaneBar
-        PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app
-        MARKETING_VERSION: "2.1.90"
-        CURRENT_PROJECT_VERSION: "2190"
+        PRODUCT_NAME: HaoBar
+        PRODUCT_MODULE_NAME: SaneBar
+        PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "100"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: NO
         ENABLE_XOJIT_PREVIEWS: NO
@@ -147,55 +140,35 @@ targets:
         MACOSX_DEPLOYMENT_TARGET: 14.0
         ARCHS: arm64
         VALID_ARCHS: arm64
-        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: 5J7WJGPA2Q
+        CODE_SIGN_STYLE: Automatic
         CODE_SIGN_INJECT_BASE_ENTITLEMENTS: YES
       configs:
-        # Community builds: use Debug (ad-hoc signing, no team required).
-        # Every other config needs the original maintainer's Apple Developer team.
         Debug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.dev
-          DEVELOPMENT_TEAM: ""
+          PRODUCT_BUNDLE_IDENTIFIER: com.haobar.dev
           CODE_SIGN_IDENTITY: "-"
+          CODE_SIGN_STYLE: Manual
+          DEVELOPMENT_TEAM: ""
           CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
           CODE_SIGN_ENTITLEMENTS: ""
-        ProdDebug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app
-          DEVELOPMENT_TEAM: M78L6FXD48
-          CODE_SIGN_IDENTITY: "Apple Development"
-          CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar.entitlements
-          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "DEBUG PRODDEBUG"
-        ProdDebug-Setapp:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app-setapp
-          DEVELOPMENT_TEAM: M78L6FXD48
-          CODE_SIGN_IDENTITY: "Apple Development"
-          CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar.entitlements
-          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "DEBUG PRODDEBUG SETAPP"
-          ARCHS: "$(ARCHS_STANDARD)"
-          VALID_ARCHS: "arm64 x86_64"
-        Release:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app
-          DEVELOPMENT_TEAM: M78L6FXD48
-          CODE_SIGN_IDENTITY: "Developer ID Application"
-          CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar.entitlements
-        Release-AppStore:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app
-          DEVELOPMENT_TEAM: M78L6FXD48
+        Debug-AppStore:
+          PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
           CODE_SIGN_STYLE: Automatic
           CODE_SIGN_IDENTITY: "Apple Development"
           CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
           ENABLE_APP_SANDBOX: YES
           OTHER_SWIFT_FLAGS: "$(inherited) -D APP_STORE"
-          APP_STORE_PRODUCT_ID: com.sanebar.app.pro.unlock
-          INFOPLIST_KEY_AppStoreProductID: com.sanebar.app.pro.unlock
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "DEBUG APP_STORE"
           CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar-AppStore.entitlements
-        Release-Setapp:
-          PRODUCT_BUNDLE_IDENTIFIER: com.sanebar.app-setapp
-          DEVELOPMENT_TEAM: M78L6FXD48
-          CODE_SIGN_IDENTITY: "Developer ID Application"
-          CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar.entitlements
-          OTHER_SWIFT_FLAGS: "$(inherited) -D SETAPP"
-          ARCHS: "$(ARCHS_STANDARD)"
-          VALID_ARCHS: "arm64 x86_64"
+        Release-AppStore:
+          PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
+          CODE_SIGN_STYLE: Automatic
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+          ENABLE_APP_SANDBOX: YES
+          OTHER_SWIFT_FLAGS: "$(inherited) -D APP_STORE"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "APP_STORE"
+          CODE_SIGN_ENTITLEMENTS: SaneBar/SaneBar-AppStore.entitlements
     postCompileScripts:
       - script: |
           export PATH="/opt/homebrew/bin:$PATH"
@@ -206,47 +179,11 @@ targets:
           fi
         name: Run SwiftLint
         basedOnDependencyAnalysis: false
-    postBuildScripts:
-      - script: |
-          if [ "$CONFIGURATION" == "ProdDebug-Setapp" ] || [ "$CONFIGURATION" == "Release-Setapp" ]; then
-            echo "Setapp build: stripping Sparkle framework and direct-store keys..."
-            rm -rf "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework"
-            /usr/libexec/PlistBuddy -c "Delete :SUFeedURL" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :SUPublicEDKey" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :SUEnableAutomaticChecks" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :SUEnableSystemProfiling" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :AppStoreProductID" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :NSScreenCaptureUsageDescription" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Delete :MPSupportedArchitectures" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Add :MPSupportedArchitectures array" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Add :MPSupportedArchitectures:0 string arm64" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Add :MPSupportedArchitectures:1 string x86_64" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Delete :NSUpdateSecurityPolicy" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}" 2>/dev/null || true
-            /usr/libexec/PlistBuddy -c "Add :NSUpdateSecurityPolicy dict" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Add :NSUpdateSecurityPolicy:AllowProcesses dict" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Add :NSUpdateSecurityPolicy:AllowProcesses:MEHY5QF425 array" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            /usr/libexec/PlistBuddy -c "Add :NSUpdateSecurityPolicy:AllowProcesses:MEHY5QF425:0 string com.setapp.DesktopClient.SetappAgent" "${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}"
-            SETAPP_KEY_SOURCE="${SRCROOT}/Setapp/setappPublicKey.pem"
-            if [ -f "${SETAPP_KEY_SOURCE}" ]; then
-              cp "${SETAPP_KEY_SOURCE}" "${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/setappPublicKey.pem"
-              echo "Setapp build: bundled setappPublicKey.pem"
-            else
-              echo "warning: Setapp build missing ${SETAPP_KEY_SOURCE}"
-            fi
-            WEAKEN_SCRIPT="${SRCROOT}/../../infra/SaneProcess/scripts/weaken_sparkle.rb"
-            if [ -f "${WEAKEN_SCRIPT}" ]; then
-              find "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}" -type f -path "*/Contents/MacOS/*" -print0 | \
-                xargs -0 -I{} ruby "${WEAKEN_SCRIPT}" "{}" || exit 1
-            fi
-            echo "Setapp build: Sparkle removed, Setapp policy applied"
-          fi
-        name: Strip Sparkle for Setapp
-        basedOnDependencyAnalysis: false
 
   SaneBarTests:
     type: bundle.unit-test
     platform: macOS
-    bundleId: com.sanebar.appTests
+    bundleId: com.haobar.appTests
     deploymentTarget:
       macOS: 14.0
     testTarget: SaneBar
@@ -258,17 +195,17 @@ targets:
       - target: SaneBar
     settings:
       base:
-        CODE_SIGN_STYLE: Manual
+        PRODUCT_MODULE_NAME: SaneBarTests
+        DEVELOPMENT_TEAM: 5J7WJGPA2Q
+        CODE_SIGN_STYLE: Automatic
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/HaoBar.app/Contents/MacOS/HaoBar"
+        BUNDLE_LOADER: "$(TEST_HOST)"
       configs:
         Debug:
           DEVELOPMENT_TEAM: ""
+          CODE_SIGN_STYLE: Manual
           CODE_SIGN_IDENTITY: "-"
-        ProdDebug-Setapp:
-          DEVELOPMENT_TEAM: M78L6FXD48
+        Debug-AppStore:
           CODE_SIGN_IDENTITY: "Apple Development"
-        Release:
-          DEVELOPMENT_TEAM: M78L6FXD48
-          CODE_SIGN_IDENTITY: "Apple Development"
-        Release-Setapp:
-          DEVELOPMENT_TEAM: M78L6FXD48
+        Release-AppStore:
           CODE_SIGN_IDENTITY: "Apple Development"

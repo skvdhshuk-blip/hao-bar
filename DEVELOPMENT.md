@@ -1,4 +1,4 @@
-# SaneBar Development Guide
+# HaoBar Development Guide
 
 > [README](README.md) · [ARCHITECTURE](ARCHITECTURE.md) · [DEVELOPMENT](DEVELOPMENT.md) · [PRIVACY](PRIVACY.md) · [SECURITY](SECURITY.md)
 
@@ -10,8 +10,8 @@ internally, read [ARCHITECTURE.md](ARCHITECTURE.md).
 ## Quick Start
 
 ```bash
-git clone https://github.com/sane-apps/SaneBar.git
-cd SaneBar
+git clone https://github.com/skvdhshuk-blip/hao-bar.git
+cd hao-bar
 ./Scripts/SaneMaster.rb verify     # build + run the unit tests
 ./Scripts/SaneMaster.rb test_mode  # kill -> build -> launch -> stream logs
 ```

@@ -1,13 +1,11 @@
 import Foundation
 import os.log
 
-private let eventLogger = Logger(subsystem: "com.sanebar.app", category: "EventTracker")
+private let eventLogger = Logger(subsystem: AppIdentity.logSubsystem, category: "EventTracker")
 
-/// Anonymous aggregate event tracking via sane-dist Worker.
-/// Fire-and-forget, silent failure — must never affect app behavior.
+/// Historical aggregate event helper. HaoBar does not send telemetry.
+/// Payload builders stay for tests; `log` is a no-op.
 enum EventTracker {
-    private static let endpoint = "https://dist.saneapps.com/api/event"
-
     static func log(_ event: String) async {
         await log(event, tier: nil, targetVersion: nil, targetBuild: nil)
     }
@@ -18,19 +16,8 @@ enum EventTracker {
         targetVersion: String? = nil,
         targetBuild: String? = nil
     ) async {
-        var components = URLComponents(string: endpoint)
-        components?.queryItems = queryItems(for: telemetryPayload(
-            event: event,
-            tier: tier,
-            targetVersion: targetVersion,
-            targetBuild: targetBuild
-        ))
-        guard let url = components?.url else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.timeoutInterval = 10
-        _ = try? await URLSession.shared.data(for: request)
-        eventLogger.debug("Event logged: \(event)")
+        eventLogger.debug("Telemetry disabled; dropped event: \(event, privacy: .public)")
+        _ = (tier, targetVersion, targetBuild)
     }
 
     static func telemetryPayload(
@@ -44,7 +31,7 @@ enum EventTracker {
         channel: String = distributionChannel(bundle: .main)
     ) -> [String: String] {
         var payload = [
-            "app": "sanebar",
+            "app": "haobar",
             "event": event,
             "app_version": appVersion,
             "build": build,
@@ -89,14 +76,8 @@ enum EventTracker {
         return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
-    static func distributionChannel(bundle: Bundle) -> String {
-        #if SETAPP
-            "setapp"
-        #else
-            ((bundle.object(forInfoDictionaryKey: "AppStoreProductID") as? String)?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .nonEmpty) != nil ? "app_store" : "direct"
-        #endif
+    static func distributionChannel(bundle _: Bundle) -> String {
+        "app_store"
     }
 
     static func resolvedTier(explicitTier: String?, event: String) -> String? {

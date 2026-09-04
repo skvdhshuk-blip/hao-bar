@@ -40,7 +40,7 @@ struct HealthSettingsView: View {
 
     private var structureLabel: String {
         if runtimeSnapshot.likelySystemSuppressedStatusItems {
-            return "Hidden"
+            return "Hidden by macOS"
         }
         return switch runtimeSnapshot.structuralState {
         case .ready: "Ready"
@@ -77,34 +77,34 @@ struct HealthSettingsView: View {
 
     private var accessibilityHelp: String {
         accessibilityService.isGranted
-            ? "SaneBar has Accessibility permission and can inspect, reveal, and arrange menu bar items."
-            : "SaneBar needs Accessibility permission before Browse Icons, Arrange Now, and diagnostics can inspect menu bar items."
+            ? "HaoBar has Accessibility permission and can inspect, reveal, and arrange menu bar items."
+            : "HaoBar needs Accessibility permission before Browse Icons, Arrange Now, and diagnostics can inspect menu bar items."
     }
 
     private var geometryHelp: String {
         switch runtimeSnapshot.geometryConfidence {
         case .live:
-            "SaneBar has current menu bar anchor positions from the live system."
+            "HaoBar has current menu bar anchor positions from the live system."
         case .shielded:
-            "SaneBar is protecting the layout while macOS is temporarily hiding or moving menu bar items."
+            "HaoBar is protecting the layout while macOS is temporarily hiding or moving menu bar items."
         case .cached:
-            "SaneBar has usable saved menu bar anchor positions and will refresh them when needed."
+            "HaoBar has usable saved menu bar anchor positions and will refresh them when needed."
         case .stale:
-            "SaneBar can run Arrange Now to refresh older menu bar anchor positions."
+            "HaoBar can run Arrange Now to refresh older menu bar anchor positions."
         case .missing:
-            "SaneBar does not have enough menu bar anchor data. Run Arrange Now to rebuild it."
+            "HaoBar does not have enough menu bar anchor data. Run Arrange Now to rebuild it."
         }
     }
 
     private var structureHelp: String {
         if runtimeSnapshot.likelySystemSuppressedStatusItems {
-            return "macOS says SaneBar's menu bar items are visible, but their windows are detached. Check System Settings > Menu Bar > Allow in Menu Bar for SaneBar."
+            return "macOS says HaoBar's menu bar items are visible, but their windows are detached. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar."
         }
         return switch runtimeSnapshot.structuralState {
         case .ready:
-            "SaneBar can see the expected visible, hidden, and always-hidden item groups."
+            "HaoBar can see the expected visible, hidden, and always-hidden item groups."
         case .missingItems:
-            "Some expected menu bar items are not currently visible to SaneBar."
+            "Some expected menu bar items are not currently visible to HaoBar."
         case .invisibleItems:
             "macOS is reporting some menu bar items as hidden or unavailable right now."
         case .unattachedWindows:
@@ -115,9 +115,9 @@ struct HealthSettingsView: View {
     private var layoutModeHelp: String {
         switch menuBarManager.settings.layoutMode {
         case .stability:
-            "Hands-off: SaneBar only fixes its icon layout when it starts or when you click Fix. Good if your setup rarely changes."
+            "Hands-off: HaoBar only fixes its icon layout when it starts or when you click Fix. Good if your setup rarely changes."
         case .live:
-            "SaneBar also re-checks the layout after sleep/wake and when displays are connected or disconnected. Good if icons sometimes scramble after wake."
+            "HaoBar also re-checks the layout after sleep/wake and when displays are connected or disconnected. Good if icons sometimes scramble after wake."
         }
     }
 
@@ -134,7 +134,7 @@ struct HealthSettingsView: View {
                             .accessibilityLabel("Open macOS Menu Bar settings")
                         }
                         SaneInlineHelp(
-                            "macOS may be hiding SaneBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move SaneBar's icon to the immediate left of Control Center."
+                            "macOS may be hiding HaoBar's icon behind the notch or because the menu bar is full. macOS doesn't let apps force their own icon back on screen, so this is fixed at the system level: open Menu Bar settings to manage what's shown, remove or reorder other menu-bar icons, or move HaoBar's icon to the immediate left of Control Center."
                         )
                     }
                 }
@@ -154,7 +154,7 @@ struct HealthSettingsView: View {
                                     openAccessibilitySettings()
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
-                                .saneHelp("Opens Accessibility settings so you can grant SaneBar permission.")
+                                .saneHelp("Opens Accessibility settings so you can grant HaoBar permission.")
                                 .accessibilityLabel("Open Accessibility settings")
                             }
                         }
@@ -178,7 +178,7 @@ struct HealthSettingsView: View {
                         .fixedSize(horizontal: true, vertical: false)
                     }
                     CompactDivider()
-                    CompactRow("SaneBar Items") {
+                    CompactRow("HaoBar Items") {
                         HStack(spacing: 8) {
                             StatusBadge(structureLabel, color: runtimeSnapshot.structuralState == .ready ? .green : .orange, icon: "menubar.rectangle")
                                 .saneHelp(structureHelp)
@@ -189,8 +189,8 @@ struct HealthSettingsView: View {
                                 }
                                 .buttonStyle(ChromeActionButtonStyle(prominent: true))
                                 .disabled(repairInProgress)
-                                .saneHelp("Repairs detached or missing SaneBar item groups.")
-                                .accessibilityLabel("Fix SaneBar items")
+                                .saneHelp("Repairs detached or missing HaoBar item groups.")
+                                .accessibilityLabel("Fix HaoBar items")
                             }
                         }
                         .fixedSize(horizontal: true, vertical: false)
@@ -204,7 +204,7 @@ struct HealthSettingsView: View {
                             ) {
                                 setLayoutMode(.stability)
                             }
-                            .saneHelp("Hands-off: SaneBar only fixes its icon layout at startup or when you click Fix.")
+                            .saneHelp("Hands-off: HaoBar only fixes its icon layout at startup or when you click Fix.")
 
                             ChromeSegmentedChoiceButton(
                                 title: "Live",
@@ -212,7 +212,7 @@ struct HealthSettingsView: View {
                             ) {
                                 setLayoutMode(.live)
                             }
-                            .saneHelp("SaneBar also re-checks the layout after sleep/wake, display changes, and session changes.")
+                            .saneHelp("HaoBar also re-checks the layout after sleep/wake, display changes, and session changes.")
                         }
                         .fixedSize(horizontal: true, vertical: false)
                     }
@@ -224,7 +224,7 @@ struct HealthSettingsView: View {
                         Text(restorePointLabel)
                             .font(SaneTypography.body)
                             .foregroundStyle(.white.opacity(0.94))
-                            .saneHelp("The saved known-good layout SaneBar can return to if icons drift after restart, wake, or display changes.")
+                            .saneHelp("The saved known-good layout HaoBar can return to if icons drift after restart, wake, or display changes.")
                     }
                     CompactDivider()
                     CompactRow("Save Current Layout") {
@@ -232,7 +232,7 @@ struct HealthSettingsView: View {
                             createRestorePoint()
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .saneHelp("Saves the current SaneBar icon, divider, spacer, display-backup, and always-hidden divider positions as the restore point.")
+                        .saneHelp("Saves the current HaoBar icon, divider, spacer, display-backup, and always-hidden divider positions as the restore point.")
                     }
                     CompactDivider()
                     CompactRow("Restore Last Good Layout") {
@@ -242,7 +242,7 @@ struct HealthSettingsView: View {
                         .buttonStyle(ChromeActionButtonStyle())
                         .disabled(!canRestoreLayout)
                         .saneHelp(canRestoreLayout
-                            ? "Restores the saved layout point, recreates SaneBar's menu bar items, then runs the same repair path as Arrange Now."
+                            ? "Restores the saved layout point, recreates HaoBar's menu bar items, then runs the same repair path as Arrange Now."
                             : "Create a restore point before using layout restore.")
                     }
                     if !layoutRescueMessage.isEmpty {
@@ -288,7 +288,7 @@ struct HealthSettingsView: View {
                         }
                         .buttonStyle(ChromeActionButtonStyle())
                         .disabled(repairInProgress)
-                        .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs SaneBar's visible, hidden, and always-hidden groups if needed.")
+                        .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs HaoBar's visible, hidden, and always-hidden groups if needed.")
                     }
                     CompactDivider()
                     CompactRow("Last Repair") {
@@ -302,7 +302,7 @@ struct HealthSettingsView: View {
                             openAccessibilitySettings()
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .saneHelp("Opens macOS System Settings directly to Privacy & Security > Accessibility so you can grant or repair SaneBar's permission.")
+                        .saneHelp("Opens macOS System Settings directly to Privacy & Security > Accessibility so you can grant or repair HaoBar's permission.")
                     }
                 }
 
@@ -332,12 +332,12 @@ struct HealthSettingsView: View {
             if MenuBarProfileWorkflow.canCreateLayoutRescueRestorePoint(from: snapshot) {
                 if hadDeferredWakeRepair,
                    menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair() {
-                    layoutRescueMessage = "Repair is running. SaneBar will clear the wake repair note after the layout restore finishes."
+                    layoutRescueMessage = "Repair is running. HaoBar will clear the wake repair note after the layout restore finishes."
                 } else {
                     layoutRescueMessage = message ?? "Repair check finished."
                 }
             } else if snapshot.likelySystemSuppressedStatusItems {
-                layoutRescueMessage = "macOS may be hiding SaneBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for SaneBar."
+                layoutRescueMessage = "macOS may be hiding HaoBar's icons. Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar."
             } else {
                 layoutRescueMessage = "Layout still needs attention."
             }

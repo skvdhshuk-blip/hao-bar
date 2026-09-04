@@ -47,7 +47,7 @@ final class MenuBarStatusItemSetupWorkflow {
             showReleaseNotesAction: LicenseService.shared.usesSetappDistribution
                 ? #selector(MenuBarActionWorkflow.showReleaseNotes(_:))
                 : nil,
-            checkForUpdatesAction: LicenseService.shared.distributionChannel.supportsInAppUpdates
+            checkForUpdatesAction: AppCapability.sparkleUpdates
                 ? #selector(MenuBarActionWorkflow.userDidClickCheckForUpdates(_:))
                 : nil,
             quitAction: #selector(MenuBarActionWorkflow.quitApp(_:))

@@ -50,6 +50,7 @@ final class FocusModeService: NSObject {
     // MARK: - Monitoring
 
     func startMonitoring() {
+        guard AppCapability.focusModeFiles else { return }
         guard !isMonitoring else { return }
 
         isMonitoring = true

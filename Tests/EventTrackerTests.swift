@@ -14,7 +14,7 @@ final class EventTrackerTests: XCTestCase {
             channel: "direct"
         )
 
-        XCTAssertEqual(payload["app"], "sanebar")
+        XCTAssertEqual(payload["app"], "haobar")
         XCTAssertEqual(payload["event"], "update_install_started")
         XCTAssertEqual(payload["app_version"], "2.1.32")
         XCTAssertEqual(payload["build"], "2132")

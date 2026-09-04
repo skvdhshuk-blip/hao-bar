@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
-<dictionary title="SaneBar Terminology">
-    <suite name="SaneBar Suite" code="SBar" description="SaneBar menu bar management commands">
+<dictionary title="HaoBar Terminology">
+    <suite name="HaoBar Suite" code="SBar" description="HaoBar menu bar management commands">
 
         <!-- Toggle Command -->
         <command name="toggle" code="SBartggl" description="Toggle visibility of hidden menu bar items">
@@ -40,12 +40,12 @@
             <result type="boolean" description="True if the close request was accepted"/>
         </command>
 
-        <command name="open settings window" code="SBaropsw" description="Open the SaneBar settings window">
+        <command name="open settings window" code="SBaropsw" description="Open the HaoBar settings window">
             <cocoa class="OpenSettingsWindowCommand"/>
             <result type="boolean" description="True if the settings open request was accepted"/>
         </command>
 
-        <command name="close settings window" code="SBarclsw" description="Close the SaneBar settings window if it is open">
+        <command name="close settings window" code="SBarclsw" description="Close the HaoBar settings window if it is open">
             <cocoa class="CloseSettingsWindowCommand"/>
             <result type="boolean" description="True if the settings close request was accepted"/>
         </command>

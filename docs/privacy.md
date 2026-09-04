@@ -1,3 +1,8 @@
+---
+layout: default
+title: Privacy Policy
+---
+
 # HaoBar Privacy Policy
 
 HaoBar is a menu bar utility that runs on your Mac.
@@ -8,7 +13,7 @@ Nothing. HaoBar does not create an account, does not upload menu bar contents, i
 
 ## What stays on your Mac
 
-Settings, profiles, and an optional custom menu bar icon are stored in the app’s sandbox container (`Application Support/HaoBar`).
+Settings, profiles, and an optional custom menu bar icon are stored in the app’s sandbox container.
 
 ## Permissions
 
@@ -17,8 +22,8 @@ Settings, profiles, and an optional custom menu bar icon are stored in the app�
 
 ## Updates
 
-HaoBar updates through the Mac App Store. There is no Sparkle feed and no third-party update check.
+HaoBar updates through the Mac App Store.
 
 ## Contact
 
-Questions: open an issue on [github.com/skvdhshuk-blip/hao-bar](https://github.com/skvdhshuk-blip/hao-bar).
+[github.com/skvdhshuk-blip/hao-bar](https://github.com/skvdhshuk-blip/hao-bar)

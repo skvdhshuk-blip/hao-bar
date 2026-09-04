@@ -53,6 +53,10 @@ final class AccessibilityMenuBarDragService {
         referenceScreenFrame: CGRect? = nil
     ) -> Bool {
         AccessibilityMenuBarMoveFailureStore.shared.reset()
+        guard AppCapability.simulatedDrag else {
+            AccessibilityMenuBarMoveFailureStore.shared.record(AppCapability.simulatedDragFallbackMessage)
+            return false
+        }
         guard accessibilityService.automaticMoveGate.allowsMove(origin: physicalMoveOrigin) else {
             accessibilityDragLogger.warning("🔧 Automatic move blocked by consent gate (origin=systemWakeRecovery)")
             return false
@@ -101,6 +105,10 @@ final class AccessibilityMenuBarDragService {
         referenceScreenFrame: CGRect? = nil
     ) -> Bool {
         AccessibilityMenuBarMoveFailureStore.shared.reset()
+        guard AppCapability.simulatedDrag else {
+            AccessibilityMenuBarMoveFailureStore.shared.record(AppCapability.simulatedDragFallbackMessage)
+            return false
+        }
         guard accessibilityService.automaticMoveGate.allowsMove(origin: physicalMoveOrigin) else {
             accessibilityDragLogger.warning("🔧 Automatic reorder blocked by consent gate (origin=systemWakeRecovery)")
             return false
@@ -165,6 +173,10 @@ final class AccessibilityMenuBarDragService {
         physicalMoveOrigin: MenuBarPhysicalMoveOrigin,
         referenceScreenFrame: CGRect? = nil
     ) -> Bool {
+        guard AppCapability.simulatedDrag else {
+            AccessibilityMenuBarMoveFailureStore.shared.record(AppCapability.simulatedDragFallbackMessage)
+            return false
+        }
         guard accessibilityService.automaticMoveGate.allowsMove(origin: physicalMoveOrigin) else {
             accessibilityDragLogger.warning("🔧 Automatic move blocked by consent gate (origin=systemWakeRecovery)")
             return false
@@ -610,6 +622,8 @@ final class AccessibilityMenuBarDragService {
         let waitResult = semaphore.wait(timeout: .now() + 2.0)
         if waitResult == .timedOut {
             timeoutState.markTimedOut()
+            AppCapability.disableSimulatedDrag()
+            AccessibilityMenuBarMoveFailureStore.shared.record(AppCapability.simulatedDragFallbackMessage)
             accessibilityDragLogger.error("🔧 performCmdDrag(\(tapName, privacy: .public)): semaphore timed out — forcing mouseUp to prevent stuck cursor")
             // force-release mouse button to prevent cursor being stuck in drag state
             if let forceUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: to, mouseButton: .left) {
@@ -618,6 +632,10 @@ final class AccessibilityMenuBarDragService {
             // Restore cursor position even on timeout
             Self.postMouseRestoreIfOnScreen(originalCGPoint, eventTap: eventTap, screenFrames: NSScreen.screens.map(\.frame), globalMaxY: NSScreen.screens.map(\.frame.maxY).max() ?? 0)
             return false
+        }
+        if !result.value {
+            AppCapability.disableSimulatedDrag()
+            AccessibilityMenuBarMoveFailureStore.shared.record(AppCapability.simulatedDragFallbackMessage)
         }
         return result.value
     }}

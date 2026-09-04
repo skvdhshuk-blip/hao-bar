@@ -83,7 +83,7 @@ struct StatusBarControllerMenuTests {
         let donateItem = menu.item(titled: "Donate...")
         #expect(donateItem != nil, "Menu should have Donate item")
 
-        let quitItem = menu.item(titled: "Quit SaneBar")
+        let quitItem = menu.item(titled: "Quit HaoBar")
         #expect(quitItem != nil, "Menu should have Quit item")
         #expect(quitItem?.keyEquivalent == "q")
     }
@@ -216,7 +216,7 @@ struct StatusBarControllerMenuTests {
         let checkForUpdatesItem = menu.item(titled: "Check for Updates...")
         let aboutItem = menu.item(titled: SaneStandardMenu.aboutAndBugReportTitle)
         let donateItem = menu.item(titled: "Donate...")
-        let quitItem = menu.item(titled: "Quit SaneBar")
+        let quitItem = menu.item(titled: "Quit HaoBar")
 
         #expect(findIconItem?.action == #selector(DummyTarget.findIcon), "Browse Icons item should have findIcon action")
         #expect(toggleItem?.action == #selector(DummyTarget.toggle), "Show / Hide Icons item should have toggle action")

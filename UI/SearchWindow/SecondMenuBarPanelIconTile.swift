@@ -38,7 +38,7 @@ struct PanelIconTile: View {
             .frame(width: tileSize, height: tileSize)
             .clipShape(RoundedRectangle(cornerRadius: 7))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(HaoPressButtonStyle())
         .padding(1)
         .overlay(alignment: .topTrailing) {
             if let duplicateMarker {

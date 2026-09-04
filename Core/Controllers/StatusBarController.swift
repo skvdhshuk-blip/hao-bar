@@ -635,7 +635,7 @@ final class StatusBarController: StatusBarControllerProtocol {
 
         SaneStandardMenu.addCoreUtilityItems(
             to: menu,
-            appName: "SaneBar",
+            appName: AppIdentity.displayName,
             target: nil,
             settingsAction: configuration.settingsAction,
             licenseAction: configuration.licenseAction,

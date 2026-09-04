@@ -95,7 +95,7 @@ struct AppearanceSettingsView: View {
                         .menuStyle(.button)
                         .buttonStyle(.plain)
                         .frame(width: 160)
-                        .help("Choose the SaneBar menu bar icon style")
+                        .help("Choose the HaoBar menu bar icon style")
                     }
 
                     if menuBarManager.settings.menuBarIconStyle == .custom {
@@ -261,7 +261,8 @@ struct AppearanceSettingsView: View {
                     } // end isPro else
                 }
 
-                // 3. Menu Bar Layout — Pro
+                // 3. Menu Bar Layout — Pro (not available in the Mac App Store sandbox)
+                if AppCapability.menuBarSpacing {
                 CompactSection("Menu Bar Layout") {
                     if licenseService.isPro {
                         CompactToggle(label: "Reduce space between icons", isOn: tighterSpacingEnabled)
@@ -289,6 +290,7 @@ struct AppearanceSettingsView: View {
                         CompactDivider()
                         proGatedRow(feature: .iconSpacing, label: "Click Area")
                     }
+                }
                 }
         }
         .sheet(item: $proUpsellFeature) { feature in
@@ -318,7 +320,7 @@ struct AppearanceSettingsView: View {
             try service.setSelectionPadding(menuBarManager.settings.menuBarSelectionPadding)
             service.attemptGracefulRefresh()
         } catch {
-            print("[SaneBar] Failed to apply spacing: \(error)")
+            print("[HaoBar] Failed to apply spacing: \(error)")
         }
     }
 
@@ -329,7 +331,7 @@ struct AppearanceSettingsView: View {
             try MenuBarSpacingService.shared.resetToDefaults()
             MenuBarSpacingService.shared.attemptGracefulRefresh()
         } catch {
-            print("[SaneBar] Failed to reset spacing: \(error)")
+            print("[HaoBar] Failed to reset spacing: \(error)")
         }
     }
 
@@ -355,7 +357,7 @@ struct AppearanceSettingsView: View {
         do {
             try PersistenceService.shared.saveCustomIcon(image)
         } catch {
-            print("[SaneBar] Failed to save custom icon: \(error)")
+            print("[HaoBar] Failed to save custom icon: \(error)")
         }
 
         // Trigger icon update by re-setting the style

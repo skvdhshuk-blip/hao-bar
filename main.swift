@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 import ServiceManagement
 
-// Entry point for SaneBar
+// Entry point for HaoBar
 // Using manual main.swift instead of @main to control initialization timing
 
 let app = NSApplication.shared
@@ -10,12 +10,12 @@ let app = NSApplication.shared
 // Handle command line arguments
 let args = CommandLine.arguments
 if args.contains("--unregister") {
-    print("[SaneBar] Unregistering from background services...")
+    print("[\(AppIdentity.displayName)] Unregistering from background services...")
     do {
         try SMAppService.mainApp.unregister()
-        print("[SaneBar] Successfully unregistered.")
+        print("[\(AppIdentity.displayName)] Successfully unregistered.")
     } catch {
-        print("[SaneBar] Failed to unregister: \(error)")
+        print("[\(AppIdentity.displayName)] Failed to unregister: \(error)")
     }
     exit(0)
 }
@@ -27,27 +27,22 @@ if args.contains("--unregister") {
 app.setActivationPolicy(.accessory)
 app.appearance = NSAppearance(named: .darkAqua)
 
-// SAFETY: Enforce bundle ID separation between dev and release builds
-// ProdDebug config uses production bundle ID intentionally (for testing with real permissions)
+// SAFETY: Debug must not steal the App Store container.
 let bundleId = Bundle.main.bundleIdentifier ?? "(unknown)"
-#if SETAPP
-    let expectedBundleId = "com.sanebar.app-setapp"
-    if bundleId != expectedBundleId {
-        fatalError("Setapp build must use Setapp bundle ID (\(expectedBundleId)). Found: \(bundleId)")
+#if APP_STORE
+    if bundleId != AppIdentity.productionBundleId {
+        fatalError("App Store build must use \(AppIdentity.productionBundleId). Found: \(bundleId)")
     }
-#elseif PRODDEBUG
-    // ProdDebug: production bundle ID is expected — no check needed
 #elseif DEBUG
-    if bundleId == "com.sanebar.app" {
+    if AppIdentity.isProductionBundle(bundleId) {
         let env = ProcessInfo.processInfo.environment
-        if env["SANEBAR_ALLOW_PROD_BUNDLE"] != "1" {
-            fatalError("Debug build is using production bundle ID (com.sanebar.app). Use ProdDebug config or set SANEBAR_ALLOW_PROD_BUNDLE=1.")
+        if env["HAOBAR_ALLOW_PROD_BUNDLE"] != "1", env["SANEBAR_ALLOW_PROD_BUNDLE"] != "1" {
+            fatalError("Debug build is using production bundle ID (\(AppIdentity.productionBundleId)). Use Debug-AppStore or set HAOBAR_ALLOW_PROD_BUNDLE=1.")
         }
     }
 #else
-    let expectedBundleId = "com.sanebar.app"
-    if bundleId != expectedBundleId {
-        fatalError("Release build must use production bundle ID (\(expectedBundleId)). Found: \(bundleId)")
+    if bundleId != AppIdentity.productionBundleId {
+        fatalError("Release build must use \(AppIdentity.productionBundleId). Found: \(bundleId)")
     }
 #endif
 

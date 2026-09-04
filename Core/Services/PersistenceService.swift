@@ -504,7 +504,7 @@ final class PersistenceService: PersistenceServiceProtocol, @unchecked Sendable 
         let paths = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         // Be defensive: this should exist on macOS, but avoid crashing if it doesn't.
         let base = paths.first ?? URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let appSupport = base.appendingPathComponent("SaneBar", isDirectory: true)
+        let appSupport = base.appendingPathComponent(AppIdentity.persistenceFolder, isDirectory: true)
 
         // Create directory if needed
         if !fileManager.fileExists(atPath: appSupport.path) {

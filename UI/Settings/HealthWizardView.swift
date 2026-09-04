@@ -44,7 +44,7 @@ final class HealthWizardController: NSObject, NSWindowDelegate {
             defer: false
         )
         window.appearance = NSAppearance(named: .darkAqua)
-        window.title = "SaneBar Health"
+        window.title = "HaoBar Health"
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
@@ -80,7 +80,7 @@ private struct FirstRunHealthWizardView: View {
 
     var body: some View {
         SaneSettingsPage {
-            CompactSection("SaneBar Health", icon: "stethoscope", iconColor: .green) {
+            CompactSection("HaoBar Health", icon: "stethoscope", iconColor: .green) {
                 SaneInlineHelp("Finish setup with a permission check and a saved layout restore point.")
                 CompactDivider()
                 accessibilityRow
@@ -142,13 +142,13 @@ private struct FirstRunHealthWizardView: View {
                     color: rescuePointSaved || menuBarManager.settings.layoutRescueRestorePoint != nil ? .green : .orange,
                     icon: "lifepreserver"
                 )
-                .saneHelp("The first restore point lets SaneBar return to the current known-good layout later.")
+                .saneHelp("The first restore point lets HaoBar return to the current known-good layout later.")
 
                 ActionButton("Save", style: .secondary) {
                     saveRestorePoint()
                 }
                 .controlSize(.small)
-                .saneHelp("Saves the current menu bar layout as SaneBar's first rescue point.")
+                .saneHelp("Saves the current menu bar layout as HaoBar's first rescue point.")
             }
             .fixedSize(horizontal: true, vertical: false)
         }
@@ -179,8 +179,8 @@ private struct FirstRunHealthWizardView: View {
 
     private var accessibilityHelp: String {
         accessibilityService.isGranted
-            ? "SaneBar can inspect and arrange menu bar items."
-            : "Open Accessibility settings and grant SaneBar before using Browse Icons or Arrange Now."
+            ? "HaoBar can inspect and arrange menu bar items."
+            : "Open Accessibility settings and grant HaoBar before using Browse Icons or Arrange Now."
     }
 
     private func saveRestorePoint() {

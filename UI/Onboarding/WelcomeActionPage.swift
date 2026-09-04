@@ -19,11 +19,11 @@ struct WelcomeActionPage: View {
                     .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
             }
 
-            Text("Welcome to SaneBar")
+            Text(String(localized: "Try it"))
                 .font(.system(size: 30, weight: .bold, design: .serif))
                 .foregroundStyle(.white)
 
-            (Text("One click to ") + Text("hide").foregroundColor(saneAccentSoft) + Text(". One click to ") + Text("reveal").foregroundColor(saneAccentSoft) + Text("."))
+            (Text(String(localized: "One click to ")) + Text(String(localized: "hide")).foregroundColor(saneAccentSoft) + Text(String(localized: ". One click to ")) + Text(String(localized: "reveal")).foregroundColor(saneAccentSoft) + Text("."))
                 .font(.system(size: 17))
                 .foregroundStyle(.white.opacity(0.9))
 
@@ -131,11 +131,11 @@ struct WelcomeActionPage: View {
                 }
 
                 if competitor == "Ice" {
-                    Text("SaneBar can import your Ice settings here, but Ice does not store icon positions.")
+                    Text("HaoBar can import your Ice settings here, but Ice does not store icon positions.")
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.9))
                 } else {
-                    Text("SaneBar can import your Bartender layout and matching settings from the detected plist.")
+                    Text("HaoBar can import your Bartender layout and matching settings from the detected plist.")
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.9))
                 }

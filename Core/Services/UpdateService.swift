@@ -1,13 +1,8 @@
 import AppKit
 import Foundation
-import UserNotifications
 import os.log
-import SaneUI
-#if !SETAPP
-    @preconcurrency import Sparkle
-#endif
 
-private let logger = Logger(subsystem: "com.sanebar.app", category: "UpdateService")
+private let logger = Logger(subsystem: AppIdentity.logSubsystem, category: "UpdateService")
 
 enum UpdateCheckFrequency: String, CaseIterable, Identifiable {
     case daily
@@ -39,240 +34,38 @@ enum UpdateCheckFrequency: String, CaseIterable, Identifiable {
     }
 }
 
-#if !SETAPP
-
-    /// Wrapper around Sparkle's SPUStandardUpdaterController.
-    /// Handles app updates securely and privately.
-    @MainActor
-    class UpdateService: NSObject, ObservableObject {
-
-    // MARK: - Properties
-
-    nonisolated static let releaseBundleIdentifier = "com.sanebar.app"
-    nonisolated static let scheduledUpdateReminderNotificationID = "com.sanebar.app.sparkle.scheduled-update"
-
-    private var updaterController: SPUStandardUpdaterController?
-    private let updateChannelEnabled: Bool
-    private var scheduledUpdateReminderActive = false
-
-    // MARK: - Initialization
+/// App Store builds update through the store. Sparkle is not shipped.
+@MainActor
+class UpdateService: NSObject, ObservableObject {
+    nonisolated static let releaseBundleIdentifier = AppIdentity.productionBundleId
+    nonisolated static let scheduledUpdateReminderNotificationID = "com.haobar.app.scheduled-update"
 
     override init() {
-        self.updateChannelEnabled = Self.supportsSparkleUpdates(bundleIdentifier: Bundle.main.bundleIdentifier)
         super.init()
-
-        guard updateChannelEnabled else {
-            let bundleID = Bundle.main.bundleIdentifier ?? "unknown"
-            logger.info("Sparkle disabled for non-release bundle id: \(bundleID, privacy: .public)")
-            return
-        }
-
-        // SPUStandardUpdaterController must be retained by the app.
-        // startingUpdater: true starts the scheduled checks logic immediately.
-        self.updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
-        normalizeUpdateCheckFrequency()
-
-        logger.info("Sparkle updater initialized")
-
-        // Privacy check (Sanity check for developers)
-        if let profiling = Bundle.main.object(forInfoDictionaryKey: "SUEnableSystemProfiling") as? Bool, profiling == true {
-            logger.fault("CRITICAL: SUEnableSystemProfiling is ENABLED. This violates the privacy policy.")
-        }
+        logger.info("In-app updater disabled; HaoBar updates through the Mac App Store")
     }
 
-    // MARK: - Public API
-
-    /// Trigger a user-initiated update check.
-    /// This shows the Sparkle UI (Standard User Driver).
     func checkForUpdates() {
-        guard updateChannelEnabled else {
-            logger.info("Ignoring Check for Updates on non-release build")
-            NSSound.beep()
-            return
-        }
-        clearScheduledUpdateReminder(reason: "manual_check")
-        logger.info("User triggered check for updates")
-        let tier = LicenseService.shared.isPro ? "pro" : "free"
-        Task.detached {
-            await EventTracker.log("update_check_manual", tier: tier)
-        }
-        updaterController?.checkForUpdates(nil)
+        NSSound.beep()
     }
 
-    /// Check if updates are handled automatically (just a pass-through property for UI if needed)
     var automaticallyChecksForUpdates: Bool {
-        get { updateChannelEnabled && (updaterController?.updater.automaticallyChecksForUpdates ?? false) }
-        set {
-            guard updateChannelEnabled else { return }
-            updaterController?.updater.automaticallyChecksForUpdates = newValue
-        }
+        get { false }
+        set { _ = newValue }
     }
 
     var updateCheckFrequency: UpdateCheckFrequency {
-        get {
-            let interval = updaterController?.updater.updateCheckInterval ?? UpdateCheckFrequency.daily.interval
-            return UpdateCheckFrequency.resolve(updateCheckInterval: interval)
-        }
-        set {
-            guard updateChannelEnabled else { return }
-            updaterController?.updater.updateCheckInterval = newValue.interval
-        }
+        get { .daily }
+        set { _ = newValue }
     }
 
-    var isUpdateChannelEnabled: Bool { updateChannelEnabled }
+    var isUpdateChannelEnabled: Bool { AppCapability.sparkleUpdates }
 
-    nonisolated static func supportsSparkleUpdates(bundleIdentifier: String?) -> Bool {
-        #if APP_STORE
-            false
-        #else
-            bundleIdentifier == releaseBundleIdentifier
-        #endif
+    nonisolated static func supportsSparkleUpdates(bundleIdentifier _: String?) -> Bool {
+        false
     }
 
-    nonisolated static func shouldShowScheduledUpdateDockBadge(showDockIcon: Bool) -> Bool {
-        showDockIcon
-    }
-
-    private func normalizeUpdateCheckFrequency() {
-        guard let updater = updaterController?.updater else { return }
-        updater.updateCheckInterval = UpdateCheckFrequency.normalizedInterval(from: updater.updateCheckInterval)
-    }
-
-    private func presentScheduledUpdateReminder(for update: SUAppcastItem) {
-        guard !scheduledUpdateReminderActive else { return }
-        scheduledUpdateReminderActive = true
-
-        if Self.shouldShowScheduledUpdateDockBadge(showDockIcon: MenuBarManager.shared.settings.showDockIcon) {
-            NSApp.setActivationPolicy(.regular)
-            NSApp.dockTile.badgeLabel = "1"
-        } else {
-            NSApp.dockTile.badgeLabel = nil
-        }
-
-        Task {
-            let center = UNUserNotificationCenter.current()
-            let granted = try? await center.requestAuthorization(options: [.alert, .sound])
-            guard granted == true else { return }
-
-            let content = UNMutableNotificationContent()
-            content.title = "SaneBar update ready"
-            content.body = "Version \(update.displayVersionString) is ready to install."
-            content.sound = .default
-
-            let request = UNNotificationRequest(
-                identifier: Self.scheduledUpdateReminderNotificationID,
-                content: content,
-                trigger: nil
-            )
-            try? await center.add(request)
-        }
-    }
-
-    private func clearScheduledUpdateReminder(reason: StaticString) {
-        guard scheduledUpdateReminderActive else { return }
-        scheduledUpdateReminderActive = false
-        NSApp.dockTile.badgeLabel = nil
-        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [Self.scheduledUpdateReminderNotificationID])
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [Self.scheduledUpdateReminderNotificationID])
-        SaneActivationPolicy.restorePolicy(showDockIcon: MenuBarManager.shared.settings.showDockIcon)
-        logger.info("Cleared scheduled update reminder: \(reason)")
+    nonisolated static func shouldShowScheduledUpdateDockBadge(showDockIcon _: Bool) -> Bool {
+        false
     }
 }
-
-extension UpdateService: @preconcurrency SPUStandardUserDriverDelegate {
-    var supportsGentleScheduledUpdateReminders: Bool { true }
-
-    func standardUserDriverShouldHandleShowingScheduledUpdate(_: SUAppcastItem, andInImmediateFocus immediateFocus: Bool) -> Bool {
-        immediateFocus
-    }
-
-    func standardUserDriverWillHandleShowingUpdate(_ handleShowingUpdate: Bool, forUpdate update: SUAppcastItem, state: SPUUserUpdateState) {
-        guard !state.userInitiated else {
-            clearScheduledUpdateReminder(reason: "user_initiated")
-            return
-        }
-
-        if handleShowingUpdate {
-            clearScheduledUpdateReminder(reason: "sparkle_showing")
-        } else {
-            presentScheduledUpdateReminder(for: update)
-        }
-    }
-
-    func standardUserDriverDidReceiveUserAttention(forUpdate _: SUAppcastItem) {
-        clearScheduledUpdateReminder(reason: "user_attention")
-    }
-
-    func standardUserDriverWillFinishUpdateSession() {
-        clearScheduledUpdateReminder(reason: "session_finished")
-    }
-}
-
-extension UpdateService: SPUUpdaterDelegate {
-    nonisolated func updater(_: SPUUpdater, didFindValidUpdate item: SUAppcastItem) {
-        let targetVersion = item.displayVersionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        let targetBuild = item.versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        Task { @MainActor in
-            let tier = LicenseService.shared.isPro ? "pro" : "free"
-            await EventTracker.log(
-                "update_available",
-                tier: tier,
-                targetVersion: targetVersion.isEmpty ? nil : targetVersion,
-                targetBuild: targetBuild.isEmpty ? nil : targetBuild
-            )
-        }
-    }
-
-    nonisolated func updater(_: SPUUpdater, willInstallUpdate item: SUAppcastItem) {
-        let targetVersion = item.displayVersionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        let targetBuild = item.versionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        Task { @MainActor in
-            let tier = LicenseService.shared.isPro ? "pro" : "free"
-            await EventTracker.log(
-                "update_install_started",
-                tier: tier,
-                targetVersion: targetVersion.isEmpty ? nil : targetVersion,
-                targetBuild: targetBuild.isEmpty ? nil : targetBuild
-            )
-        }
-    }
-}
-
-#else
-
-    @MainActor
-    class UpdateService: NSObject, ObservableObject {
-        nonisolated static let releaseBundleIdentifier = "com.sanebar.app"
-        nonisolated static let scheduledUpdateReminderNotificationID = "com.sanebar.app.sparkle.scheduled-update"
-
-        override init() {
-            super.init()
-            logger.info("Sparkle updater disabled in Setapp build")
-        }
-
-        func checkForUpdates() {
-            NSSound.beep()
-        }
-
-        var automaticallyChecksForUpdates: Bool {
-            get { false }
-            set { _ = newValue }
-        }
-
-        var updateCheckFrequency: UpdateCheckFrequency {
-            get { .daily }
-            set { _ = newValue }
-        }
-
-        var isUpdateChannelEnabled: Bool { false }
-
-        nonisolated static func supportsSparkleUpdates(bundleIdentifier _: String?) -> Bool {
-            false
-        }
-
-        nonisolated static func shouldShowScheduledUpdateDockBadge(showDockIcon _: Bool) -> Bool {
-            false
-        }
-    }
-
-#endif

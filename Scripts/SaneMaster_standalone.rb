@@ -10,6 +10,7 @@ require 'fileutils'
 PROJECT_ROOT = File.expand_path('..', __dir__)
 XCODEPROJ = File.join(PROJECT_ROOT, 'SaneBar.xcodeproj')
 SCHEME = 'SaneBar'
+APP_NAME = 'HaoBar'
 
 def run(cmd, label = nil)
   warn "=> #{label || cmd}"
@@ -47,10 +48,10 @@ end
 
 def test_mode
   build
-  app = Dir.glob(File.join(PROJECT_ROOT, 'build/**/SaneBar.app')).first
-  app ||= Dir.glob(File.expand_path('~/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug/SaneBar.app')).first
-  abort 'Could not find built SaneBar.app' unless app
-  system('killall SaneBar 2>/dev/null')
+  app = Dir.glob(File.join(PROJECT_ROOT, "build/**/#{APP_NAME}.app")).first
+  app ||= Dir.glob(File.expand_path("~/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug/#{APP_NAME}.app")).first
+  abort "Could not find built #{APP_NAME}.app" unless app
+  system("killall #{APP_NAME} 2>/dev/null")
   sleep 0.5
   system("open '#{app}'")
   warn "Launched #{app}"

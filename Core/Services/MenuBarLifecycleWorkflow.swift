@@ -58,12 +58,12 @@ final class MenuBarLifecycleWorkflow {
             manager.triggerService.configure(menuBarManager: manager)
             manager.iconHotkeysService.configure(with: manager)
             manager.networkTriggerService.configure(menuBarManager: manager)
-            if manager.settings.showOnNetworkChange {
+            if AppCapability.wifiSSID, manager.settings.showOnNetworkChange {
                 manager.networkTriggerService.startMonitoring()
             }
 
             manager.focusModeService.configure(menuBarManager: manager)
-            if manager.settings.showOnFocusModeChange {
+            if AppCapability.focusModeFiles, manager.settings.showOnFocusModeChange {
                 manager.focusModeService.startMonitoring()
             }
 
@@ -73,7 +73,7 @@ final class MenuBarLifecycleWorkflow {
             }
 
             manager.scriptTriggerService.configure(menuBarManager: manager)
-            if manager.settings.scriptTriggerEnabled {
+            if AppCapability.scriptTrigger, manager.settings.scriptTriggerEnabled {
                 manager.scriptTriggerService.startMonitoring()
             }
 
@@ -98,7 +98,7 @@ final class MenuBarLifecycleWorkflow {
     }
 
     func updateNetworkTrigger(enabled: Bool) {
-        if enabled {
+        if AppCapability.wifiSSID, enabled {
             manager.networkTriggerService.startMonitoring()
         } else {
             manager.networkTriggerService.stopMonitoring()
@@ -106,7 +106,7 @@ final class MenuBarLifecycleWorkflow {
     }
 
     func updateFocusModeTrigger(enabled: Bool) {
-        if enabled {
+        if AppCapability.focusModeFiles, enabled {
             manager.focusModeService.startMonitoring()
         } else {
             manager.focusModeService.stopMonitoring()
@@ -122,7 +122,7 @@ final class MenuBarLifecycleWorkflow {
     }
 
     func updateScriptTrigger(settings: SaneBarSettings) {
-        if settings.scriptTriggerEnabled {
+        if AppCapability.scriptTrigger, settings.scriptTriggerEnabled {
             manager.scriptTriggerService.restartIfRunning()
             manager.scriptTriggerService.startMonitoring()
         } else {

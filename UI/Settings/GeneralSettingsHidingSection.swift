@@ -46,7 +46,7 @@ struct GeneralSettingsHidingSection: View {
                     menuBarManager.hideAllOtherWorkflow.enableFromCurrentLayout { enabled in
                         hideAllOtherStatusMessage = enabled
                             ? nil
-                            : "SaneBar couldn't turn this on safely. Open Health and repair menu bar detection, then try again."
+                            : "HaoBar couldn't turn this on safely. Open Health and repair menu bar detection, then try again."
                     }
                 } else {
                     hideAllOtherStatusMessage = nil
@@ -74,7 +74,7 @@ struct GeneralSettingsHidingSection: View {
 
             CompactDivider()
             CompactToggle(label: "Reveal hidden icons on hover", isOn: $menuBarManager.settings.showOnHover)
-                .help("Hover near the menu bar to reveal hidden icons inline. Click the SaneBar icon to open or toggle manually.")
+                .help("Hover near the menu bar to reveal hidden icons inline. Click the HaoBar icon to open or toggle manually.")
             if menuBarManager.settings.showOnHover {
                 revealDelayRow
             }

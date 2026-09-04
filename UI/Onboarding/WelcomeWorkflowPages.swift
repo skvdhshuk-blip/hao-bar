@@ -109,7 +109,7 @@ struct ZoneGuidePage: View {
         ),
         ZoneRow(
             title: "Hidden",
-            detail: "Shows when SaneBar is active.",
+            detail: "Shows when HaoBar is active.",
             icon: "eye.slash.fill",
             accent: .yellow.opacity(0.9)
         ),

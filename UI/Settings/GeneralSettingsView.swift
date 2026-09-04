@@ -235,7 +235,7 @@ struct GeneralSettingsView: View {
                             }
                         }
                         .buttonStyle(ChromeActionButtonStyle())
-                        .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs SaneBar's visible, hidden, and always-hidden groups if needed.")
+                        .saneHelp("Runs an immediate layout check, refreshes menu bar anchor positions, and repairs HaoBar's visible, hidden, and always-hidden groups if needed.")
                     }
                 }
 
@@ -257,7 +257,7 @@ struct GeneralSettingsView: View {
                 }
 
                 // 7. Updates
-                if licenseService.distributionChannel.supportsInAppUpdates {
+                if AppCapability.sparkleUpdates {
                     softwareUpdatesSection
                 }
 
@@ -469,7 +469,7 @@ struct GeneralSettingsView: View {
         do {
             savedProfiles = try PersistenceService.shared.listProfiles()
         } catch {
-            print("[SaneBar] Failed to load profiles: \(error)")
+            print("[HaoBar] Failed to load profiles: \(error)")
         }
     }
 
@@ -486,7 +486,7 @@ struct GeneralSettingsView: View {
             try PersistenceService.shared.saveProfile(profile)
             loadProfiles()
         } catch {
-            print("[SaneBar] Failed to save profile: \(error)")
+            print("[HaoBar] Failed to save profile: \(error)")
         }
     }
 
@@ -505,7 +505,7 @@ struct GeneralSettingsView: View {
             try PersistenceService.shared.deleteProfile(id: profile.id)
             loadProfiles()
         } catch {
-            print("[SaneBar] Failed to delete profile: \(error)")
+            print("[HaoBar] Failed to delete profile: \(error)")
         }
     }
 
@@ -514,7 +514,7 @@ struct GeneralSettingsView: View {
     private func exportSettings() {
         let panel = NSSavePanel()
         panel.allowedContentTypes = [.json]
-        panel.nameFieldStringValue = "SaneBar-settings.json"
+        panel.nameFieldStringValue = "HaoBar-settings.json"
         panel.title = "Export Settings"
 
         guard panel.runModal() == .OK, let url = panel.url else {

@@ -229,21 +229,20 @@ actions:
   steps:
   - Open the status menu from the shipped app.
   - Exercise Browse Icons, Show / Hide Icons, Arrange Now, Help / Repair, Settings,
-    License, Check for Updates, About / Report a Bug, What's New when present, and
-    Quit availability.
+    About / Report a Bug, What's New when present, and Quit availability.
   - For destructive or externally visible commands, verify the menu item and first
     non-destructive surface, then cancel or close.
   assertions:
   - Every advertised status menu item is present, enabled when applicable, and wired
     to a selector.
-  - Browse Icons, Settings, License, Help / Repair, Check for Updates, About / Report
-    a Bug, and What's New when present open the intended customer surface.
+  - Browse Icons, Settings, Help / Repair, About / Report a Bug, and What's New when
+    present open the intended customer surface.
   - Arrange Now completes without losing the live menu bar anchor.
   - Quit is present but is only invoked in an isolated end-of-run launch/quit check.
   evidence:
   - Mini AX menu transcript
   - Menu selector unit guard
-  - Settings, License, Health, and About screenshots
+  - Settings, Health, and About screenshots
   required_proof_level: full_runtime_completion
   required_evidence_types:
   - mini_click
@@ -273,15 +272,14 @@ actions:
   user_inputs:
   - Open the status menu from the shipped app.
   - Exercise Browse Icons, Show / Hide Icons, Arrange Now, Help / Repair, Settings,
-    License, Check for Updates, About / Report a Bug, What's New when present, and
-    Quit availability.
+    About / Report a Bug, What's New when present, and Quit availability.
   - For destructive or externally visible commands, verify the menu item and first
     non-destructive surface, then cancel or close.
   expected_outputs:
   - Every advertised status menu item is present, enabled when applicable, and wired
     to a selector.
-  - Browse Icons, Settings, License, Help / Repair, Check for Updates, About / Report
-    a Bug, and What's New when present open the intended customer surface.
+  - Browse Icons, Settings, Help / Repair, About / Report a Bug, and What's New when
+    present open the intended customer surface.
   - Arrange Now completes without losing the live menu bar anchor.
 - id: dock-menu-command-actions
   title: Dock menu utility commands are reachable
@@ -605,7 +603,6 @@ actions:
   - Appearance tab
   - Shortcuts tab
   - Health tab
-  - License tab
   - About tab
   steps:
   - Open Settings from the shipped app.
@@ -1089,7 +1086,6 @@ actions:
 - id: license-about-support-actions
   title: License, About, support, and external links are live and cancelable
   surfaces:
-  - License tab
   - About tab
   - Pro upsell window
   - Feedback/report bug sheet

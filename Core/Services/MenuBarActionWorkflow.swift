@@ -176,7 +176,7 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
 
     @objc func openLicense(_: Any?) {
         logger.info("Menu: Opening License")
-        SettingsOpener.open(tab: .license)
+        SettingsOpener.open(tab: .about)
     }
 
     @objc func openDonate(_: Any?) {

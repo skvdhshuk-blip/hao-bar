@@ -71,7 +71,7 @@ struct PermissionPage: View {
                 }
                 .buttonStyle(OnboardingPrimaryButtonStyle(cornerRadius: 10, horizontalPadding: 18, verticalPadding: 10))
 
-                Text("Toggle SaneBar on in the list that appears")
+                Text(String(localized: "Turn on \(AppIdentity.displayName) in the list that appears"))
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.9))
             }

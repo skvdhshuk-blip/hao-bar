@@ -12,6 +12,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundleDisplayName</key>
+	<string>HaoBar</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -20,32 +22,26 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.sanebar.app</string>
+			<string>com.haobar.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sanebar</string>
+				<string>haobar</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSAccessibilityUsageDescription</key>
-	<string>SaneBar needs accessibility permissions to detect and manage menu bar items.</string>
+	<string>HaoBar needs accessibility permission to detect and arrange menu bar icons.</string>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>SaneBar needs to control other applications to manage your menu bar items.</string>
+	<string>HaoBar uses Apple Events so Shortcuts and AppleScript can control HaoBar itself.</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>OSAScriptingDefinition</key>
 	<string>SaneBar.sdef</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
-	<key>SUEnableSystemProfiling</key>
-	<false/>
-	<key>SUFeedURL</key>
-	<string>https://sanebar.com/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>7Pl/8cwfb2vm4Dm65AByslkMCScLJ9tbGlwGGx81qYU=</string>
 </dict>
 </plist>

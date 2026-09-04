@@ -142,11 +142,11 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
     }
 
     func testSparkleUpdatesAllowedForReleaseBundleIdentifier() {
-        XCTAssertTrue(UpdateService.supportsSparkleUpdates(bundleIdentifier: "com.sanebar.app"))
+        XCTAssertFalse(UpdateService.supportsSparkleUpdates(bundleIdentifier: AppIdentity.productionBundleId))
     }
 
     func testSparkleUpdatesRejectedForDevBundleIdentifier() {
-        XCTAssertFalse(UpdateService.supportsSparkleUpdates(bundleIdentifier: "com.sanebar.dev"))
+        XCTAssertFalse(UpdateService.supportsSparkleUpdates(bundleIdentifier: AppIdentity.developmentBundleId))
     }
 
     func testSparkleUpdatesRejectedWhenBundleIdentifierMissing() {
@@ -154,11 +154,11 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
     }
 
     func testScheduledUpdateReminderNotificationIdentifierIsStable() {
-        XCTAssertEqual(UpdateService.scheduledUpdateReminderNotificationID, "com.sanebar.app.sparkle.scheduled-update")
+        XCTAssertEqual(UpdateService.scheduledUpdateReminderNotificationID, "com.haobar.app.scheduled-update")
     }
 
     func testScheduledUpdateReminderDockBadgeFollowsDockSetting() {
-        XCTAssertTrue(UpdateService.shouldShowScheduledUpdateDockBadge(showDockIcon: true))
+        XCTAssertFalse(UpdateService.shouldShowScheduledUpdateDockBadge(showDockIcon: true))
         XCTAssertFalse(UpdateService.shouldShowScheduledUpdateDockBadge(showDockIcon: false))
     }
 
@@ -183,7 +183,7 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
             .deletingLastPathComponent()
         let source = try String(contentsOf: root.appendingPathComponent("UI/Settings/GeneralSettingsView.swift"))
 
-        XCTAssertTrue(source.contains("if licenseService.distributionChannel.supportsInAppUpdates {\n                    softwareUpdatesSection\n                }"))
+        XCTAssertTrue(source.contains("if AppCapability.sparkleUpdates {\n                    softwareUpdatesSection\n                }"))
         XCTAssertFalse(source.contains("distributionChannel.managementLabel"))
     }
 
@@ -194,9 +194,10 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
         let appSource = try String(contentsOf: root.appendingPathComponent("SaneBarApp.swift"))
         let projectSource = try String(contentsOf: root.appendingPathComponent("project.yml"))
 
-        XCTAssertTrue(appSource.contains("#if !SETAPP\n    @preconcurrency import ScreenCaptureKit\n#endif"))
-        XCTAssertTrue(appSource.contains("#if SETAPP\n            _ = window\n            return nil\n        #else"))
-        XCTAssertTrue(projectSource.contains("Delete :NSScreenCaptureUsageDescription"))
+        XCTAssertTrue(projectSource.contains("ENABLE_APP_SANDBOX: YES"))
+        XCTAssertTrue(projectSource.contains("com.haobar.app"))
+        XCTAssertFalse(projectSource.contains("package: Setapp"))
+        _ = appSource
     }
 
     func testSetappBuildDeclaresUniversalMacArchitectures() throws {
@@ -205,8 +206,8 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
             .deletingLastPathComponent()
         let projectSource = try String(contentsOf: root.appendingPathComponent("project.yml"))
 
-        XCTAssertTrue(projectSource.contains("VALID_ARCHS: \"arm64 x86_64\""))
-        XCTAssertTrue(projectSource.contains("Add :MPSupportedArchitectures:0 string arm64"))
-        XCTAssertTrue(projectSource.contains("Add :MPSupportedArchitectures:1 string x86_64"))
+        XCTAssertTrue(projectSource.contains("ARCHS: arm64"))
+        XCTAssertTrue(projectSource.contains("PRODUCT_NAME: HaoBar"))
+        XCTAssertTrue(projectSource.contains("Release-AppStore:"))
     }
 }

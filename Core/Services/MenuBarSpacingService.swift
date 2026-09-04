@@ -53,6 +53,7 @@ final class MenuBarSpacingService {
     // MARK: - Writing Values
 
     func setSpacing(_ value: Int?) throws {
+        guard AppCapability.menuBarSpacing else { return }
         if let value {
             guard Self.validRange.contains(value) else {
                 throw MenuBarSpacingError.valueOutOfRange(value)
@@ -66,6 +67,7 @@ final class MenuBarSpacingService {
     }
 
     func setSelectionPadding(_ value: Int?) throws {
+        guard AppCapability.menuBarSpacing else { return }
         if let value {
             guard Self.validRange.contains(value) else {
                 throw MenuBarSpacingError.valueOutOfRange(value)

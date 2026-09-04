@@ -5,21 +5,19 @@ import SwiftUI
 struct SettingsView: View {
     enum SettingsTab: String, SaneSettingsTab {
         case control = "Control"
-        case rules = "Rules"
         case appearance = "Appearance"
         case shortcuts = "Shortcuts"
+        case rules = "Rules"
         case health = "Health"
-        case license = "License"
         case about = "About"
 
         var icon: String {
             switch self {
             case .control: "switch.2"
-            case .rules: "wand.and.stars"
             case .appearance: "paintpalette"
             case .shortcuts: "keyboard"
+            case .rules: "wand.and.stars"
             case .health: "stethoscope"
-            case .license: "key.fill"
             case .about: "questionmark.circle"
             }
         }
@@ -28,16 +26,14 @@ struct SettingsView: View {
             switch self {
             case .control:
                 SaneSettingsIconSemantic.general.color
-            case .rules:
-                SaneSettingsIconSemantic.rules.color
             case .appearance:
                 SaneSettingsIconSemantic.appearance.color
             case .shortcuts:
                 SaneSettingsIconSemantic.shortcuts.color
+            case .rules:
+                SaneSettingsIconSemantic.rules.color
             case .health:
                 .green
-            case .license:
-                SaneSettingsIconSemantic.license.color
             case .about:
                 SaneSettingsIconSemantic.about.color
             }
@@ -64,15 +60,6 @@ struct SettingsView: View {
             case .health:
                 HealthSettingsView()
                     .navigationTitle("Health")
-            case .license:
-                SaneSettingsPage {
-                    LicenseSettingsView<SaneBarLicenseSettingsAdapter>(
-                        licenseService: SaneBarLicenseSettingsAdapter.shared,
-                        style: .panel,
-                        donationURL: SaneDonation.githubSponsorsURL
-                    )
-                }
-                .navigationTitle("License")
             case .about:
                 AboutSettingsView()
                     .navigationTitle("About")

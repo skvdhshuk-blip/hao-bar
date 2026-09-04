@@ -1,119 +1,16 @@
-# Security Policy
+# HaoBar Security
 
-> [README](README.md) · [ARCHITECTURE](ARCHITECTURE.md) · [DEVELOPMENT](DEVELOPMENT.md) · [PRIVACY](PRIVACY.md) · [SECURITY](SECURITY.md)
+Report vulnerabilities via a private GitHub security advisory on [hao-bar](https://github.com/skvdhshuk-blip/hao-bar).
 
-## Supported Versions
+## Model
 
-SaneBar is community-maintained. There is no formal support commitment; only
-the latest release receives fixes, on a best-effort basis.
+- Sandboxed Mac App Store build
+- Accessibility is required for menu bar management
+- Touch ID lock is a casual privacy feature, not a security boundary; the flag lives in local settings JSON
+- No telemetry, no Sparkle, no third-party crash reporter
 
----
+## Hardening
 
-## Reporting a Vulnerability
-
-**Please do NOT report security vulnerabilities through public GitHub issues.**
-
-Instead, please report them via email to: **hi@saneapps.com** (or create a private security advisory on GitHub if available).
-
-Include:
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Any suggested fixes (optional)
-
-Reports are read on a best-effort basis — SaneBar is community-maintained, so there is no guaranteed response time.
-
----
-
-## Security Model
-
-SaneBar is a **menu bar utility** that:
-
-1. **Requires Accessibility permissions** to read and manipulate menu bar items
-2. **Stores settings locally** in `~/Library/Application Support/SaneBar/`
-3. **Uses limited network requests only when needed** — Sparkle update checks and a few simple anonymous app counts
-
-### Known Limitations
-
-#### Touch ID / Password Protection
-
-The "Require Authentication to Reveal Hidden Icons" feature is designed as a **casual privacy feature**, not a security boundary.
-
-**What it protects against:**
-- Casual snooping (someone glancing at your screen)
-- Accidental reveals
-
-**What it does NOT protect against:**
-- Determined attackers with local access
-- Users who can edit `~/Library/Application Support/SaneBar/settings.json`
-
-The authentication flag is stored in a plaintext JSON file. An attacker with filesystem access could disable it.
-
-**AppleScript behavior:** When Touch ID protection is enabled, AppleScript commands (`toggle`, `show hidden`, `hide items`) that would reveal hidden icons are **blocked** and return an error. This prevents programmatic bypasses via `osascript`.
-
-**Remediation considered:** Moving the lock state to the System Keychain. Not implemented due to complexity vs. actual threat model for a menu bar organizer.
-
-#### WiFi Network Names
-
-SaneBar stores WiFi network names (SSIDs) in plaintext for the "Show on specific networks" trigger feature. This is stored locally and not transmitted anywhere.
-
----
-
-## Security Audits
-
-### Internal Audit — January 2026
-
-An independent code review was conducted in January 2026. Key findings:
-
-| Finding | Severity | Status |
-|---------|----------|--------|
-| AppleScript auth bypass | Critical | ✅ Fixed (v1.0.17) |
-| Auth bypass via config file | Medium | Documented (see above) |
-| Plaintext SSID storage | Low | Accepted (local only) |
-| Force casts in AX code | Medium | ✅ Fixed (v1.0.17) |
-
-The internal audit summary is kept here so the public security policy does not depend on local build-output artifacts.
-
-### Third-Party Audit — January 2026
-
-A third-party security and privacy audit was conducted via [BaseHub Forums](https://forums.basehub.com/sane-apps/SaneBar/1). The audit examined SaneBar's entitlements, data storage, network behavior, update system, authentication, and diagnostic data handling.
-
-**Result: Zero critical or high-severity issues.**
-
-Key findings:
-- Single entitlement (AppleScript automation only)
-- All data stored locally with no cloud sync
-- Sparkle updates use EdDSA cryptographic signing with system profiling disabled
-- Diagnostic data sanitization removes paths, emails, and API key patterns
-- Authentication rate limiting (5 attempts, 60-second lockout)
-- No personal data or persistent user identifiers detected
-- Remote attack surface effectively zero
-
-Minor concerns (all documented with mitigations above):
-- Touch ID config stored as plaintext JSON — documented design limitation
-- WiFi SSIDs in unencrypted local storage — local-only mitigation
-- Focus Mode reads undocumented Apple private files — graceful error handling
-
----
-
-## Hardening Measures
-
-SaneBar implements:
-
-- **Hardened Runtime** — Required for notarization
-- **No special network entitlements** — Standard outbound macOS networking only for updates and a few simple anonymous app counts
-- **Notarized by Apple** — Scanned for malware before distribution
-- **100% transparent code** — Full source available for inspection on GitHub
-
----
-
-## Privacy
-
-SaneBar does **not** upload personal content:
-
-- No names, emails, files, icon names, or menu bar contents
-- No crash reporting to external services
-- No account required
-- Only a few simple anonymous app counts for release management
-
-See [PRIVACY.md](PRIVACY.md) for our full privacy policy.
+- Hardened Runtime
+- App Sandbox
+- Updates only via the Mac App Store

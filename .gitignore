@@ -1,4 +1,8 @@
-# SaneBar .gitignore
+# HaoBar .gitignore
+
+# Local brief and IDE
+Guidance.md
+.idea/
 
 # ═══════════════════════════════════════════════════════════════
 # Build artifacts

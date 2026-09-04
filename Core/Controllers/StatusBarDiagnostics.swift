@@ -138,7 +138,7 @@ enum StatusBarDiagnostics {
         )
 
         if mainSuppressed || separatorSuppressed {
-            return "possible macOS menu bar suppression: check System Settings > Menu Bar > Allow in Menu Bar for SaneBar"
+            return "possible macOS menu bar suppression: check System Settings > Menu Bar > Allow in Menu Bar for HaoBar"
         }
         return "none"
     }

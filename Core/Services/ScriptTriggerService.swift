@@ -23,6 +23,7 @@ final class ScriptTriggerService {
     // MARK: - Monitoring
 
     func startMonitoring() {
+        guard AppCapability.scriptTrigger else { return }
         guard timer == nil else { return } // Already running
         guard let manager = menuBarManager else { return }
 

@@ -242,7 +242,7 @@ final class SearchWindowController: NSObject, NSWindowDelegate {
             mode: desiredMode,
             useContentFittingSize: desiredMode != .secondMenuBar
         )
-        window.makeKeyAndOrderFront(nil)
+        presentWindow(window)
         NSApp.activate(ignoringOtherApps: true)
         lastSecondMenuBarDiagnostics.showRequestedAt = Self.diagnosticsTimestamp(Date())
         lastSecondMenuBarDiagnostics.currentMode = Self.diagnosticsMode(desiredMode)
@@ -296,8 +296,40 @@ final class SearchWindowController: NSObject, NSWindowDelegate {
             return
         }
 
+        window?.alphaValue = 1
         window?.orderOut(nil)
         handleBrowseDismissal(reason: "close")
+    }
+
+    private func presentWindow(_ window: NSWindow) {
+        if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+            window.alphaValue = 1
+            window.makeKeyAndOrderFront(nil)
+            return
+        }
+        window.alphaValue = 0
+        window.makeKeyAndOrderFront(nil)
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.32
+            context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            window.animator().alphaValue = 1
+        }
+    }
+
+    private func dismissWindow(_ window: NSWindow) {
+        if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+            window.orderOut(nil)
+            window.alphaValue = 1
+            return
+        }
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.22
+            context.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            window.animator().alphaValue = 0
+        }, completionHandler: {
+            window.orderOut(nil)
+            window.alphaValue = 1
+        })
     }
 
     private func shouldDeferCloseForBrowseActivation(now: Date = Date()) -> Bool {

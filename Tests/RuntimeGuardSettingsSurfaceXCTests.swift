@@ -127,7 +127,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
         )
         XCTAssertTrue(
             generalSource.contains("Reveal hidden icons on hover") &&
-                generalSource.contains("Click the SaneBar icon to open or toggle manually"),
+                generalSource.contains("Click the HaoBar icon to open or toggle manually"),
             "Hover settings should say they reveal hidden icons inline instead of implying they open Browse Icons"
         )
         XCTAssertTrue(
@@ -168,8 +168,8 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Shortcuts settings should show each Pro hotkey as an individual Basic-visible locked row"
         )
         XCTAssertTrue(
-            shortcutsSource.contains("proAutomationCommandRow(item)") &&
-                shortcutsSource.contains("Unlock Pro to copy and use this automation command"),
+            shortcutsSource.contains("proGatedRow(feature: .appleScript, label: item.title)") &&
+                shortcutsSource.contains("SaneInlineHelp(item.command)"),
             "Shortcuts settings should show each Pro automation command as an individual Basic-visible locked row"
         )
         XCTAssertTrue(
@@ -204,7 +204,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains(".saneHelp(structureHelp)") &&
                 healthSource.contains("if runtimeSnapshot.likelySystemSuppressedStatusItems") &&
                 healthSource.contains("return \"Hidden by macOS\"") &&
-                healthSource.contains("Check System Settings > Menu Bar > Allow in Menu Bar for SaneBar") &&
+                healthSource.contains("Check System Settings > Menu Bar > Allow in Menu Bar for HaoBar") &&
                 healthSource.contains("SaneInlineHelp(layoutModeHelp)") &&
                 healthSource.contains("if !accessibilityService.isGranted") &&
                 healthSource.contains("openAccessibilitySettings()") &&
@@ -216,7 +216,7 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 healthSource.contains(".accessibilityLabel(\"Fix menu bar geometry\")") &&
                 healthSource.contains("if needsStructureAction") &&
                 healthSource.contains("runRepair(reason: \"health-items-fix\"") &&
-                healthSource.contains(".accessibilityLabel(\"Fix SaneBar items\")") &&
+                healthSource.contains(".accessibilityLabel(\"Fix HaoBar items\")") &&
                 healthSource.contains("menuBarManager.profileWorkflow.setLayoutMode(mode, reason: \"health\")") &&
                 healthSource.contains("title: \"Stability\"") &&
                 healthSource.contains("title: \"Live\"") &&
@@ -363,12 +363,12 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
             "Direct builds should keep the license-entry helper copy aligned with purchase-email instructions"
         )
         XCTAssertTrue(
-            settingsSource.contains("case license = \"License\""),
-            "Settings should keep the dedicated License tab available for direct activation guidance"
+            settingsSource.contains("case about = \"About\""),
+            "Settings should keep the About tab for license acknowledgements"
         )
-        XCTAssertTrue(
-            settingsSource.contains("LicenseSettingsView<SaneBarLicenseSettingsAdapter>("),
-            "Settings should keep activation flowing through the shared License tab surface"
+        XCTAssertFalse(
+            settingsSource.contains("case license = \"License\""),
+            "HaoBar does not ship a License tab"
         )
         XCTAssertTrue(
             upsellSource.contains("Button(LicenseService.existingCustomerButtonLabel())"),
@@ -473,10 +473,10 @@ final class RuntimeGuardSettingsSurfaceXCTests: RuntimeGuardTestCase {
                 secondMenuBarSource.contains("SaneGradientBackground(style: .panel)"),
             "Settings should use the shared SaneUI container, and both browse surfaces should use the calmer shared panel background"
         )
-        XCTAssertTrue(
-            settingsSource.contains("case license = \"License\"") &&
+        XCTAssertFalse(
+            settingsSource.contains("case license = \"License\"") ||
                 settingsSource.contains("LicenseSettingsView<SaneBarLicenseSettingsAdapter>("),
-            "SaneBar settings should expose a dedicated shared License tab instead of keeping an app-local inline license block"
+            "HaoBar settings drop the License tab; About keeps acknowledgements"
         )
         XCTAssertFalse(
             FileManager.default.fileExists(

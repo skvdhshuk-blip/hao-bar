@@ -151,7 +151,7 @@ struct MenuBarAppTile: View {
                 }
             )
         })
-        .buttonStyle(.plain)
+        .buttonStyle(HaoPressButtonStyle())
         .overlay(alignment: .topTrailing) {
             if let duplicateMarker {
                 BrowseDuplicateBadge(marker: duplicateMarker)

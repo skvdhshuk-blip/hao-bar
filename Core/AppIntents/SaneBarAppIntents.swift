@@ -4,7 +4,7 @@ import Foundation
 
 struct ToggleHiddenItemsIntent: AppIntent {
     static let title: LocalizedStringResource = "Toggle Hidden Items"
-    static let description = IntentDescription("Show or hide SaneBar's hidden menu bar icons.")
+    static let description = IntentDescription("Show or hide HaoBar's hidden menu bar icons.")
     static let openAppWhenRun = false
 
     @MainActor
@@ -16,7 +16,7 @@ struct ToggleHiddenItemsIntent: AppIntent {
 
 struct ShowHiddenItemsIntent: AppIntent {
     static let title: LocalizedStringResource = "Show Hidden Icons"
-    static let description = IntentDescription("Reveal SaneBar's hidden menu bar icons.")
+    static let description = IntentDescription("Reveal HaoBar's hidden menu bar icons.")
     static let openAppWhenRun = false
 
     @MainActor
@@ -28,7 +28,7 @@ struct ShowHiddenItemsIntent: AppIntent {
 
 struct HideHiddenItemsIntent: AppIntent {
     static let title: LocalizedStringResource = "Hide Icons"
-    static let description = IntentDescription("Hide SaneBar's hidden menu bar icons again.")
+    static let description = IntentDescription("Hide HaoBar's hidden menu bar icons again.")
     static let openAppWhenRun = false
 
     @MainActor
@@ -40,7 +40,7 @@ struct HideHiddenItemsIntent: AppIntent {
 
 struct ApplySaneBarProfileIntent: AppIntent {
     static let title: LocalizedStringResource = "Apply Profile"
-    static let description = IntentDescription("Apply a saved SaneBar profile by name.")
+    static let description = IntentDescription("Apply a saved HaoBar profile by name.")
     static let openAppWhenRun = false
 
     @Parameter(title: "Profile Name")
@@ -58,12 +58,12 @@ struct ApplySaneBarProfileIntent: AppIntent {
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let trimmedName = profileName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else {
-            return .result(dialog: "Choose a SaneBar profile name.")
+            return .result(dialog: "Choose a HaoBar profile name.")
         }
 
         let profiles = MenuBarManager.shared.profileWorkflow.savedProfiles()
         guard let profile = profiles.first(where: { $0.name.localizedCaseInsensitiveCompare(trimmedName) == .orderedSame }) else {
-            return .result(dialog: "SaneBar could not find a profile named \(trimmedName).")
+            return .result(dialog: "HaoBar could not find a profile named \(trimmedName).")
         }
 
         MenuBarManager.shared.profileWorkflow.applyProfile(profile, preserveAutomation: false, reason: "app-intent")
@@ -73,7 +73,7 @@ struct ApplySaneBarProfileIntent: AppIntent {
 
 struct QuickSearchSaneBarIntent: AppIntent {
     static let title: LocalizedStringResource = "Quick Search"
-    static let description = IntentDescription("Open SaneBar Browse Icons with search text.")
+    static let description = IntentDescription("Open HaoBar Browse Icons with search text.")
     static let openAppWhenRun = true
 
     @Parameter(title: "Search Text")

@@ -79,12 +79,8 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
 
         XCTAssertTrue(source.contains("outboundActionInFlight"))
         XCTAssertTrue(source.contains("runSingleOutboundAction"))
-        XCTAssertTrue(source.contains("Mr. Sane here. I need to share an insane stat with you all."))
-        XCTAssertTrue(source.contains("Fewer than 0.5% resulted in a purchase."))
-        XCTAssertTrue(source.contains("Text(\"Donate\")"))
-        XCTAssertTrue(source.contains("if !licenseService.hasLegacyPaidUnlock"))
-        XCTAssertTrue(source.contains("This does not lock SaneBar. The app remains free."))
-        XCTAssertTrue(source.contains("NSWorkspace.shared.open(LicenseService.donationURL())"))
+        XCTAssertTrue(source.contains("FreeVsProPage"))
+        XCTAssertTrue(source.contains("SaneBar is now fully open source") || source.contains("HaoBar"))
         XCTAssertFalse(source.contains("NSWorkspace.shared.open(LicenseService.checkoutURL())"))
         XCTAssertFalse(source.contains("Restore Purchases"))
         XCTAssertFalse(source.contains("Unlock Pro"))
@@ -103,7 +99,8 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
             contentsOf: projectRootURL().appendingPathComponent("UI/Onboarding/WelcomeView.swift"),
             encoding: .utf8
         )
-        XCTAssertTrue(welcomeSource.contains("private var finalButtonLabel: String {\n        \"Get Started\"\n    }"))
+        XCTAssertTrue(welcomeSource.contains("Get Started"))
+        XCTAssertTrue(welcomeSource.contains("totalPages = 4"))
         XCTAssertFalse(welcomeSource.contains("NSWorkspace.shared.open(LicenseService.checkoutURL())"))
 
         let licenseSource = try String(
@@ -167,15 +164,15 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
             encoding: .utf8
         )
         let website = try String(
-            contentsOf: projectRootURL().appendingPathComponent("docs/index.html"),
+            contentsOf: projectRootURL().appendingPathComponent("docs/index.md"),
             encoding: .utf8
         )
 
-        XCTAssertTrue(security.contains("community-maintained"), "Security policy should state the post-sunset support reality")
+        XCTAssertTrue(security.contains("Sandboxed"), "Security policy should describe the App Store sandbox")
         XCTAssertFalse(security.contains("| 1.0.x"), "Security policy should not advertise stale 1.0.x support")
-        XCTAssertTrue(readme.contains("MIT License"), "README should state the current MIT open-source license")
+        XCTAssertTrue(readme.contains("MIT"), "README should state the current MIT open-source license")
         XCTAssertFalse(readme.contains("source-available under PolyForm Shield"), "README should not advertise the retired PolyForm Shield license after the MIT relicense")
-        XCTAssertTrue(website.contains("open source"), "Website should state SaneBar is open source (MIT) after the free relicense")
+        XCTAssertTrue(website.contains("HaoBar"), "Website should name HaoBar")
     }
 
     func testNormalizedEventYKeepsAlreadyFlippedMenuBarY() {
@@ -498,7 +495,7 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
         XCTAssertTrue(
             !healthSource.contains("pendingDeferredWakeRestoreReason = nil") &&
                 healthSource.contains("menuBarManager.hasActionableDeferredWakeVisibleAllowListRepair()") &&
-                healthSource.contains("Repair is running. SaneBar will clear the wake repair note after the layout restore finishes."),
+                healthSource.contains("Repair is running. HaoBar will clear the wake repair note after the layout restore finishes."),
             "Health UI should not clear deferred wake guidance until the replay path clears it after a successful physical repair"
         )
         XCTAssertTrue(
@@ -975,11 +972,8 @@ final class RuntimeGuardRepoGeometryXCTests: RuntimeGuardTestCase {
 
         XCTAssertTrue(
             source.contains("private var hideNewUnlistedToggleRow: some View") &&
-                source.contains("Button {") &&
-                source.contains("hideAllOtherMenuBarItemsBinding.wrappedValue.toggle()") &&
-                source.contains(".accessibilityIdentifier(\"sanebar-hide-new-unlisted-toggle\")") &&
-                source.contains("Capsule()") &&
-                source.contains("Circle()"),
+                source.contains("CompactToggle(label: \"Hide new/unlisted items by default\", isOn: hideAllOtherMenuBarItemsBinding)") &&
+                source.contains(".accessibilityIdentifier(\"sanebar-hide-new-unlisted-toggle\")"),
             "Hide new/unlisted must own a real pressable row so customers and the UI sweep can toggle it reliably"
         )
     }

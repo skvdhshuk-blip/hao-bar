@@ -161,6 +161,7 @@ struct RulesSettingsView: View {
                         )
                     }
 
+                    if AppCapability.wifiSSID {
                     CompactDivider()
 
                     if licenseService.isPro {
@@ -205,7 +206,9 @@ struct RulesSettingsView: View {
                             help: "Reveal selected icons when your Mac joins specific Wi-Fi networks"
                         )
                     }
+                    }
 
+                    if AppCapability.focusModeFiles {
                     CompactDivider()
 
                     if licenseService.isPro {
@@ -263,7 +266,9 @@ struct RulesSettingsView: View {
                             help: "Reveal selected icons when Focus turns on, changes, or turns off"
                         )
                     }
+                    }
 
+                    if AppCapability.scriptTrigger {
                     CompactDivider()
 
                     if licenseService.isPro {
@@ -279,6 +284,7 @@ struct RulesSettingsView: View {
                             label: "Let a script control visibility",
                             help: "Run your own script to decide when hidden icons should show or hide"
                         )
+                    }
                     }
                 }
         }

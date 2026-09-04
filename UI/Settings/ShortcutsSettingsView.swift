@@ -17,57 +17,57 @@ struct ShortcutsSettingsView: View {
         .init(
             id: "toggle",
             title: "Toggle hidden icons",
-            command: "open \"sanebar://toggle\""
+            command: "open \"\(AppIdentity.urlScheme)://toggle\""
         ),
         .init(
             id: "show",
             title: "Show hidden icons",
-            command: "open \"sanebar://show\""
+            command: "open \"\(AppIdentity.urlScheme)://show\""
         ),
         .init(
             id: "hide",
             title: "Hide icons",
-            command: "open \"sanebar://hide\""
+            command: "open \"\(AppIdentity.urlScheme)://hide\""
         ),
         .init(
             id: "search",
             title: "Open search",
-            command: "open \"sanebar://search\""
+            command: "open \"\(AppIdentity.urlScheme)://search\""
         ),
         .init(
             id: "search-query",
             title: "Search text",
-            command: "open \"sanebar://search?q=wifi\""
+            command: "open \"\(AppIdentity.urlScheme)://search?q=wifi\""
         ),
         .init(
             id: "settings",
             title: "Open settings",
-            command: "open \"sanebar://settings\""
+            command: "open \"\(AppIdentity.urlScheme)://settings\""
         ),
         .init(
             id: "health",
             title: "Open health",
-            command: "open \"sanebar://health\""
+            command: "open \"\(AppIdentity.urlScheme)://health\""
         ),
         .init(
             id: "applescript-toggle",
             title: "AppleScript toggle",
-            command: "osascript -e 'tell application \"SaneBar\" to toggle'"
+            command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to toggle'"
         ),
         .init(
             id: "applescript-search",
             title: "AppleScript search",
-            command: "osascript -e 'tell application \"SaneBar\" to quick search \"wifi\"'"
+            command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to quick search \"wifi\"'"
         ),
         .init(
             id: "applescript-move-before",
             title: "AppleScript move before",
-            command: "osascript -e 'tell application \"SaneBar\" to move icon before \"SOURCE_ID\" target icon \"TARGET_ID\"'"
+            command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to move icon before \"SOURCE_ID\" target icon \"TARGET_ID\"'"
         ),
         .init(
             id: "applescript-move-after",
             title: "AppleScript move after",
-            command: "osascript -e 'tell application \"SaneBar\" to move icon after \"SOURCE_ID\" target icon \"TARGET_ID\"'"
+            command: "osascript -e 'tell application \"\(AppIdentity.displayName)\" to move icon after \"SOURCE_ID\" target icon \"TARGET_ID\"'"
         )
     ]
 
@@ -103,7 +103,7 @@ struct ShortcutsSettingsView: View {
                         CompactRow("Open Settings") {
                             KeyboardShortcuts.Recorder(for: .openSettings)
                                 .fixedSize()
-                                .help("Open the SaneBar settings window")
+                                .help("Open the HaoBar settings window")
                         }
                     } else {
                         CompactDivider()

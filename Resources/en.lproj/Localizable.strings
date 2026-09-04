@@ -1,29 +1,47 @@
 /* General */
 "General" = "General";
 "Startup" = "Startup";
-"Start SaneBar when you log in" = "Start SaneBar when you log in";
+"Start SaneBar when you log in" = "Start HaoBar when you log in";
 "Auto-hide" = "Auto-hide";
 "Auto-hide after showing" = "Auto-hide after showing";
 "Delay:" = "Delay:";
 "seconds" = "seconds";
 "How it works" = "How it works";
 "Your menu bar icons:" = "Your menu bar icons:";
-"SaneBar" = "SaneBar";
+"SaneBar" = "HaoBar";
+"HaoBar" = "HaoBar";
+"Welcome to %@" = "Welcome to %@";
+"Hide the menu bar icons you don’t need. Keep the important ones visible." = "Hide the menu bar icons you don’t need. Keep the important ones visible.";
+"Everything stays on this Mac. No account, no upload." = "Everything stays on this Mac. No account, no upload.";
+"Try it" = "Try it";
+"Choose how you browse hidden icons" = "Choose how you browse hidden icons";
+"Icon Panel" = "Icon Panel";
+"Second Menu Bar" = "Second Menu Bar";
+"A compact floating grid. Best for search and quick open." = "A compact floating grid. Best for search and quick open.";
+"A full-width row under the real menu bar. Best when you want more icons at once." = "A full-width row under the real menu bar. Best when you want more icons at once.";
+"Back" = "Back";
+"Next" = "Next";
+"Get Started" = "Get Started";
+"Turn on %@ in the list that appears" = "Turn on %@ in the list that appears";
+"One click to " = "One click to ";
+"hide" = "hide";
+". One click to " = ". One click to ";
+"reveal" = "reveal";
 "Separator" = "Separator";
 "**⌘+drag** icons to organize them" = "**⌘+drag** icons to organize them";
 "• Left of separator = can be hidden" = "• Left of separator = can be hidden";
 "• Right of separator = always visible" = "• Right of separator = always visible";
 
 /* Onboarding */
-"Welcome to SaneBar!" = "Welcome to SaneBar!";
+"Welcome to SaneBar!" = "Welcome to HaoBar!";
 "Cmd+drag icons to arrange them" = "Cmd+drag icons to arrange them";
 "This is the separator icon" = "This is the separator icon";
 "Icons LEFT of it can be hidden" = "Icons LEFT of it can be hidden";
 "Icons RIGHT of it stay visible" = "Icons RIGHT of it stay visible";
-"Click SaneBar icon to show/hide" = "Click SaneBar icon to show/hide";
+"Click SaneBar icon to show/hide" = "Click HaoBar icon to show/hide";
 "Got it!" = "Got it!";
-"**Click SaneBar icon** to show/hide" = "**Click SaneBar icon** to show/hide";
-"**Notch detected** — keep important icons to the right of SaneBar" = "**Notch detected** — keep important icons to the right of SaneBar";
+"**Click SaneBar icon** to show/hide" = "**Click HaoBar icon** to show/hide";
+"**Notch detected** — keep important icons to the right of SaneBar" = "**Notch detected** — keep important icons to the right of HaoBar";
 
 /* Shortcuts */
 "Shortcuts" = "Shortcuts";
@@ -100,7 +118,7 @@ The hotkey will reveal hidden icons and activate that app.";
 "About" = "About";
 "Version %@ (%@)" = "Version %@ (%@)";
 "100% On-Device" = "On-Device by Default";
-"No analytics. No telemetry. No network requests. Everything stays on your Mac." = "No user-content upload. Limited network use for updates, license checks, and a few simple anonymous app counts.";
+"No analytics. No telemetry. No network requests. Everything stays on your Mac." = "No account. No upload. Settings stay on this Mac.";
 "GitHub" = "GitHub";
 "Licenses" = "Licenses";
 "Reset to Defaults" = "Reset to Defaults";

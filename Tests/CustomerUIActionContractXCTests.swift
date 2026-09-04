@@ -150,7 +150,7 @@ final class CustomerUIActionContractXCTests: XCTestCase {
         let shortcutsSource = try read("UI/Settings/ShortcutsSettingsView.swift")
         let healthSource = try read("UI/Settings/HealthSettingsView.swift")
 
-        for tab in ["Control", "Rules", "Appearance", "Shortcuts", "Health", "License", "About"] {
+        for tab in ["Control", "Appearance", "Shortcuts", "Rules", "Health", "About"] {
             XCTAssertTrue(settingsSource.contains(tab), "Expected Settings tab \(tab)")
             XCTAssertTrue(contract.contains("\(tab) tab"), "Contract must require evidence for Settings \(tab)")
         }

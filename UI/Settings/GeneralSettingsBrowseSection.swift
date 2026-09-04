@@ -113,7 +113,7 @@ struct GeneralSettingsBrowseSection: View {
     }
 
     private var leftClickRows: some View {
-        CompactRow("Left-click SaneBar icon") {
+        CompactRow("Left-click HaoBar icon") {
             HStack(spacing: 6) {
                 ForEach(GeneralSettingsBrowseLeftClickMode.allCases) { mode in
                     segmentedChoiceButton(mode.title, isSelected: leftClickMode.wrappedValue == mode) {
@@ -124,7 +124,7 @@ struct GeneralSettingsBrowseSection: View {
             }
             .fixedSize(horizontal: true, vertical: false)
         }
-        .saneHelp("Right-click the SaneBar icon to open the app menu.")
+        .saneHelp("Right-click the HaoBar icon to open the app menu.")
     }
 
     private func segmentedChoiceButton(
@@ -174,12 +174,12 @@ struct GeneralSettingsBrowseSection: View {
     private func leftClickModeHelp(_ mode: GeneralSettingsBrowseLeftClickMode) -> String {
         switch mode {
         case .toggleHidden:
-            return "Left-click the SaneBar icon to show or hide icons."
+            return "Left-click the HaoBar icon to show or hide icons."
         case .openBrowseIcons:
             if licenseService.isPro {
-                return "Left-click the SaneBar icon to open \(browseDestinationLabel)."
+                return "Left-click the HaoBar icon to open \(browseDestinationLabel)."
             }
-            return "Left-click the SaneBar icon to open \(browseDestinationLabel) for browsing and clicking icons."
+            return "Left-click the HaoBar icon to open \(browseDestinationLabel) for browsing and clicking icons."
         }
     }
 }

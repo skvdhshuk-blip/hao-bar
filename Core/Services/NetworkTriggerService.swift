@@ -45,6 +45,7 @@ final class NetworkTriggerService: NSObject, NetworkTriggerServiceProtocol, CWEv
     // MARK: - Monitoring
 
     func startMonitoring() {
+        guard AppCapability.wifiSSID else { return }
         guard !isMonitoring else { return }
 
         wifiClient.delegate = self

@@ -407,11 +407,11 @@ class SaneBarAppDelegate: NSObject, NSApplicationDelegate {
 
         SaneStandardMenu.addCoreUtilityItems(
             to: menu,
-            appName: "SaneBar",
+            appName: AppIdentity.displayName,
             target: self,
             settingsAction: #selector(openSettingsFromDock(_:)),
             licenseAction: #selector(openLicenseFromDock(_:)),
-            checkForUpdatesAction: LicenseService.shared.distributionChannel.supportsInAppUpdates
+            checkForUpdatesAction: AppCapability.sparkleUpdates
                 ? #selector(checkForUpdatesFromDock(_:))
                 : nil,
             aboutAndBugReportAction: #selector(openAboutFromDock(_:)),
@@ -445,7 +445,7 @@ class SaneBarAppDelegate: NSObject, NSApplicationDelegate {
 
     @MainActor
     @objc private func openLicenseFromDock(_: Any?) {
-        SettingsOpener.open(tab: .license)
+        SettingsOpener.open(tab: .about)
     }
 
     @MainActor
@@ -599,15 +599,19 @@ enum SettingsOpener {
             contentRect: NSRect(
                 x: 0,
                 y: 0,
-                width: SaneSettingsWindowDefaults.idealWidth,
-                height: SaneSettingsWindowDefaults.idealHeight
+                width: SaneBarSettingsWindowMetrics.idealWidth,
+                height: SaneBarSettingsWindowMetrics.idealHeight
             ),
             styleMask: [.titled, .closable, .resizable, .miniaturizable],
             backing: .buffered,
             defer: false
         )
         window.contentViewController = hostingController
-        window.title = "SaneBar Settings"
+        window.title = "\(AppIdentity.displayName) Settings"
+        window.minSize = NSSize(
+            width: SaneSettingsWindowDefaults.minWidth,
+            height: SaneSettingsWindowDefaults.minHeight
+        )
         window.appearance = NSAppearance(named: .darkAqua)
         window.saneApplySettingsChrome(preferIdealSize: true)
         window.center()

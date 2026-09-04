@@ -1,0 +1,123 @@
+/* General */
+"General" = "通用";
+"Startup" = "启动";
+"Start SaneBar when you log in" = "登录时启动 HaoBar";
+"Auto-hide" = "自动隐藏";
+"Auto-hide after showing" = "显示后自动再隐藏";
+"Delay:" = "延迟：";
+"seconds" = "秒";
+"How it works" = "怎么用";
+"Your menu bar icons:" = "你的菜单栏图标：";
+"SaneBar" = "HaoBar";
+"HaoBar" = "HaoBar";
+"Welcome to %@" = "欢迎使用 %@";
+"Hide the menu bar icons you don’t need. Keep the important ones visible." = "藏起暂时不用的菜单栏图标，留下真正需要的。";
+"Everything stays on this Mac. No account, no upload." = "数据只留在这台 Mac。不用账号，也不上传。";
+"Try it" = "先试一下";
+"Choose how you browse hidden icons" = "选择查看隐藏图标的方式";
+"Icon Panel" = "图标面板";
+"Second Menu Bar" = "第二菜单栏";
+"A compact floating grid. Best for search and quick open." = "紧凑的浮动网格，适合搜索和快速打开。";
+"A full-width row under the real menu bar. Best when you want more icons at once." = "真实菜单栏下方的整行，适合一次看更多图标。";
+"Back" = "返回";
+"Next" = "继续";
+"Get Started" = "开始使用";
+"Turn on %@ in the list that appears" = "在出现的列表里打开 %@";
+"One click to " = "点一下就能";
+"hide" = "隐藏";
+". One click to " = "。再点一下就能";
+"reveal" = "显示";
+"Separator" = "分隔符";
+"**⌘+drag** icons to organize them" = "**⌘+拖动** 图标来整理";
+"• Left of separator = can be hidden" = "• 分隔符左边 = 可以隐藏";
+"• Right of separator = always visible" = "• 分隔符右边 = 始终可见";
+
+/* Onboarding */
+"Welcome to SaneBar!" = "欢迎使用 HaoBar！";
+"Cmd+drag icons to arrange them" = "按住 ⌘ 拖动图标来排列";
+"This is the separator icon" = "这是分隔符";
+"Icons LEFT of it can be hidden" = "它左边的图标可以被隐藏";
+"Icons RIGHT of it stay visible" = "它右边的图标保持可见";
+"Click SaneBar icon to show/hide" = "点击 HaoBar 图标即可显示或隐藏";
+"Got it!" = "知道了";
+"**Click SaneBar icon** to show/hide" = "**点击 HaoBar 图标** 即可显示或隐藏";
+"**Notch detected** — keep important icons to the right of SaneBar" = "**检测到刘海** — 把重要图标放在 HaoBar 右边";
+
+/* Shortcuts */
+"Shortcuts" = "快捷键";
+"Global Shortcuts" = "全局快捷键";
+"Click a field, then press your shortcut keys." = "点选输入框，然后按下快捷键。";
+"Toggle visibility:" = "切换显示：";
+"Show hidden:" = "显示隐藏项：";
+"Hide items:" = "隐藏图标：";
+"Search apps:" = "搜索应用：";
+"Open Settings:" = "打开设置：";
+"AppleScript & Automation" = "AppleScript 与自动化";
+"Copy" = "复制";
+"Commands: **toggle**, **show hidden**, **hide items**" = "命令：**toggle**、**show hidden**、**hide items**";
+
+/* Advanced */
+"Advanced" = "高级";
+"Profiles" = "配置";
+"Save and restore your settings configurations." = "保存和恢复设置。";
+"No saved profiles" = "还没有保存的配置";
+"Load" = "加载";
+"Save Current Settings as Profile..." = "将当前设置保存为配置…";
+"Save Profile" = "保存配置";
+"Profile name" = "配置名称";
+"Enter a name for this profile." = "给这个配置起个名字。";
+"Save" = "保存";
+"Cancel" = "取消";
+
+"Always Visible" = "始终可见";
+"Keep specific icons always visible." = "让指定图标始终可见。";
+"Enter bundle IDs separated by commas.\n\n⌘+drag those icons LEFT of the separator.\n\nFind bundle ID:\nosascript -e 'id of app \"AppName\"'" = "用逗号分隔 Bundle ID。\n\n⌘+拖动这些图标到分隔符左边。";
+
+"Spacers" = "间隔";
+"Number of spacers: %d" = "间隔数量：%d";
+"Spacers are small dividers (—) that appear in your menu bar.\n\n⌘+drag them to organize hidden icons into groups." = "间隔是菜单栏里的小分隔符。\n\n⌘+拖动它们来给隐藏图标分组。";
+
+"Icon Hotkeys" = "图标快捷键";
+"Assign keyboard shortcuts to activate specific menu bar apps" = "为菜单栏应用指定快捷键";
+"How to add a hotkey:\n\n1. Set a \"Search apps\" shortcut in the Shortcuts tab\n2. Press that shortcut to open the app search\n3. Select an app and press a key to assign it\n\nThe hotkey will reveal hidden icons and activate that app." = "添加快捷键：\n\n1. 在快捷键页设置“搜索应用”\n2. 按下它打开搜索\n3. 选中应用并按下一个键\n\n该快捷键会显示隐藏图标并打开对应应用。";
+"No hotkeys configured yet" = "还没有配置快捷键";
+
+"Appearance" = "外观";
+"Enable custom menu bar style" = "启用自定义菜单栏样式";
+"Style Options" = "样式选项";
+"Tint:" = "着色：";
+"Opacity:" = "不透明度：";
+"Shadow" = "阴影";
+"Border" = "边框";
+"Rounded" = "圆角";
+"Corner radius:" = "圆角半径：";
+
+"Automation" = "自动化";
+"Show on hover" = "悬停时显示";
+"Show when battery is low" = "低电量时显示";
+"More Triggers" = "更多触发";
+"Show when specific apps launch" = "特定应用启动时显示";
+"Show on WiFi networks" = "连接指定 Wi-Fi 时显示";
+"Auto-show hidden icons when connecting to specific networks." = "连上指定网络时自动显示隐藏图标。";
+"Add \"%@\"" = "添加“%@”";
+
+/* About */
+"About" = "关于";
+"Version %@ (%@)" = "版本 %@（%@）";
+"100% On-Device" = "默认只在本机";
+"No analytics. No telemetry. No network requests. Everything stays on your Mac." = "不用账号，不上传。设置只留在这台 Mac。";
+"GitHub" = "GitHub";
+"Licenses" = "许可";
+"Reset to Defaults" = "恢复默认";
+"Reset Settings?" = "恢复默认设置？";
+"This will reset all settings to their defaults. This cannot be undone." = "所有设置会恢复默认，且无法撤销。";
+"Reset" = "重置";
+"Open Source Licenses" = "开源许可";
+"Done" = "完成";
+
+/* Search Window */
+"Search apps..." = "搜索应用…";
+"No matching apps" = "没有匹配的应用";
+"Activate" = "打开";
+"Copy ID" = "复制 ID";
+"Select an app and press Return to activate it. This will reveal hidden items and bring the app forward." = "选中应用后按回车打开。这会显示隐藏图标并把它带到前面。";

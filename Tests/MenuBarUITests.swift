@@ -47,7 +47,7 @@ struct MenuBarUITests {
     func rightClickShowsMenu() throws {
         let script = """
         tell application "System Events"
-            tell process "SaneBar"
+            tell process "HaoBar"
                 set menuBarItem to menu bar item 2 of menu bar 2
                 click menuBarItem
                 delay 0.3
@@ -68,7 +68,7 @@ struct MenuBarUITests {
     func settingsMenuOpensWindow() throws {
         let script = """
         tell application "System Events"
-            tell process "SaneBar"
+            tell process "HaoBar"
                 set menuBarItem to menu bar item 2 of menu bar 2
                 click menuBarItem
                 delay 0.3
@@ -94,7 +94,7 @@ struct MenuBarUITests {
         // The text explains how to show/hide icons using Cmd+drag.
         let script = """
         tell application "System Events"
-            tell process "SaneBar"
+            tell process "HaoBar"
                 -- Open Find Icon (Cmd+Shift+Space triggers this)
                 -- For testing, we'll check if the app window contains the expected text
                 set allText to (value of every static text of every window)
@@ -113,11 +113,11 @@ struct MenuBarUITests {
     func menuHasExpectedItems() throws {
         let script = """
         tell application "System Events"
-            tell process "SaneBar"
+            tell process "HaoBar"
                 set menuBarItem to menu bar item 2 of menu bar 2
                 click menuBarItem
                 delay 0.3
-                set menuItems to name of menu items of menu "SaneBar" of menuBarItem
+                set menuItems to name of menu items of menu "HaoBar" of menuBarItem
                 return menuItems as string
             end tell
         end tell
@@ -126,8 +126,7 @@ struct MenuBarUITests {
         let result = try runAppleScript(script)
         #expect(result.contains("Browse Icons..."), "Menu should have Browse Icons...")
         #expect(result.contains("Settings"), "Menu should have Settings")
-        #expect(result.contains("Check for Updates..."), "Menu should have Check for Updates...")
-        #expect(result.contains("Quit SaneBar"), "Menu should have Quit SaneBar")
+        #expect(result.contains("Quit HaoBar"), "Menu should have Quit HaoBar")
     }
 
     @Test("Quit menu item terminates app", .disabled("Requires running app - destructive"))
@@ -136,11 +135,11 @@ struct MenuBarUITests {
         // Can be run manually for verification
         let script = """
         tell application "System Events"
-            tell process "SaneBar"
+            tell process "HaoBar"
                 set menuBarItem to menu bar item 2 of menu bar 2
                 click menuBarItem
                 delay 0.3
-                if exists menu item "Quit SaneBar" of menu "SaneBar" of menuBarItem then
+                if exists menu item "Quit HaoBar" of menu "HaoBar" of menuBarItem then
                     return "QUIT_EXISTS"
                 else
                     return "QUIT_NOT_FOUND"

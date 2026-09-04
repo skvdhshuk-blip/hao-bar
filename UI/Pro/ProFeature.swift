@@ -42,10 +42,10 @@ enum ProFeature: String, Identifiable, CaseIterable {
         case .settingsProfiles: "Save and load different configurations"
         case .exportImport: "Export settings to share or back up, import from file"
         case .competitorImport: "Import settings from Bartender or Ice"
-        case .customIcon: "Use your own image as the SaneBar menu bar icon"
+        case .customIcon: "Use your own image as the HaoBar menu bar icon"
         case .spacersConfig: "Add extra visual dividers to organize your menu bar"
         case .additionalShortcuts: "Show-only, hide-only, open settings, and more shortcuts"
-        case .appleScript: "Control SaneBar from scripts and automation tools"
+        case .appleScript: "Control HaoBar from scripts and automation tools"
         }
     }
 
