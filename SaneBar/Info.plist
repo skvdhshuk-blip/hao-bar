@@ -37,6 +37,8 @@
 	<string>public.app-category.utilities</string>
 	<key>NSAccessibilityUsageDescription</key>
 	<string>HaoBar needs accessibility permission to detect and arrange menu bar icons.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>HaoBar snapshots the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything.</string>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>HaoBar uses Apple Events so Shortcuts and AppleScript can control HaoBar itself.</string>
 	<key>NSAppleScriptEnabled</key>

@@ -256,6 +256,14 @@ struct SearchWindowActivationTests {
             )
         )
         #expect(
+            SearchServiceSupport.shouldPreferHardwareFirst(
+                origin: .browsePanel,
+                isRightClick: false,
+                app: RunningApp(id: "notch.app", name: "Notch", icon: nil, xPosition: 700, width: 24),
+                notchRightSafeMinX: 825
+            ) == false
+        )
+        #expect(
             SearchServiceSupport.shouldUsePinnedAlwaysHiddenFallback(
                 hidingState: .hidden,
                 isBrowseSessionActive: false

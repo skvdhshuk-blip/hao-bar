@@ -305,7 +305,7 @@ struct MenuBarSearchView: View {
             removeAppFromGroup: { bundleId, groupId in
                 BrowsePanelGroupEditor.removeAppFromGroup(bundleId: bundleId, groupId: groupId, manager: menuBarManager)
             },
-            makeToggleHiddenAction: makeToggleHiddenAction(for:),
+            makeMoveToVisibleAction: makeMoveToVisibleAction(for:),
             makeMoveToAlwaysHiddenAction: makeMoveToAlwaysHiddenAction(for:),
             makeMoveToHiddenAction: makeMoveToHiddenAction(for:),
             showRestrictedFeature: { proUpsellFeature = $0 },

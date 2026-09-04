@@ -66,6 +66,14 @@ struct GeneralSettingsHidingSection: View {
 
     var body: some View {
         CompactSection(String(localized: "Hiding Behavior")) {
+            CompactToggle(
+                label: String(localized: "Keep visible icons right of the notch"),
+                isOn: $menuBarManager.settings.keepVisibleIconsRightOfNotch
+            )
+            .help(String(localized: "On notched Macs, extra visible icons move to Hidden. Click HaoBar to open them."))
+            SettingsInlineHelp(String(localized: "On notched Macs, extra visible icons move to Hidden. Click HaoBar to open them."))
+
+            CompactDivider()
             CompactToggle(label: String(localized: "Hide icons automatically"), isOn: $menuBarManager.settings.autoRehide)
                 .help("Hide revealed icons again after the delay below.")
 

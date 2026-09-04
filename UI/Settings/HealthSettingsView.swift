@@ -169,6 +169,32 @@ struct HealthSettingsView: View {
                         HealthInlineHelp(AccessibilityService.deniedHelpText())
                     }
                     CompactDivider()
+                    CompactRow(String(localized: "Screen Recording")) {
+                        HStack(spacing: 8) {
+                            StatusBadge(
+                                MenuBarItemCapturePermission.isGranted ? String(localized: "OK") : String(localized: "Needs Action"),
+                                color: MenuBarItemCapturePermission.isGranted ? .green : .orange,
+                                icon: MenuBarItemCapturePermission.isGranted ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
+                            )
+                            .saneHelp(String(localized: "HaoBar captures the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything."))
+
+                            if !MenuBarItemCapturePermission.isGranted {
+                                Button("Open") {
+                                    Task {
+                                        await MenuBarItemCapturePermission.requestAndOpenSettings()
+                                    }
+                                }
+                                .buttonStyle(ChromeActionButtonStyle(prominent: true))
+                                .saneHelp(String(localized: "Opens Screen Recording settings so you can grant HaoBar permission."))
+                                .accessibilityLabel(String(localized: "Open Screen Recording settings"))
+                            }
+                        }
+                    }
+                    HealthInlineHelp(String(localized: "macOS may show a purple screen-capture indicator while HaoBar snapshots the menu bar."))
+                    if !MenuBarItemCapturePermission.isGranted {
+                        HealthInlineHelp(String(localized: "Relaunch HaoBar after enabling Screen Recording."))
+                    }
+                    CompactDivider()
                     CompactRow(String(localized: "Menu Bar Geometry")) {
                         HStack(spacing: 8) {
                             StatusBadge(geometryLabel, color: geometryColor, icon: "point.3.connected.trianglepath.dotted")

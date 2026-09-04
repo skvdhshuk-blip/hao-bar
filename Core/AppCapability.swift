@@ -18,6 +18,10 @@ enum AppCapability {
     static var scriptTrigger: Bool { false }
     static var sparkleUpdates: Bool { false }
 
+    /// Public ScreenCaptureKit snapshots of the menu bar for the hidden-icon popup.
+    /// This is not the private CGEvent teleport path.
+    static var menuBarItemCapture: Bool { true }
+
     static var simulatedDrag: Bool {
         SimulatedDragState.shared.isEnabled
     }

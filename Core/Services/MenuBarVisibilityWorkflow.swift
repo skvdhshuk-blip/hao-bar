@@ -258,6 +258,15 @@ final class MenuBarVisibilityWorkflow {
         logger.info("Restored application menus (\(reason, privacy: .public))")
     }
 
+    func authenticateForHiddenRevealIfNeeded() async -> Bool {
+        guard manager.settings.requireAuthToShowHiddenIcons else { return true }
+        guard !manager.isAuthenticating else { return false }
+        manager.isAuthenticating = true
+        let ok = await authenticate(reason: "Show hidden menu bar icons")
+        manager.isAuthenticating = false
+        return ok
+    }
+
     func authenticate(reason: String) async -> Bool {
         if let lastFailed = manager.lastFailedAuthTime,
            manager.failedAuthAttempts >= manager.maxFailedAttempts {

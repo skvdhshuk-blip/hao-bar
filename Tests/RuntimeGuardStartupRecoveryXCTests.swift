@@ -609,7 +609,7 @@ final class RuntimeGuardStartupRecoveryXCTests: RuntimeGuardTestCase {
             "Accessibility sync helper should perform a live trust probe when state is refreshed"
         )
         XCTAssertTrue(
-            chromeSource.contains("Button(\"Try Again\", action: retry)"),
+            chromeSource.contains("Button(String(localized: \"Try Again\"), action: retry)"),
             "Search view should expose a retry CTA in the accessibility prompt"
         )
         XCTAssertTrue(

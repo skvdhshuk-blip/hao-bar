@@ -108,6 +108,7 @@ final class LicenseService: ObservableObject {
             proTrialLastSeenAt = nil
             hasPaidUnlock = true
             hasLegacyPaidUnlock = false
+            isPro = true
         } else {
             let now = Date()
             proTrialStartedAt = Self.storedTrialDate(userDefaults: userDefaults, keychain: keychain, key: Keys.proTrialStartedAt, now: now, rejectsFutureDate: true)

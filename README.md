@@ -8,7 +8,7 @@ HaoBar is a Mac App Store fork of [SaneBar](https://github.com/sane-apps/SaneBar
 
 ## What it does
 
-- Click the HaoBar icon to show or hide tucked-away menu bar apps
+- Click the HaoBar icon to open a bar of hidden icons under the menu bar
 - Browse hidden apps in the Icon Panel or a Second Menu Bar
 - Search by name and open an app with a double-click
 - Touch ID to reveal hidden icons

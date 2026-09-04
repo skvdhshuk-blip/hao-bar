@@ -97,7 +97,8 @@ enum SearchServiceSupport {
         app: RunningApp,
         origin: ActivationOrigin,
         didReveal: Bool,
-        isBrowseSessionActive: Bool
+        isBrowseSessionActive: Bool,
+        notchRightSafeMinX: CGFloat? = nil
     ) -> MenuBarRuntimeSnapshot {
         let geometryConfidence: MenuBarGeometryConfidence = if didReveal {
             .cached
@@ -119,7 +120,8 @@ enum SearchServiceSupport {
             identityPrecision: app.hasPreciseMenuBarIdentity ? .exact : .coarse,
             geometryConfidence: geometryConfidence,
             visibilityPhase: didReveal ? .expanded : .hidden,
-            browsePhase: browsePhase
+            browsePhase: browsePhase,
+            notchRightSafeMinX: notchRightSafeMinX
         )
     }
 
@@ -128,14 +130,16 @@ enum SearchServiceSupport {
         origin: ActivationOrigin,
         isRightClick: Bool,
         didReveal: Bool,
-        isBrowseSessionActive: Bool
+        isBrowseSessionActive: Bool,
+        notchRightSafeMinX: CGFloat? = nil
     ) -> MenuBarOperationCoordinator.BrowseActivationPlan {
         MenuBarOperationCoordinator.browseActivationPlan(
             snapshot: activationRuntimeSnapshot(
                 app: app,
                 origin: origin,
                 didReveal: didReveal,
-                isBrowseSessionActive: isBrowseSessionActive
+                isBrowseSessionActive: isBrowseSessionActive,
+                notchRightSafeMinX: notchRightSafeMinX
             ),
             origin: origin,
             isRightClick: isRightClick,
@@ -279,8 +283,14 @@ enum SearchServiceSupport {
     nonisolated static func shouldPreferHardwareFirst(
         origin: ActivationOrigin,
         isRightClick: Bool,
-        app: RunningApp
+        app: RunningApp,
+        notchRightSafeMinX: CGFloat? = nil
     ) -> Bool {
+        if let notchRightSafeMinX,
+           NotchVisibleOverflowPolicy.isVisibleOverflow(app, notchRightSafeMinX: notchRightSafeMinX) {
+            return false
+        }
+
         if isRightClick {
             return true
         }

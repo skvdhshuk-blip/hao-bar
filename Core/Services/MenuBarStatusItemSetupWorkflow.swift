@@ -300,6 +300,7 @@ final class MenuBarStatusItemSetupWorkflow {
 
         await manager.hidingService.hide()
         logger.info("Initial hide complete")
+        manager.notchVisibleOverflowWorkflow.scheduleEvaluation()
         manager.scheduleInitialPositionValidationAfterStartup()
     }
 

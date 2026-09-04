@@ -77,16 +77,12 @@ struct MenuBarAppTile: View {
     let onSetHotkey: () -> Void
     var onRemoveFromGroup: (() -> Void)?
 
-    /// Whether this icon is currently in the hidden section
+    /// Whether this icon is currently in the hidden or always-hidden section
     var isHidden: Bool = false
-    /// Callback when user wants to toggle hidden status (shows instructions)
-    var onToggleHidden: (() -> Void)?
 
-    /// Callback when user wants to move an icon into the always-hidden zone
-    var onMoveToAlwaysHidden: (() -> Void)?
-
-    /// Callback when user wants to move an icon from always-hidden to the regular hidden zone
+    var onMoveToVisible: (() -> Void)?
     var onMoveToHidden: (() -> Void)?
+    var onMoveToAlwaysHidden: (() -> Void)?
 
     /// Whether to show app name below icon (for users with many apps)
     var showName: Bool = true
@@ -198,20 +194,20 @@ struct MenuBarAppTile: View {
             Button("Copy Icon ID") {
                 copyIconID(app.uniqueId)
             }
-            if let toggleAction = onToggleHidden {
+            if onMoveToVisible != nil || onMoveToHidden != nil || onMoveToAlwaysHidden != nil {
                 Divider()
-                Button(isHidden ? "Move to Visible" : "Move to Hidden") {
-                    toggleAction()
+            }
+            if let moveToVisible = onMoveToVisible {
+                Button("Move to Visible") {
+                    moveToVisible()
                 }
             }
             if let moveToHidden = onMoveToHidden {
-                Divider()
                 Button("Move to Hidden") {
                     moveToHidden()
                 }
             }
             if let moveToAlwaysHidden = onMoveToAlwaysHidden {
-                Divider()
                 Button("Move to Always Hidden") {
                     moveToAlwaysHidden()
                 }

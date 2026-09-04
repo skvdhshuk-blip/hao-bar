@@ -190,6 +190,29 @@
           }
         }
       }
+    },
+    "NSScreenCaptureUsageDescription" : {
+      "comment" : "Shown by macOS when asking for Screen Recording permission.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar snapshots the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 会截取菜单栏，以便在弹条里显示隐藏图标。不会录像，也不会上传。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HaoBar 會擷取選單列，以便在彈出列顯示隱藏圖示。不會錄影，也不會上傳。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

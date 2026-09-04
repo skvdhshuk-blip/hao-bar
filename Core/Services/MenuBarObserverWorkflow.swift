@@ -98,6 +98,7 @@ final class MenuBarObserverWorkflow {
             .sink { [weak self] _ in
                 self?.manager.updateDividerStyle()
                 self?.manager.visibilityWorkflow.restoreApplicationMenusIfNeeded(reason: "sectionHidden")
+                self?.manager.notchVisibleOverflowWorkflow.scheduleEvaluation()
             }
             .store(in: &cancellables)
 
@@ -129,6 +130,9 @@ final class MenuBarObserverWorkflow {
         manager.updateAlwaysHiddenSeparator()
         manager.enforceExternalMonitorVisibilityPolicy(reason: "settingsChanged")
         manager.applyAutoRehideSettingsChange(from: oldSettings, to: newSettings)
+        if newSettings.keepVisibleIconsRightOfNotch, !oldSettings.keepVisibleIconsRightOfNotch {
+            manager.notchVisibleOverflowWorkflow.scheduleEvaluation()
+        }
         if newSettings.showDockIcon {
             manager.visibilityWorkflow.restoreApplicationMenusIfNeeded(reason: "dockIconEnabled")
         } else if manager.hidingState == .expanded {
@@ -443,6 +447,7 @@ final class MenuBarObserverWorkflow {
         manager.markWakeVisibleAllowListReplayPending(reason: "wakeResume")
         manager.schedulePositionValidation(context: .wakeResume)
         manager.schedulePostRecoveryAutoRehideIfNeeded(reason: "wakeResume")
+        manager.notchVisibleOverflowWorkflow.scheduleEvaluation()
     }
 
     private func handleSessionBecameActive() {
@@ -453,6 +458,7 @@ final class MenuBarObserverWorkflow {
         // the cached hidden-snapshot exception reserved for real wake recovery.
         manager.schedulePositionValidation(context: .activeSpaceChanged)
         manager.schedulePostRecoveryAutoRehideIfNeeded(reason: "sessionDidBecomeActive")
+        manager.notchVisibleOverflowWorkflow.scheduleEvaluation()
     }
 
     private func handleActiveSpaceChange() {

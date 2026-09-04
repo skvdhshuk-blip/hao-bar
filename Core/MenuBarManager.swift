@@ -173,6 +173,7 @@ final class MenuBarManager: NSObject, ObservableObject {
     lazy var standardIconMoveWorkflow = MenuBarStandardIconMoveWorkflow(manager: self)
     lazy var alwaysHiddenIconMoveWorkflow = MenuBarAlwaysHiddenIconMoveWorkflow(manager: self)
     lazy var alwaysHiddenPinWorkflow = MenuBarAlwaysHiddenPinWorkflow(manager: self)
+    lazy var notchVisibleOverflowWorkflow = NotchVisibleOverflowWorkflow(manager: self)
     /// Recovery rebuilds temporarily reconfigure the delimiter in expanded mode.
     /// Preserve a prior hidden state so wake/display recovery can restore it.
     var pendingRecoveryHideRestore = false
@@ -293,6 +294,14 @@ final class MenuBarManager: NSObject, ObservableObject {
         updateService: UpdateService? = nil
     ) {
         self.hidingService = hidingService ?? HidingService()
+        self.hidingService.beforeHide = {
+            let classified = SearchService.shared.cachedClassifiedApps()
+            let screen = MenuBarManager.shared.currentRecoveryReferenceScreen() ?? NSScreen.main
+            await MenuBarItemCaptureService.shared.captureOnScreenHiddenItems(
+                apps: classified.hidden,
+                screen: screen
+            )
+        }
         self.persistenceService = persistenceService
         self.settingsController = settingsController ?? SettingsController(persistence: persistenceService)
         self.triggerService = triggerService ?? TriggerService()

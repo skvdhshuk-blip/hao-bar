@@ -38,7 +38,7 @@ struct BrowseFindIconPanelView: View {
     let activateApp: (RunningApp, Bool) -> Void
     let setHotkey: (RunningApp) -> Void
     let removeAppFromGroup: (String, UUID) -> Void
-    let makeToggleHiddenAction: (RunningApp) -> (() -> Void)?
+    let makeMoveToVisibleAction: (RunningApp) -> (() -> Void)?
     let makeMoveToAlwaysHiddenAction: (RunningApp) -> (() -> Void)?
     let makeMoveToHiddenAction: (RunningApp) -> (() -> Void)?
     let showRestrictedFeature: (ProFeature) -> Void
@@ -165,7 +165,7 @@ struct BrowseFindIconPanelView: View {
             activateApp: activateApp,
             setHotkey: setHotkey,
             removeAppFromGroup: removeAppFromGroup,
-            makeToggleHiddenAction: makeToggleHiddenAction,
+            makeMoveToVisibleAction: makeMoveToVisibleAction,
             makeMoveToAlwaysHiddenAction: makeMoveToAlwaysHiddenAction,
             makeMoveToHiddenAction: makeMoveToHiddenAction,
             showRestrictedFeature: showRestrictedFeature,

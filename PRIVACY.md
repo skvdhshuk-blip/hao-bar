@@ -13,6 +13,7 @@ Settings, profiles, and an optional custom menu bar icon are stored in the app�
 ## Permissions
 
 - **Accessibility** — required to detect and arrange menu bar icons. HaoBar does not read other apps’ windows or log keystrokes.
+- **Screen Recording** — used only to snapshot the menu bar so hidden icons can appear in the popup bar. HaoBar does not record video, does not capture other windows, and does not upload those snapshots. macOS may show a purple screen-capture indicator while a snapshot is taken.
 - **Apple Events** — so Shortcuts and AppleScript can control HaoBar itself.
 
 ## Updates

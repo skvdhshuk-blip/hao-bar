@@ -24366,6 +24366,94 @@
         }
       }
     },
+    "Move to Visible": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Visible"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移到可见"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移到可見"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示へ移動"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "표시로 이동"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach Sichtbar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déplacer vers Visible"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover a Visible"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para Visível"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sposta in Visibile"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats naar Zichtbaar"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chuyển sang Hiện"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ย้ายไปแสดง"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pindah ke Terlihat"
+          }
+        }
+      }
+    },
     "Move to Hidden": {
       "localizations": {
         "en": {
@@ -46582,6 +46670,358 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pakai skrip Anda sendiri untuk menentukan kapan ikon muncul atau tersembunyi."
+          }
+        }
+      }
+    },
+    "Show Hidden Bar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Hidden Bar"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示隐藏条"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示隱藏列"
+          }
+        }
+      }
+    },
+    "Keep visible icons right of the notch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep visible icons right of the notch"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可见图标只留在刘海右侧"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可見圖示只留在瀏海右側"
+          }
+        }
+      }
+    },
+    "On notched Macs, extra visible icons move to Hidden. Click HaoBar to open them.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On notched Macs, extra visible icons move to Hidden. Click HaoBar to open them."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在刘海屏上，多出来的可见图标会进隐藏。点 HaoBar 即可打开。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在瀏海螢幕上，多出來的可見圖示會進入隱藏。點 HaoBar 即可打開。"
+          }
+        }
+      }
+    },
+    "Left-click the HaoBar icon to show hidden icons in a bar under the menu bar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left-click the HaoBar icon to show hidden icons in a bar under the menu bar."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左键点 HaoBar 图标，在菜单栏下方显示隐藏图标条。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左鍵點 HaoBar 圖示，在選單列下方顯示隱藏圖示列。"
+          }
+        }
+      }
+    },
+    "Screen Recording — menu bar only.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen Recording — menu bar only."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "屏幕录制 — 只截菜单栏。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "螢幕錄製 — 只擷取選單列。"
+          }
+        }
+      }
+    },
+    "No video recording.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No video recording."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不录像。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不錄影。"
+          }
+        }
+      }
+    },
+    "HaoBar captures the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar captures the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 只截菜单栏，好在弹条里显示隐藏图标。不录像，也不上传。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 只擷取選單列，以便在彈出列顯示隱藏圖示。不錄影，也不上傳。"
+          }
+        }
+      }
+    },
+    "macOS may show a purple screen-capture indicator while HaoBar snapshots the menu bar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS may show a purple screen-capture indicator while HaoBar snapshots the menu bar."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 截菜单栏时，系统可能出现紫色「正在截屏」提示。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 擷取選單列時，系統可能出現紫色「正在截取畫面」提示。"
+          }
+        }
+      }
+    },
+    "Open Screen Recording Settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Screen Recording Settings"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开屏幕录制设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開螢幕錄製設定"
+          }
+        }
+      }
+    },
+    "Opens Screen Recording settings so you can grant HaoBar permission.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens Screen Recording settings so you can grant HaoBar permission."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开屏幕录制设置，以便授权 HaoBar。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打開螢幕錄製設定，以便授權 HaoBar。"
+          }
+        }
+      }
+    },
+    "Relaunch HaoBar after enabling Screen Recording.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relaunch HaoBar after enabling Screen Recording."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开屏幕录制后，请重新打开 HaoBar。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟螢幕錄製後，請重新打開 HaoBar。"
+          }
+        }
+      }
+    },
+    "No hidden icons.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hidden icons."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有隐藏图标。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "沒有隱藏圖示。"
+          }
+        }
+      }
+    },
+    "Screen Recording is required to show icon snapshots.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen Recording is required to show icon snapshots."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示图标截图需要屏幕录制权限。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示圖示擷取需要螢幕錄製權限。"
+          }
+        }
+      }
+    },
+    "Grant Screen Recording": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grant Screen Recording"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "授权屏幕录制"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "授權螢幕錄製"
+          }
+        }
+      }
+    },
+    "HaoBar could not find a display to snapshot.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar could not find a display to snapshot."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 找不到可以截取的显示器。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HaoBar 找不到可以擷取的顯示器。"
+          }
+        }
+      }
+    },
+    "Screen capture is unavailable on this Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen capture is unavailable on this Mac."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这台 Mac 无法截屏。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "這台 Mac 無法擷取畫面。"
           }
         }
       }

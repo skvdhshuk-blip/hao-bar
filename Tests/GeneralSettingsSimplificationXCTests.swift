@@ -12,6 +12,11 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
         XCTAssertEqual(title, String(localized: "Toggle Hidden"))
     }
 
+    func testLeftClickModeShowHiddenBarTitle() {
+        let title = GeneralSettingsView.BrowseLeftClickMode.showHiddenIconBar.title
+        XCTAssertEqual(title, String(localized: "Show Hidden Bar"))
+    }
+
     func testSecondMenuBarPresetResolveMinimal() {
         let preset = GeneralSettingsView.SecondMenuBarPreset.resolve(
             showVisible: false,
@@ -198,6 +203,15 @@ final class GeneralSettingsSimplificationXCTests: XCTestCase {
         XCTAssertTrue(projectSource.contains("com.haobar.app"))
         XCTAssertFalse(projectSource.contains("package: Setapp"))
         _ = appSource
+    }
+
+    func testHidingSectionOffersNotchVisibleLaneToggle() throws {
+        let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(contentsOf: root.appendingPathComponent("UI/Settings/GeneralSettingsHidingSection.swift"))
+        XCTAssertTrue(source.contains("Keep visible icons right of the notch"))
+        XCTAssertTrue(source.contains("keepVisibleIconsRightOfNotch"))
     }
 
     func testSetappBuildDeclaresUniversalMacArchitectures() throws {

@@ -128,6 +128,7 @@ targets:
         OSAScriptingDefinition: SaneBar.sdef
         NSAppleEventsUsageDescription: "HaoBar uses Apple Events so Shortcuts and AppleScript can control HaoBar itself."
         NSAccessibilityUsageDescription: "HaoBar needs accessibility permission to detect and arrange menu bar icons."
+        NSScreenCaptureUsageDescription: "HaoBar snapshots the menu bar so hidden icons can appear in the popup bar. It does not record video or upload anything."
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         CFBundleDisplayName: HaoBar
@@ -142,8 +143,8 @@ targets:
         PRODUCT_NAME: HaoBar
         PRODUCT_MODULE_NAME: SaneBar
         PRODUCT_BUNDLE_IDENTIFIER: com.haobar.app
-        MARKETING_VERSION: "1.0.0"
-        CURRENT_PROJECT_VERSION: "102"
+        MARKETING_VERSION: "1.1.0"
+        CURRENT_PROJECT_VERSION: "103"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: NO
         ENABLE_XOJIT_PREVIEWS: NO

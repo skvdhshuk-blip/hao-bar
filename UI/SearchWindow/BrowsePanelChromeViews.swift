@@ -135,8 +135,8 @@ struct BrowseAccessibilityPrompt: View {
             .frame(maxWidth: 320)
 
             VStack(alignment: .leading, spacing: 12) {
-                privacyRow(icon: "video.slash.fill", text: String(localized: "No screen recording."))
-                privacyRow(icon: "eye.slash.fill", text: String(localized: "No screenshots."))
+                privacyRow(icon: "video.fill", text: String(localized: "Screen Recording — menu bar only."))
+                privacyRow(icon: "hand.raised.fill", text: String(localized: "No menu bar contents uploaded."))
                 privacyRow(icon: "icloud.slash", text: String(localized: "No data collected."))
             }
             .font(.system(size: 17, weight: .medium))

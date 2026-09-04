@@ -506,25 +506,12 @@ enum MenuBarOperationCoordinator {
             snapshot.browsePhase != .idle ||
             origin == .browsePanel
 
-        let preferHardwareFirst: Bool = {
-            if isRightClick {
-                return true
-            }
-
-            if origin == .browsePanel {
-                return true
-            }
-
-            if requestedApp.menuExtraIdentifier?.hasPrefix("com.apple.menuextra.") == true {
-                return true
-            }
-
-            if requestedApp.menuExtraIdentifier == nil {
-                return true
-            }
-
-            return requestedApp.bundleId.hasPrefix("com.apple.")
-        }()
+        let preferHardwareFirst = SearchServiceSupport.shouldPreferHardwareFirst(
+            origin: origin,
+            isRightClick: isRightClick,
+            app: requestedApp,
+            notchRightSafeMinX: snapshot.notchRightSafeMinX
+        )
 
         return BrowseActivationPlan(
             requireObservableReaction: requiresStrictVerification,

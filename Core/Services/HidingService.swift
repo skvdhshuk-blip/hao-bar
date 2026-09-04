@@ -86,6 +86,10 @@ final class HidingService: ObservableObject, HidingServiceProtocol {
     /// The always-hidden delimiter — when expanded, this stays large to keep always-hidden items off-screen
     private weak var alwaysHiddenDelimiterItem: StatusItemProtocol?
 
+    /// Called after hide() has passed its guards and before the separator expands.
+    /// Used to snapshot Hidden-zone icons while they are still on-screen.
+    var beforeHide: (() async -> Void)?
+
     /// Normal visual length of the always-hidden separator
     private static let alwaysHiddenVisualLength: CGFloat = 14
 
@@ -255,6 +259,9 @@ final class HidingService: ObservableObject, HidingServiceProtocol {
         }
 
         let wasAlreadyHidden = state == .hidden
+        if !wasAlreadyHidden {
+            await beforeHide?()
+        }
         isAnimating = true
         defer { isAnimating = false }
         if wasAlreadyHidden {

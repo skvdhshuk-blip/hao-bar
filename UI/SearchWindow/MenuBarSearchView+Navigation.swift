@@ -26,61 +26,46 @@ extension MenuBarSearchView {
 
     // MARK: - Action Factories
 
-    func makeToggleHiddenAction(for app: RunningApp) -> (() -> Void)? {
-        // Determine direction based on tab (or actual zone for All tab)
-        let sourceZone: AppZone
-        let targetZone: AppZone
-        switch mode {
-        case .visible:
-            sourceZone = .visible
-            targetZone = .hidden
-        case .hidden:
-            sourceZone = .hidden
-            targetZone = .visible
-        case .alwaysHidden:
-            sourceZone = .alwaysHidden
-            targetZone = .visible
-        case .all:
-            let zone = appZone(for: app)
-            switch zone {
-            case .visible:
-                sourceZone = .visible
-                targetZone = .hidden
-            case .hidden:
-                sourceZone = .hidden
-                targetZone = .visible
-            case .alwaysHidden:
-                sourceZone = .alwaysHidden
-                targetZone = .visible
-            }
-        }
+    func sourceZone(for app: RunningApp) -> AppZone {
+        BrowsePanelIconMoveMenu.sourceZone(mode: mode, resolvedZone: appZone(for: app))
+    }
+
+    func makeMoveToVisibleAction(for app: RunningApp) -> (() -> Void)? {
+        guard BrowsePanelIconMoveMenu.destinations(
+            zone: sourceZone(for: app),
+            alwaysHiddenEnabled: isAlwaysHiddenEnabled
+        ).toVisible else { return nil }
 
         return {
-            // Use the async (AfterDrop) path so the move never runs the
-            // synchronous prepare (nested RunLoop.current.run) on the main
-            // thread. Context-menu/keyboard moves used to beachball for
-            // seconds during Always-Hidden separator prep; drag-drop already
-            // routed here. (Bug A: menu-bar move beachball.)
-            _ = self.queueMoveAfterDrop(app, from: sourceZone, to: targetZone)
+            let source = self.sourceZone(for: app)
+            guard source != .visible else { return }
+            _ = self.queueMoveAfterDrop(app, from: source, to: .visible)
         }
     }
 
     func makeMoveToHiddenAction(for app: RunningApp) -> (() -> Void)? {
-        // Show "Move to Hidden" for AH tab, or for AH apps in All tab
-        let isAH = mode == .alwaysHidden || (mode == .all && appZone(for: app) == .alwaysHidden)
-        guard isAH else { return nil }
+        guard BrowsePanelIconMoveMenu.destinations(
+            zone: sourceZone(for: app),
+            alwaysHiddenEnabled: isAlwaysHiddenEnabled
+        ).toHidden else { return nil }
+
         return {
-            _ = self.queueMoveAfterDrop(app, from: .alwaysHidden, to: .hidden)
+            let source = self.sourceZone(for: app)
+            guard source != .hidden else { return }
+            _ = self.queueMoveAfterDrop(app, from: source, to: .hidden)
         }
     }
 
     func makeMoveToAlwaysHiddenAction(for app: RunningApp) -> (() -> Void)? {
-        guard isAlwaysHiddenEnabled else { return nil }
-        // Don't show for AH tab, or for AH apps in All tab
-        let isAH = mode == .alwaysHidden || (mode == .all && appZone(for: app) == .alwaysHidden)
-        guard !isAH else { return nil }
+        guard BrowsePanelIconMoveMenu.destinations(
+            zone: sourceZone(for: app),
+            alwaysHiddenEnabled: isAlwaysHiddenEnabled
+        ).toAlwaysHidden else { return nil }
+
         return {
-            _ = self.queueMoveAfterDrop(app, from: self.appZone(for: app), to: .alwaysHidden)
+            let source = self.sourceZone(for: app)
+            guard source != .alwaysHidden else { return }
+            _ = self.queueMoveAfterDrop(app, from: source, to: .alwaysHidden)
         }
     }
 

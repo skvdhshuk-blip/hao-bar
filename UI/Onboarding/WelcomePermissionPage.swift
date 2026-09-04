@@ -21,20 +21,20 @@ struct PermissionPage: View {
 
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 10) {
-                    Image(systemName: "video.slash.fill")
+                    Image(systemName: "video.fill")
                         .font(.system(size: 20))
                         .foregroundStyle(saneAccent)
                         .frame(width: 28)
-                    Text(String(localized: "No screen recording."))
+                    Text(String(localized: "Screen Recording — menu bar only."))
                         .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(.white)
                 }
                 HStack(spacing: 10) {
-                    Image(systemName: "eye.slash.fill")
+                    Image(systemName: "hand.raised.fill")
                         .font(.system(size: 20))
                         .foregroundStyle(saneAccent)
                         .frame(width: 28)
-                    Text(String(localized: "No screenshots."))
+                    Text(String(localized: "No video recording."))
                         .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(.white)
                 }
@@ -72,6 +72,26 @@ struct PermissionPage: View {
                 .buttonStyle(OnboardingPrimaryButtonStyle(cornerRadius: 10, horizontalPadding: 18, verticalPadding: 10))
 
                 Text(AccessibilityService.deniedHelpText())
+                    .font(.system(size: 13))
+                    .foregroundStyle(.white.opacity(0.9))
+            }
+
+            if !MenuBarItemCapturePermission.isGranted {
+                Button {
+                    Task {
+                        await MenuBarItemCapturePermission.requestAndOpenSettings()
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "video.fill")
+                            .font(.system(size: 14))
+                        Text(String(localized: "Open Screen Recording Settings"))
+                            .font(.system(size: 15, weight: .semibold))
+                    }
+                }
+                .buttonStyle(OnboardingPrimaryButtonStyle(cornerRadius: 10, horizontalPadding: 18, verticalPadding: 10))
+
+                Text(String(localized: "Relaunch HaoBar after enabling Screen Recording."))
                     .font(.system(size: 13))
                     .foregroundStyle(.white.opacity(0.9))
             }

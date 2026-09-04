@@ -27,6 +27,45 @@ enum BrowseAppZone {
     case alwaysHidden
 }
 
+enum BrowsePanelIconMoveMenu {
+    struct Destinations: Equatable {
+        var toVisible: Bool
+        var toHidden: Bool
+        var toAlwaysHidden: Bool
+    }
+
+    static func destinations(zone: BrowseAppZone, alwaysHiddenEnabled: Bool) -> Destinations {
+        Destinations(
+            toVisible: zone != .visible,
+            toHidden: zone != .hidden,
+            toAlwaysHidden: alwaysHiddenEnabled && zone != .alwaysHidden
+        )
+    }
+
+    static func sourceZone(mode: BrowsePanelMode, resolvedZone: BrowseAppZone) -> BrowseAppZone {
+        switch mode {
+        case .visible:
+            .visible
+        case .hidden:
+            .hidden
+        case .alwaysHidden:
+            .alwaysHidden
+        case .all:
+            resolvedZone
+        }
+    }
+
+    static func gatedAction(
+        allowed: Bool,
+        isPro: Bool,
+        perform: @escaping () -> Void,
+        upsell: @escaping () -> Void
+    ) -> (() -> Void)? {
+        guard allowed else { return nil }
+        return isPro ? perform : upsell
+    }
+}
+
 enum BrowsePanelRestrictedAction {
     case rightClick
     case zoneMove

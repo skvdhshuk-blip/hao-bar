@@ -605,12 +605,15 @@ final class SearchService: SearchServiceProtocol, @unchecked Sendable {
         }
         diagnostics.didReveal = didReveal
         let browseSessionActive = SearchWindowController.shared.isBrowseSessionActive
+        let notchRightSafeMinX = MenuBarManager.shared.currentRecoveryReferenceScreen()?.auxiliaryTopRightArea?.minX
+            ?? NSScreen.main?.auxiliaryTopRightArea?.minX
         let activationPlan = SearchServiceSupport.activationPlan(
             app: app,
             origin: origin,
             isRightClick: isRightClick,
             didReveal: didReveal,
-            isBrowseSessionActive: browseSessionActive
+            isBrowseSessionActive: browseSessionActive,
+            notchRightSafeMinX: notchRightSafeMinX
         )
         let requireObservableReaction = activationPlan.requireObservableReaction
         let forceFreshTargetResolution = activationPlan.forceFreshTargetResolution
@@ -651,7 +654,8 @@ final class SearchService: SearchServiceProtocol, @unchecked Sendable {
             origin: origin,
             isRightClick: isRightClick,
             didReveal: didReveal,
-            isBrowseSessionActive: browseSessionActive
+            isBrowseSessionActive: browseSessionActive,
+            notchRightSafeMinX: notchRightSafeMinX
         )
         let initialFallbackCenter = SearchActivationTargetResolver.fallbackCenter(
             for: initialTarget,
@@ -747,7 +751,8 @@ final class SearchService: SearchServiceProtocol, @unchecked Sendable {
                     origin: origin,
                     isRightClick: isRightClick,
                     didReveal: didReveal,
-                    isBrowseSessionActive: browseSessionActive
+                    isBrowseSessionActive: browseSessionActive,
+                    notchRightSafeMinX: notchRightSafeMinX
                 )
                 let refreshedPreferHardwareFirst = refreshedPlan.preferHardwareFirst
                 let refreshedLikelyNoExtras = axService.likelyLacksExtrasMenuBar(bundleID: refreshedTarget.bundleId)

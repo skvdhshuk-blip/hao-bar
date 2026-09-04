@@ -54,9 +54,9 @@ struct GeneralSettingsView: View {
 
     private var leftClickModeBinding: Binding<BrowseLeftClickMode> {
         Binding(
-            get: { menuBarManager.settings.leftClickOpensBrowseIcons ? .openBrowseIcons : .toggleHidden },
+            get: { menuBarManager.settings.leftClickAction },
             set: { mode in
-                menuBarManager.settings.leftClickOpensBrowseIcons = (mode == .openBrowseIcons)
+                menuBarManager.settings.leftClickAction = mode
                 normalizeBrowseModeSettingsForCurrentPlan()
             }
         )

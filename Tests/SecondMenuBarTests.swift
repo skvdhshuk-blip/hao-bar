@@ -375,12 +375,12 @@ struct ZoneMoveExhaustivenessTests {
             "UI/SearchWindow/SecondMenuBarView.swift"
         ].map(source).joined(separator: "\n")
 
-        #expect(browseGrid.contains("onToggleHidden: isPro ? makeToggleHiddenAction(app)"))
-        #expect(browseGrid.contains("onMoveToAlwaysHidden: isPro ? makeMoveToAlwaysHiddenAction(app)"))
-        #expect(browseGrid.contains("onMoveToHidden: isPro ? makeMoveToHiddenAction(app)"))
+        #expect(browseGrid.contains("onMoveToVisible: gatedZoneAction(makeMoveToVisibleAction(app), isPro: isPro)"))
+        #expect(browseGrid.contains("onMoveToHidden: gatedZoneAction(makeMoveToHiddenAction(app), isPro: isPro)"))
+        #expect(browseGrid.contains("onMoveToAlwaysHidden: gatedZoneAction(makeMoveToAlwaysHiddenAction(app), isPro: isPro)"))
         #expect(browseToolbar.contains("handleZoneDrop(payloads, segmentMode)"))
 
-        let toggleAction = try functionBody("func makeToggleHiddenAction", in: browseNavigation)
+        let moveToVisibleAction = try functionBody("func makeMoveToVisibleAction", in: browseNavigation)
         let moveToHiddenAction = try functionBody("func makeMoveToHiddenAction", in: browseNavigation)
         let moveToAlwaysHiddenAction = try functionBody("func makeMoveToAlwaysHiddenAction", in: browseNavigation)
         let browseZoneDrop = try functionBody("func handleZoneDrop", in: browseNavigation)
@@ -388,8 +388,10 @@ struct ZoneMoveExhaustivenessTests {
         let browseDeferredMove = try functionBody("static func queueMoveAfterDrop", in: browseQueue)
         let browseDeferredReorder = try functionBody("static func queueReorderAfterDrop", in: browseQueue)
 
-        #expect(toggleAction.contains("queueMoveAfterDrop"))
+        #expect(moveToVisibleAction.contains("queueMoveAfterDrop"))
         #expect(moveToHiddenAction.contains("queueMoveAfterDrop"))
+        #expect(moveToHiddenAction.contains("to: .hidden"))
+        #expect(!moveToHiddenAction.contains("from: .alwaysHidden"))
         #expect(moveToAlwaysHiddenAction.contains("queueMoveAfterDrop"))
         #expect(browseZoneDrop.contains("return queueMoveAfterDrop(sourceApp, from: sourceZone, to: .visible)"))
         #expect(browseZoneDrop.contains("return queueMoveAfterDrop(sourceApp, from: sourceZone, to: .hidden)"))

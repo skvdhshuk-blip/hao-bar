@@ -327,8 +327,18 @@ struct SaneBarSettings: Codable, Equatable {
     /// Off by default to keep first-use Browse Icons simpler.
     var secondMenuBarShowAlwaysHidden: Bool = false
 
-    /// When true, left-clicking the SaneBar icon opens Browse Icons instead of expanding in the menu bar.
-    var leftClickOpensBrowseIcons: Bool = false
+    /// What a left-click on the HaoBar icon does.
+    var leftClickAction: HaoBarLeftClickAction = .showHiddenIconBar
+
+    /// On notched Macs, keep the Visible lane to the right of the camera cutout.
+    /// Extra visible icons are squeezed into Hidden by moving HaoBar's separator.
+    var keepVisibleIconsRightOfNotch: Bool = true
+
+    /// When true, left-clicking the HaoBar icon opens Browse Icons.
+    var leftClickOpensBrowseIcons: Bool {
+        get { leftClickAction == .openBrowseIcons }
+        set { leftClickAction = newValue ? .openBrowseIcons : .showHiddenIconBar }
+    }
 
     /// Menu bar item IDs that should be kept in the always-hidden section across launches.
     /// Stored as `RunningApp.uniqueId` values (best-effort).
@@ -449,7 +459,11 @@ struct SaneBarSettings: Codable, Equatable {
             ?? false
         secondMenuBarShowVisible = try container.decodeIfPresent(Bool.self, forKey: .secondMenuBarShowVisible) ?? true
         secondMenuBarShowAlwaysHidden = try container.decodeIfPresent(Bool.self, forKey: .secondMenuBarShowAlwaysHidden) ?? false
-        leftClickOpensBrowseIcons = try container.decodeIfPresent(Bool.self, forKey: .leftClickOpensBrowseIcons) ?? false
+        leftClickAction = HaoBarLeftClickAction.resolved(
+            stored: try container.decodeIfPresent(HaoBarLeftClickAction.self, forKey: .leftClickAction),
+            legacyOpensBrowseIcons: try legacyContainer.decodeIfPresent(Bool.self, forKey: .leftClickOpensBrowseIcons) ?? false
+        )
+        keepVisibleIconsRightOfNotch = try container.decodeIfPresent(Bool.self, forKey: .keepVisibleIconsRightOfNotch) ?? true
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -467,7 +481,7 @@ struct SaneBarSettings: Codable, Equatable {
         case menuBarSpacing, menuBarSelectionPadding
         case checkForUpdatesAutomatically, lastUpdateCheck
         case hideMainIcon, dividerStyle, menuBarIconStyle
-        case alwaysHiddenSectionEnabled, alwaysHiddenPinnedItemIds, useSecondMenuBar, secondMenuBarShowVisible, secondMenuBarShowAlwaysHidden, leftClickOpensBrowseIcons
+        case alwaysHiddenSectionEnabled, alwaysHiddenPinnedItemIds, useSecondMenuBar, secondMenuBarShowVisible, secondMenuBarShowAlwaysHidden, leftClickAction, keepVisibleIconsRightOfNotch
         case hideAllOtherMenuBarItems, hideAllOtherVisibleItemIds, layoutMode
         case hasCompletedHealthWizard, layoutRescueRestorePoint, layoutRescueRestorePointCreatedAt
         case scriptTriggerEnabled, scriptTriggerPath, scriptTriggerInterval
@@ -476,6 +490,7 @@ struct SaneBarSettings: Codable, Equatable {
     /// Legacy keys for backward-compatible decoding of renamed settings.
     private enum LegacyCodingKeys: String, CodingKey {
         case useDropdownPanel
+        case leftClickOpensBrowseIcons
     }
 }
 

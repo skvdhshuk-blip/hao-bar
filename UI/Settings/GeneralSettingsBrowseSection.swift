@@ -173,6 +173,8 @@ struct GeneralSettingsBrowseSection: View {
 
     private func leftClickModeHelp(_ mode: GeneralSettingsBrowseLeftClickMode) -> String {
         switch mode {
+        case .showHiddenIconBar:
+            return String(localized: "Left-click the HaoBar icon to show hidden icons in a bar under the menu bar.")
         case .toggleHidden:
             return String(localized: "Left-click the HaoBar icon to show or hide icons.")
         case .openBrowseIcons:

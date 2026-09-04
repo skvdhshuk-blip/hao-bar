@@ -335,10 +335,17 @@ final class MenuBarActionWorkflow: NSObject, NSMenuDelegate {
     }
 
     private func handleLeftClick() {
-        if manager.settings.leftClickOpensBrowseIcons {
+        switch manager.settings.leftClickAction {
+        case .showHiddenIconBar:
+            logger.info("Left-click: showing hidden icon bar")
+            HiddenIconPopupController.shared.toggle()
+            return
+        case .openBrowseIcons:
             logger.info("Left-click: opening Browse Icons (leftClickOpensBrowseIcons)")
             SearchWindowController.shared.toggle()
             return
+        case .toggleHidden:
+            break
         }
 
         logger.info("Left-click: calling toggleHiddenItems()")

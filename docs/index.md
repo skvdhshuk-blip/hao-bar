@@ -8,7 +8,7 @@ The live site is [`index.html`](index.html).
 
 ## What it does
 
-- Click the HaoBar extra to show or hide tucked-away menu bar apps
+- Click the HaoBar extra to open a bar of hidden icons under the menu bar
 - Browse hidden icons in the Icon Panel or a Second Menu Bar
 - Search by name and open an app with a double-click
 - Local profiles, keyboard shortcuts, and optional Touch ID

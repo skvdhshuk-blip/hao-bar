@@ -1,20 +1,6 @@
 import Foundation
 
-enum GeneralSettingsBrowseLeftClickMode: String, CaseIterable, Identifiable {
-    case toggleHidden
-    case openBrowseIcons
-
-    var id: String {
-        rawValue
-    }
-
-    var title: String {
-        switch self {
-        case .toggleHidden: String(localized: "Toggle Hidden")
-        case .openBrowseIcons: String(localized: "Open Browse")
-        }
-    }
-}
+typealias GeneralSettingsBrowseLeftClickMode = HaoBarLeftClickAction
 
 enum GeneralSettingsSecondMenuBarPreset: String, CaseIterable, Identifiable {
     case minimal

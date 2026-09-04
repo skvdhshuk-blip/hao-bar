@@ -11,7 +11,7 @@ struct BrowseAppGridView: View {
     let activateApp: (RunningApp, Bool) -> Void
     let setHotkey: (RunningApp) -> Void
     let removeAppFromGroup: (String, UUID) -> Void
-    let makeToggleHiddenAction: (RunningApp) -> (() -> Void)?
+    let makeMoveToVisibleAction: (RunningApp) -> (() -> Void)?
     let makeMoveToAlwaysHiddenAction: (RunningApp) -> (() -> Void)?
     let makeMoveToHiddenAction: (RunningApp) -> (() -> Void)?
     let showRestrictedFeature: (ProFeature) -> Void
@@ -84,21 +84,9 @@ struct BrowseAppGridView: View {
                 { removeAppFromGroup(app.bundleId, groupId) }
             },
             isHidden: mode == .hidden || mode == .alwaysHidden || (mode == .all && appZone(app) != .visible),
-            onToggleHidden: isPro ? makeToggleHiddenAction(app) : {
-                if let feature = BrowsePanelRestrictedAction.upsellFeature(for: .zoneMove, isPro: isPro) {
-                    showRestrictedFeature(feature)
-                }
-            },
-            onMoveToAlwaysHidden: isPro ? makeMoveToAlwaysHiddenAction(app) : {
-                if let feature = BrowsePanelRestrictedAction.upsellFeature(for: .zoneMove, isPro: isPro) {
-                    showRestrictedFeature(feature)
-                }
-            },
-            onMoveToHidden: isPro ? makeMoveToHiddenAction(app) : {
-                if let feature = BrowsePanelRestrictedAction.upsellFeature(for: .zoneMove, isPro: isPro) {
-                    showRestrictedFeature(feature)
-                }
-            },
+            onMoveToVisible: gatedZoneAction(makeMoveToVisibleAction(app), isPro: isPro),
+            onMoveToHidden: gatedZoneAction(makeMoveToHiddenAction(app), isPro: isPro),
+            onMoveToAlwaysHidden: gatedZoneAction(makeMoveToAlwaysHiddenAction(app), isPro: isPro),
             isMoving: movingAppId == app.uniqueId,
             isSelected: selectedAppIndex == index,
             isPro: isPro,
@@ -112,5 +100,18 @@ struct BrowseAppGridView: View {
             clearDragState()
             return didHandle
         }
+    }
+
+    private func gatedZoneAction(_ action: (() -> Void)?, isPro: Bool) -> (() -> Void)? {
+        BrowsePanelIconMoveMenu.gatedAction(
+            allowed: action != nil,
+            isPro: isPro,
+            perform: { action?() },
+            upsell: {
+                if let feature = BrowsePanelRestrictedAction.upsellFeature(for: .zoneMove, isPro: isPro) {
+                    showRestrictedFeature(feature)
+                }
+            }
+        )
     }
 }
